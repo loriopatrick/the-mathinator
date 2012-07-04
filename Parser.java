@@ -80,8 +80,7 @@ public class Parser {
                 return current;
             } else if (c == '^' || c == '/') {
                 Node temp = new Node(s);
-                if (current.nodes.size() > 0 && !current.value.equals("/")
-                        && !current.value.equals("^")) {
+                if (current.nodes.size() > 0 && !eq[i - 1].equals(")")) {
                     temp.nodes.add(current.nodes.get(current.nodes.size() - 1));
                     current.nodes.set(current.nodes.size() - 1, temp);
                     temp.parent = current;

@@ -1,6 +1,5 @@
-
 public class Simplify {
-    public static boolean Simplify (Node node) {
+    public static boolean Simplify(Node node) {
         if (node.height == 0) {
             node.simple = true;
             return false;
@@ -46,7 +45,7 @@ public class Simplify {
                         return true;
 
                     } else if (a.equals(b)) {
-                        Node temp = new Node("*", new Node[] {
+                        Node temp = new Node("*", new Node[]{
                                 new Node("2"),
                                 a
                         });
@@ -65,8 +64,8 @@ public class Simplify {
                                 for (int n = 0; n <= 1; n++) {
                                     for (int g = 0; g <= 1; g++) {
                                         if (a.nodes.get(n).equals(b.nodes.get(g))) {
-                                            int n1 = n==1?0:1,
-                                                    g1 = g==1?0:1;
+                                            int n1 = n == 1 ? 0 : 1,
+                                                    g1 = g == 1 ? 0 : 1;
 
                                             if (Bools.isNum(a.nodes.get(n1).value) && Bools.isNum(b.nodes.get(g1).value)) {
                                                 a.nodes.get(n1).value = (
@@ -86,7 +85,7 @@ public class Simplify {
                                                     && b.nodes.get(g1).targets == 0) {
 
 
-                                                a.nodes.set(n1, new Node("+", new Node[] {
+                                                a.nodes.set(n1, new Node("+", new Node[]{
                                                         a.nodes.get(n1),
                                                         b.nodes.get(g1)
                                                 }));
@@ -117,7 +116,7 @@ public class Simplify {
                         }
                     } else if (a.value.equals("/") && b.value.equals("/")) {
                         if (a.nodes.get(1).equals(b.nodes.get(1))) {
-                            node.nodes.set(i, new Node("/", new Node[] {
+                            node.nodes.set(i, new Node("/", new Node[]{
                                     new Node("+", new Node[]{
                                             a.nodes.get(0),
                                             b.nodes.get(0)
@@ -128,7 +127,7 @@ public class Simplify {
                             return true;
                         }
 
-                        node.nodes.set(i, new Node("/", new Node[] {
+                        node.nodes.set(i, new Node("/", new Node[]{
                                 new Node("+", new Node[]{
                                         new Node("*", new Node[]{
                                                 b.nodes.get(1),
@@ -203,7 +202,7 @@ public class Simplify {
                     }
 
                     if (a.equals(b)) {
-                        node.nodes.set(i, new Node("^", new Node[] {
+                        node.nodes.set(i, new Node("^", new Node[]{
                                 a,
                                 new Node("2")
                         }));
@@ -214,7 +213,7 @@ public class Simplify {
                     if (a.value.equals("^")) {
                         if (b.value.equals("^")) {
                             if (a.nodes.get(0).equals(b.nodes.get(0))) {
-                                Node temp = new Node("+", new Node[] {
+                                Node temp = new Node("+", new Node[]{
                                         a.nodes.get(1),
                                         b.nodes.get(1)
                                 });
@@ -235,12 +234,12 @@ public class Simplify {
 
                     if (a.value.equals("/")) {
                         if (b.value.equals("/")) {
-                            node.nodes.set(i, new Node("/", new Node[] {
-                                    new Node("*", new Node[] {
+                            node.nodes.set(i, new Node("/", new Node[]{
+                                    new Node("*", new Node[]{
                                             a.nodes.get(0),
                                             b.nodes.get(0)
                                     }),
-                                    new Node("*", new Node[] {
+                                    new Node("*", new Node[]{
                                             a.nodes.get(1),
                                             b.nodes.get(1)
                                     })
@@ -249,8 +248,8 @@ public class Simplify {
                             return true;
                         }
 
-                        node.nodes.set(i, new Node("/", new Node[] {
-                                new Node("*", new Node[] {
+                        node.nodes.set(i, new Node("/", new Node[]{
+                                new Node("*", new Node[]{
                                         a.nodes.get(0),
                                         b
                                 }),
@@ -300,11 +299,11 @@ public class Simplify {
             }
 
             if (n.value.equals("/") && d.value.equals("/")) {
-                node.nodes.set(0, new Node("*", new Node[] {
+                node.nodes.set(0, new Node("*", new Node[]{
                         n.nodes.get(0),
                         d.nodes.get(1)
                 }));
-                node.nodes.set(1, new Node("*", new Node[] {
+                node.nodes.set(1, new Node("*", new Node[]{
                         n.nodes.get(1),
                         d.nodes.get(0)
                 }));
@@ -313,7 +312,7 @@ public class Simplify {
 
             if (n.value.equals("/")) { // TEST !!
                 node.nodes.set(0, n.nodes.get(0));
-                node.nodes.set(1, new Node("*", new Node[] {
+                node.nodes.set(1, new Node("*", new Node[]{
                         n.nodes.get(1),
                         d
                 }));
@@ -324,7 +323,7 @@ public class Simplify {
                 for (int i = 0; i < n.nodes.size(); i++) {
                     Node a = n.nodes.get(i);
                     for (int j = 0; j < d.nodes.size(); j++) {
-                        Node b = n.nodes.get(j);
+                        Node b = d.nodes.get(j);
 
                         if (a.equals(b)) {
                             n.nodes.remove(i);
@@ -335,9 +334,9 @@ public class Simplify {
 
                         if (a.value.equals("^") && b.value.equals("^")) {
                             if (a.nodes.get(0).equals(b.nodes.get(0))) {
-                                a.nodes.set(1, new Node("+", new Node[] {
+                                a.nodes.set(1, new Node("+", new Node[]{
                                         a.nodes.get(1),
-                                        new Node("*", new Node[] {
+                                        new Node("*", new Node[]{
                                                 new Node("-1"),
                                                 b.nodes.get(1)
                                         })
@@ -347,7 +346,29 @@ public class Simplify {
                                 return true;
                             }
                         }
+                    }
+                }
+            } else if (n.value.equals("*")) {
+                for (int i = 0; i < n.nodes.size(); i++) {
+                    Node a = n.nodes.get(i);
+                    if (a.equals(d)) {
+                        n.nodes.remove(i);
+                        node.nodes.remove(1);
+                        return true;
+                    }
 
+                    if (a.value.equals("^") && d.value.equals("^")) {
+                        if (a.nodes.get(0).equals(d.nodes.get(0))) {
+                            a.nodes.set(1, new Node("+", new Node[]{
+                                    a.nodes.get(1),
+                                    new Node("*", new Node[]{
+                                            new Node("-1"),
+                                            d.nodes.get(1)
+                                    })
+                            }));
+                            node.nodes.remove(1);
+                            return true;
+                        }
                     }
                 }
             }
@@ -366,22 +387,4 @@ public class Simplify {
 
         return false;
     }
-
-
 }
-
-//if (node == node.parent.nodes.get(0)) {
-//        node.nodes.set(1, new Node("*", new Node[] {
-//        node.nodes.get(1),
-//        node.parent.nodes.get(1)
-//        }));
-//node.parent.nodes.remove(1);
-//
-//node.parent.nodes.clear();
-//node.parent.nodes.addAll(node.nodes);
-//return true;
-//}
-//        } else if (node.value.equals("/")) {
-//        // (1/2)/3 = 1/6
-//        System.out.println("DIVIDE!!");
-//} else {
