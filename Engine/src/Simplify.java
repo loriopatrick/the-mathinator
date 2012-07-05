@@ -8,6 +8,15 @@ public class Simplify {
             if (!node.nodes.get(i).simple)
                 if (Simplify(node.nodes.get(i))) return true;
         }
+        if (node.nodes.size() == 0) {
+            if (node.value.equals("+")) {
+                node.value = "0";
+                return true;
+            } else if (node.value.equals("*")) {
+                node.value = "1";
+                return true;
+            }
+        }
         if (!Bools.isFn(node.value) && node.nodes.size() == 1) {
             Node n = node.nodes.get(0);
             node.nodes.clear();
