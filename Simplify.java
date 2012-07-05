@@ -310,7 +310,7 @@ public class Simplify {
                 return true;
             }
 
-            if (n.value.equals("/")) { // TEST !!
+            if (n.value.equals("/")) {
                 node.nodes.set(0, n.nodes.get(0));
                 node.nodes.set(1, new Node("*", new Node[]{
                         n.nodes.get(1),
@@ -342,6 +342,26 @@ public class Simplify {
                                         })
                                 }));
                                 d.nodes.remove(j);
+
+                                return true;
+                            }
+                        } else if (a.value.equals("^")) {
+                            if (a.nodes.get(0).equals(b)) {
+                                a.nodes.set(1, new Node("+", new Node[] {
+                                        a.nodes.get(1),
+                                        new Node("-1")
+                                }));
+                                d.nodes.remove(j);
+
+                                return true;
+                            }
+                        } else if (b.value.equals("^")) {
+                            if (b.nodes.get(0).equals(a)) {
+                                b.nodes.set(1, new Node("+", new Node[] {
+                                        b.nodes.get(1),
+                                        new Node("-1")
+                                }));
+                                n.nodes.remove(i);
 
                                 return true;
                             }

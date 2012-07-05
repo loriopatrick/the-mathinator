@@ -3,19 +3,22 @@ import java.util.Collections;
 
 public class Node {
 
-    public Node (String value) {
+    public Node(String value) {
         this.value = value;
         nodes = new ArrayList<Node>();
     }
 
-    public Node (String value, Node[] nodes) {
+    public Node(String value, Node[] nodes) {
         this.value = value;
         this.nodes = new ArrayList<Node>(nodes.length);
         Collections.addAll(this.nodes, nodes);
     }
 
-    public boolean equals (Node compare) {
-        if (!this.value.equals(compare.value)) return false;
+    public boolean equals(Node compare) {
+        if (Bools.isNum(this.value) && Bools.isNum(compare.value)) {
+            if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
+        } else if (!this.value.equals(compare.value)) return false;
+
         if (this.value.equals("+") || this.value.equals("*")) {
             if (this.nodes.size() != compare.nodes.size()) return false;
             for (Node child : this.nodes) {
@@ -36,7 +39,7 @@ public class Node {
         return true;
     }
 
-    public Node clone () {
+    public Node clone() {
         Node res = new Node(this.value);
         for (int i = 0; i < this.nodes.size(); i++) {
             res.nodes.add(this.nodes.get(i).clone());
@@ -44,7 +47,7 @@ public class Node {
         return res;
     }
 
-    public void changeTo (Node n) {
+    public void changeTo(Node n) {
         this.value = n.value;
         this.nodes = n.nodes;
     }
