@@ -53,8 +53,27 @@ function display(elem, node) {
             n = document.createElement('div');
             n.className = 'node';
 
+            var op = false,
+                pr = null;
+            if (node.nodes[i].nodes &&
+                node.nodes[i].nodes.length > 0) op = true;
+
+            if (op) {
+                pr = document.createElement('div');
+                pr.innerHTML = '(';
+                pr.className = 'node';
+                elem.appendChild(pr);
+            }
+
             elem.appendChild(n);
             display(n, node.nodes[i]);
+
+            if (op) {
+                pr = document.createElement('div');
+                pr.className = 'node';
+                pr.innerHTML = ')';
+                elem.appendChild(pr);
+            }
 
             if (i < node.nodes.length - 1) {
                 n = document.createElement('div');
