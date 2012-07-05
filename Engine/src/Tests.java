@@ -1,7 +1,8 @@
-import java.util.ArrayList;
+import org.junit.*;
 
 public class Tests {
-    public static boolean Parse() {
+
+    @Test public void Parse() {
         Node n;
         try {
             n = Parser.Parse(Parser.Block("(1+2)/3"));
@@ -11,7 +12,7 @@ public class Tests {
                             new Node("2")
                     }),
                     new Node("3")
-            }))) return false;
+            }))) assert false;
 
             n = Parser.Parse(Parser.Block("(1^2)^3"));
             if (!n.equals(new Node("^", new Node[]{
@@ -20,7 +21,7 @@ public class Tests {
                             new Node("2")
                     }),
                     new Node("3")
-            }))) return false;
+            }))) assert false;
 
             n = Parser.Parse(Parser.Block("5/((2+x)^(4/5^6))"));
             if (!n.equals(new Node("/", new Node[]{
@@ -38,16 +39,16 @@ public class Tests {
                                     })
                             })
                     })
-            }))) return false;
+            }))) assert false;
 
         } catch (Exception e) {
-            return false;
+            assert false;
         }
 
-        return true;
+        assert true;
     }
 
-    public static boolean NodeToString() {
+    @Test public void NodeToString() {
         Node n;
         String val;
         try {
@@ -60,7 +61,7 @@ public class Tests {
             });
             Parser.MarkUp(n);
             val = Parser.ReadNode(n);
-            if (!n.equals(Parser.Parse(Parser.Block(val)))) return false;
+            if (!n.equals(Parser.Parse(Parser.Block(val)))) assert false;
 
 
             n = new Node("/", new Node[]{
@@ -81,17 +82,17 @@ public class Tests {
             });
             Parser.MarkUp(n);
             val = Parser.ReadNode(n);
-            if (!n.equals(Parser.Parse(Parser.Block(val)))) return false;
+            if (!n.equals(Parser.Parse(Parser.Block(val)))) assert false;
 
 
         } catch (Exception e) {
-            return false;
+            assert false;
         }
 
-        return true;
+        assert true;
     }
 
-    public static boolean Simplify() {
+    @Test public void Simplify() {
         Node n;
         try {
             n = Parser.CreateNode("10+15-7+2+8-2");
@@ -99,7 +100,7 @@ public class Tests {
                 Simplify.Simplify(n);
                 Parser.MarkUp(n);
             }
-            if (!n.equals(new Node("26"))) return false;
+            if (!n.equals(new Node("26"))) assert false;
 
 
             n = Parser.CreateNode("(5*2+6)/(5^2)+10-2/4*6/4");
@@ -110,7 +111,7 @@ public class Tests {
             if (!n.equals(new Node("/", new Node[] {
                     new Node("989"),
                     new Node("100")
-            }))) return false;
+            }))) assert false;
 
 
             n = Parser.CreateNode("(x^5*y^7*z^-2)/(x^3*z^-10*y)");
@@ -132,21 +133,12 @@ public class Tests {
                             new Node("z"),
                             new Node("8")
                     })
-            }))) return false;
+            }))) assert false;
 
 
         } catch (Exception e) {
-            return false;
+            assert false;
         }
-        return true;
-    }
-
-    public static String Run() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("* Parse: ").append(Parse() ? "success" : "failure").append('\n');
-        sb.append("* NodeToString: ").append(NodeToString() ? "success" : "failure").append('\n');
-        sb.append("* Simplify: ").append(Simplify()? "success" : "failure").append('\n');
-
-        return sb.toString();
+        assert true;
     }
 }
