@@ -44,6 +44,55 @@ public class Solve {
                     return;
                 }
             }
+        } else if (left.value.equals("+")) {
+            for (int i = 0; i < left.nodes.size(); i++) {
+                Node c = left.nodes.get(i);
+                boolean go = false;
+
+                if (toLeft && c.targets == 0) go = true;
+                else if (c.targets > 0) go = true;
+
+                if (go) {
+                    eq.nodes.set(1, new Node("+", new Node[]{
+                            eq.nodes.get(1),
+                            new Node("*", new Node[]{
+                                    new Node("-1"),
+                                    c
+                            })
+                    }));
+                    left.nodes.remove(i);
+                    return;
+                }
+            }
+        } else if (right.value.equals("+")) {
+            for (int i = 0; i < right.nodes.size(); i++) {
+                Node c = right.nodes.get(i);
+                boolean go = false;
+
+                if (toLeft && c.targets > 0) go = true;
+                else if (c.targets == 0) go = true;
+
+                if (go) {
+                    eq.nodes.set(0, new Node("+", new Node[]{
+                            eq.nodes.get(0),
+                            new Node("*", new Node[]{
+                                    new Node("-1"),
+                                    c
+                            })
+                    }));
+                    right.nodes.remove(i);
+                    return;
+                }
+            }
         }
+    }
+
+    public static void Run(Node eq, String target) {
+        Node last = eq.clone();
+        Simplify.Simplify(eq);
+
+        if (!eq.equals(last)) return;
+
+        Solve.Step(eq, target);
     }
 }
