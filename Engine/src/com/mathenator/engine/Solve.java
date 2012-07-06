@@ -1,5 +1,7 @@
+package com.mathenator.engine;
+
 public class Solve {
-    public static void Step(Node eq, String target) {
+    public static void Solve(Node eq, String target) {
         if (!eq.value.equals("=")) return;
 
         Parser.MarkUp(eq, target);
@@ -99,13 +101,11 @@ public class Solve {
         }
     }
 
-    public static boolean Run(Node eq, String target) {
+    public static boolean Step(Node eq, String target) {
         Node last = eq.clone();
-        Simplify.Simplify(eq);
 
-        if (!eq.equals(last)) return false;
-
-        Solve.Step(eq, target);
+        Simplify.Step(eq);
+        Solve.Solve(eq, target);
 
         return eq.equals(last);
     }

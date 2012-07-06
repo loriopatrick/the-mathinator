@@ -1,3 +1,4 @@
+package com.mathenator.engine;
 
 public class Bools {
 

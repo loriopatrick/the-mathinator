@@ -1,3 +1,5 @@
+package com.mathenator.engine;
+
 public class Simplify {
     public static boolean Simplify(Node node) {
         if (node.height == 0) {
@@ -415,5 +417,16 @@ public class Simplify {
         }
 
         return false;
+    }
+
+    public static boolean Step (Node node) {
+        Node last = node.clone();
+
+        int count = 0;
+        while (!Simplify(node)) {
+            if (++count > 2) break;
+        }
+
+        return node.equals(last);
     }
 }

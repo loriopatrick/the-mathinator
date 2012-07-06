@@ -1,3 +1,6 @@
+import com.mathenator.engine.Node;
+import com.mathenator.engine.Parser;
+import com.mathenator.engine.Solve;
 
 public class Main {
     public static void main (String[] args) throws Exception {
@@ -5,7 +8,7 @@ public class Main {
         Node n = Parser.CreateNode("x+3/2*-2=x-3", "x");
         System.out.println(Parser.ReadNode(n));
         for (int i = 0; i < 10; i++) {
-            if (Solve.Run(n, "x")) break;
+            if (Solve.Step(n, "x")) break;
             Parser.MarkUp(n);
             System.out.println(Parser.ReadNode(n));
         }

@@ -1,3 +1,5 @@
+package com.mathenator.engine;
+
 import org.junit.*;
 
 public class Tests {

@@ -1,5 +1,6 @@
+package com.mathenator.engine;
+
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Parser {
 
