@@ -129,7 +129,7 @@ public class Parser {
                         go = true;
                         break;
                     }
-                    if (temp.value.charAt(0) == '+') {
+                    if (temp.value.charAt(0) == '+' && !eq[i - 1].equals(")")) {
                         current = temp;
                         temp = new Node(s);
                         temp.nodes.add(current.nodes.get(current.nodes.size() - 1));

@@ -41,6 +41,22 @@ public class Tests {
                     })
             }))) assert false;
 
+
+            n = Parser.Parse(Parser.Block("(8+5)*35/5+6"));
+            if (!n.equals(new Node("+", new Node[] {
+                    new Node("*", new Node[] {
+                            new Node("+", new Node[] {
+                                    new Node("8"),
+                                    new Node("5")
+                            }),
+                            new Node("/", new Node[] {
+                                    new Node("35"),
+                                    new Node("5")
+                            })
+                    }),
+                    new Node("6")
+            }))) assert false;
+
         } catch (Exception e) {
             assert false;
         }
