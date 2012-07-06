@@ -87,12 +87,14 @@ public class Solve {
         }
     }
 
-    public static void Run(Node eq, String target) {
+    public static boolean Run(Node eq, String target) {
         Node last = eq.clone();
         Simplify.Simplify(eq);
 
-        if (!eq.equals(last)) return;
+        if (!eq.equals(last)) return false;
 
         Solve.Step(eq, target);
+
+        return eq.equals(last);
     }
 }

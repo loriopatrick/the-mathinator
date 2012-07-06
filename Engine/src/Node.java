@@ -31,7 +31,7 @@ public class Node {
                 }
                 if (!in) return false;
             }
-        } else if (this.value.equals("/") || this.value.equals("^")) {
+        } else if (this.value.equals("/") || this.value.equals("^") || this.value.equals("=")) {
             if (!this.nodes.get(0).equals(compare.nodes.get(0))) return false;
             if (!this.nodes.get(1).equals(compare.nodes.get(1))) return false;
         }
