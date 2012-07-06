@@ -212,6 +212,18 @@ public class Simplify {
                         return true;
                     }
 
+                    if (Bools.isNum(a.value) && b.value.equals("+")) {
+                        for (int n = 0; n < b.nodes.size(); n++) {
+                            b.nodes.set(n, new Node("*", new Node[] {
+                                    b.nodes.get(n),
+                                    a
+                            }));
+                        }
+
+                        node.nodes.remove(i);
+                        return true;
+                    }
+
                     if (a.equals(b)) {
                         node.nodes.set(i, new Node("^", new Node[]{
                                 a,
@@ -424,7 +436,7 @@ public class Simplify {
 
         int count = 0;
         while (!Simplify(node)) {
-            if (++count > 2) break;
+            if (++count > 5) break;
         }
 
         return node.equals(last);

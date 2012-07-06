@@ -7,95 +7,117 @@ public class Solve {
         Parser.MarkUp(eq, target);
         if (eq.targets == 0) return;
 
-        Node left = eq.nodes.get(0),
-                right = eq.nodes.get(1);
+        Node x = eq.nodes.get(0),
+                y = eq.nodes.get(1);
 
         boolean toLeft = eq.nodes.get(0).targets >= eq.nodes.get(1).targets;
 
-        if (left.equals(right)) {
+        if (!toLeft) {
+            Node temp = y;
+            y = x;
+            x = temp;
+        }
+
+        if (x.equals(y)) {
             eq.nodes.set(1, new Node("0"));
             eq.nodes.set(0, new Node("0"));
             return;
         }
 
-        if (left.value.equals("+") && right.value.equals("+")) {
-            for (int i = 0; i < left.nodes.size(); i++) {
-                Node c = left.nodes.get(i);
-                boolean go = false;
+        if (x.value.equals("+") && y.value.equals("+")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node c = x.nodes.get(i);
 
-                if (toLeft && c.targets == 0) go = true;
-                else if (c.targets > 0) go = true;
-
-                if (go) {
-                    right.nodes.add(new Node("*", new Node[]{
+                if (c.targets == 0) {
+                    y.nodes.add(new Node("*", new Node[]{
                             new Node("-1"),
                             c
                     }));
-                    left.nodes.remove(i);
+                    x.nodes.remove(i);
                     return;
                 }
             }
 
-            for (int i = 0; i < right.nodes.size(); i++) {
-                Node c = right.nodes.get(i);
-                boolean go = false;
+            for (int i = 0; i < y.nodes.size(); i++) {
+                Node c = y.nodes.get(i);
 
-                if (toLeft && c.targets > 0) go = true;
-                else if (c.targets == 0) go = true;
-
-                if (go) {
-                    left.nodes.add(new Node("*", new Node[]{
+                if (c.targets > 0) {
+                    x.nodes.add(new Node("*", new Node[]{
                             new Node("-1"),
                             c
                     }));
-                    right.nodes.remove(i);
+                    y.nodes.remove(i);
                     return;
                 }
             }
-        } else if (left.value.equals("*") && right.value.equals("*")) {
+        } else if (x.value.equals("+")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node c = x.nodes.get(i);
 
-        } else if (left.value.equals("*")) {
-
-        } else if (right.value.equals("*")) {
-
-        } else if (left.value.equals("+")) {
-            for (int i = 0; i < left.nodes.size(); i++) {
-                Node c = left.nodes.get(i);
-                boolean go = false;
-
-                if (toLeft && c.targets == 0) go = true;
-                else if (c.targets > 0) go = true;
-
-                if (go) {
-                    eq.nodes.set(1, new Node("+", new Node[]{
-                            eq.nodes.get(1),
+                if (c.targets == 0) {
+                    int pos = toLeft ? 1 : 0;
+                    eq.nodes.set(pos, new Node("+", new Node[]{
+                            eq.nodes.get(pos),
                             new Node("*", new Node[]{
                                     new Node("-1"),
                                     c
                             })
                     }));
-                    left.nodes.remove(i);
+
+                    x.nodes.remove(i);
                     return;
                 }
             }
-        } else if (right.value.equals("+")) {
-            for (int i = 0; i < right.nodes.size(); i++) {
-                Node c = right.nodes.get(i);
-                boolean go = false;
+        } else if (y.value.equals("+")) {
+            for (int i = 0; i < y.nodes.size(); i++) {
+                Node c = y.nodes.get(i);
 
-                if (toLeft && c.targets > 0) go = true;
-                else if (c.targets == 0) go = true;
-
-                if (go) {
-                    eq.nodes.set(0, new Node("+", new Node[]{
-                            eq.nodes.get(0),
+                if (c.targets > 0) {
+                    int pos = toLeft ? 0 : 1;
+                    eq.nodes.set(pos, new Node("+", new Node[]{
+                            eq.nodes.get(pos),
                             new Node("*", new Node[]{
                                     new Node("-1"),
                                     c
                             })
                     }));
-                    right.nodes.remove(i);
+                    y.nodes.remove(i);
                     return;
+                }
+            }
+        }
+
+        if (x.value.equals("*")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node c = x.nodes.get(i);
+
+                if (c.targets == 0) {
+                    if (y.value.equals("/")) {
+                        if (y.nodes.get(1).value.equals("*")) {
+                            y.nodes.get(1).nodes.add(c);
+
+                            x.nodes.remove(i);
+                            return;
+                        } else {
+                            y.nodes.set(1, new Node("*", new Node[]{
+                                    y.nodes.get(1),
+                                    c
+                            }));
+
+                            x.nodes.remove(i);
+                            return;
+                        }
+                    } else {
+                        int pos = toLeft ? 1 : 0;
+
+                        eq.nodes.set(pos, new Node("/", new Node[] {
+                                y,
+                                c
+                        }));
+
+                        x.nodes.remove(i);
+                        return;
+                    }
                 }
             }
         }
@@ -104,7 +126,8 @@ public class Solve {
     public static boolean Step(Node eq, String target) {
         Node last = eq.clone();
 
-        Simplify.Step(eq);
+        Parser.MarkUp(eq, target);
+        if (!Simplify.Step(eq)) return false;
         Solve.Solve(eq, target);
 
         return eq.equals(last);
