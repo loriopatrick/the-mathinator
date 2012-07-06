@@ -10,6 +10,12 @@ public class Solve {
 
         boolean toLeft = eq.nodes.get(0).targets >= eq.nodes.get(1).targets;
 
+        if (left.equals(right)) {
+            eq.nodes.set(1, new Node("0"));
+            eq.nodes.set(0, new Node("0"));
+            return;
+        }
+
         if (left.value.equals("+") && right.value.equals("+")) {
             for (int i = 0; i < left.nodes.size(); i++) {
                 Node c = left.nodes.get(i);
@@ -44,6 +50,12 @@ public class Solve {
                     return;
                 }
             }
+        } else if (left.value.equals("*") && right.value.equals("*")) {
+
+        } else if (left.value.equals("*")) {
+
+        } else if (right.value.equals("*")) {
+
         } else if (left.value.equals("+")) {
             for (int i = 0; i < left.nodes.size(); i++) {
                 Node c = left.nodes.get(i);
