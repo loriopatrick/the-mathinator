@@ -342,6 +342,16 @@ public class Simplify {
                 return true;
             }
 
+            if (d.value.equals("/")) {
+                // 1 / (1/2)
+                node.nodes.set(0, new Node("*", new Node[]{
+                        n,
+                        d.nodes.get(1)
+                }));
+                node.nodes.set(1, d.nodes.get(0));
+                return true;
+            }
+
             if (n.value.equals("*") && d.value.equals("*")) {
                 for (int i = 0; i < n.nodes.size(); i++) {
                     Node a = n.nodes.get(i);
@@ -425,6 +435,16 @@ public class Simplify {
                 node.value = val + "";
                 node.nodes.clear();
                 return true;
+            } else if (Bools.isNum(b.value) && e.equals(new Node("/", new Node[] {
+                    new Node("1"),
+                    new Node("2")
+            }))) {
+                double val = Math.sqrt(Float.parseFloat(b.value));
+                if (val == Math.floor(val)) {
+                    node.value = val + "";
+                    node.nodes.clear();
+                    return true;
+                }
             }
         }
 

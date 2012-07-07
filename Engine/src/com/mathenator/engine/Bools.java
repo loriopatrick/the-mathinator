@@ -2,7 +2,6 @@ package com.mathenator.engine;
 
 public class Bools {
 
-
     public static boolean isNumOrChar(String s) {
         return s.length() > 0 && isNumOrChar(s.charAt(0));
     }

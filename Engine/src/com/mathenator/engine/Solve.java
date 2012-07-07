@@ -120,6 +120,27 @@ public class Solve {
                     }
                 }
             }
+        } else if (x.value.equals("/")) {
+            if (x.nodes.get(1).targets == 0) {
+                eq.nodes.set(toLeft? 0 : 1, x.nodes.get(0));
+                eq.nodes.set(toLeft? 1 : 0, new Node("*", new Node[] {
+                        y,
+                        x.nodes.get(1)
+                }));
+            }
+        } else if (x.value.equals("^")) {
+            if (y.targets == 0 && x.nodes.get(1).targets == 0) {
+                eq.nodes.set(toLeft? 1 : 0, new Node("^", new Node[] {
+                        y,
+                        new Node("/", new Node[] {
+                                new Node("1"),
+                                x.nodes.get(1)
+                        })
+                }));
+                x.value = x.nodes.get(0).value;
+                x.nodes = x.nodes.get(0).nodes;
+                return;
+            }
         }
     }
 
