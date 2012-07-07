@@ -2,10 +2,6 @@ package com.mathenator.engine;
 
 public class Simplify {
     public static boolean Simplify(Node node) {
-        if (node.height == 0) {
-            node.simple = true;
-            return false;
-        }
         for (int i = 0; i < node.nodes.size(); i++) {
             if (!node.nodes.get(i).simple)
                 if (Simplify(node.nodes.get(i))) return true;
@@ -18,6 +14,7 @@ public class Simplify {
                 node.value = "1";
                 return true;
             }
+            return false;
         }
         if (!Bools.isFn(node.value) && node.nodes.size() == 1) {
             Node n = node.nodes.get(0);

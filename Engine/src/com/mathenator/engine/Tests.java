@@ -166,5 +166,6 @@ public class Tests {
     public void Solve() {
         if (!Solve("-10*((x-10)^(1/2))=-60", new Node("46"), "x")) assert false;
         if (!Solve("(2*x-88)^(1/2)=(x/6)^(1/2)", new Node("48"), "x")) assert false;
+        if (!Solve("(2*x+40)^(1/2)=(-16-2*x)^(1/2)", new Node("-14"), "x")) assert false;
     }
 }

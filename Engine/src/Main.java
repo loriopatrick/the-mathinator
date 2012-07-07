@@ -6,9 +6,9 @@ import com.mathenator.engine.Solve;
 public class Main {
     public static void main (String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
-        Node n = Parser.CreateNode("(2*x-88)^(1/2)=(x/6)^(1/2)", "x"); // needs fixing in parser!!
+        Node n = Parser.CreateNode("x*2=x", "x"); // needs fixing in parser!!
         System.out.println(Parser.ReadNode(n));
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 5000; i++) {
             if (Solve.Step(n, "x")) break;
             Parser.MarkUp(n);
             System.out.println(Parser.ReadNode(n));
