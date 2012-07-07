@@ -6,7 +6,7 @@ import com.mathenator.engine.Solve;
 public class Main {
     public static void main (String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
-        Node n = Parser.CreateNode("-10*((x-10)^(1/2))=-60", "x"); // needs fixing in parser!!
+        Node n = Parser.CreateNode("(2*x-88)^(1/2)=(x/6)^(1/2)", "x"); // needs fixing in parser!!
         System.out.println(Parser.ReadNode(n));
         for (int i = 0; i < 1000; i++) {
             if (Solve.Step(n, "x")) break;

@@ -129,7 +129,7 @@ public class Solve {
                 }));
             }
         } else if (x.value.equals("^")) {
-            if (y.targets == 0 && x.nodes.get(1).targets == 0) {
+            if ((y.targets == 0 || y.value.equals("^")) && x.nodes.get(1).targets == 0) {
                 eq.nodes.set(toLeft? 1 : 0, new Node("^", new Node[] {
                         y,
                         new Node("/", new Node[] {

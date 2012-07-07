@@ -137,6 +137,11 @@ public class Tests {
                         new Node("8")
                 })
         }))) assert false;
+
+        if (!Simplify("(x^2)^2", new Node("^", new Node[] {
+                new Node("x"),
+                new Node("4")
+        }))) assert false;
     }
 
     public boolean Solve(String eq, Node ans, String target) {
@@ -160,5 +165,6 @@ public class Tests {
     @Test
     public void Solve() {
         if (!Solve("-10*((x-10)^(1/2))=-60", new Node("46"), "x")) assert false;
+        if (!Solve("(2*x-88)^(1/2)=(x/6)^(1/2)", new Node("48"), "x")) assert false;
     }
 }

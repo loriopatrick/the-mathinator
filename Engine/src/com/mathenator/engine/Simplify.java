@@ -430,6 +430,18 @@ public class Simplify {
             Node b = node.nodes.get(0),
                     e = node.nodes.get(1);
 
+            if (e.value.equals("1")) {
+                node.value = b.value;
+                node.nodes = b.nodes;
+                return true;
+            }
+
+            if (e.value.equals("0")) {
+                node.value = "1";
+                node.nodes.clear();
+                return true;
+            }
+
             if (Bools.isNum(b.value) && Bools.isNum(e.value)) {
                 double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
                 node.value = val + "";
@@ -445,6 +457,14 @@ public class Simplify {
                     node.nodes.clear();
                     return true;
                 }
+            } else if (b.value.equals("^")) {
+                b.nodes.set(1, new Node("*", new Node[] {
+                        b.nodes.get(1),
+                        e
+                }));
+                node.value = b.value;
+                node.nodes = b.nodes;
+                return true;
             }
         }
 
