@@ -135,7 +135,7 @@ public class Simplify {
                             return true;
                         }
 
-                        node.nodes.set(i, new Node("/", new Node[]{
+                        node.nodes.set(i, new Node("/", new Node[] {
                                 new Node("+", new Node[]{
                                         new Node("*", new Node[]{
                                                 b.nodes.get(1),
@@ -164,20 +164,22 @@ public class Simplify {
                             base = a;
                         }
 
-                        node.nodes.set(i, new Node("/", new Node[]{
-                                new Node("+", new Node[]{
-                                        new Node("*", new Node[]{
-                                                base,
-                                                div.nodes.get(1)
-                                        }),
-                                        div.nodes.get(0)
-                                }),
-                                div.nodes.get(1)
-                        }));
+                        if (div.targets > 0 && base.targets > 0 || div.targets == 0 && base.targets == 0) {
+                            node.nodes.set(i, new Node("/", new Node[]{
+                                    new Node("+", new Node[]{
+                                            new Node("*", new Node[]{
+                                                    base,
+                                                    div.nodes.get(1)
+                                            }),
+                                            div.nodes.get(0)
+                                    }),
+                                    div.nodes.get(1)
+                            }));
 
-                        node.nodes.remove(j);
+                            node.nodes.remove(j);
 
-                        return true;
+                            return true;
+                        }
                     }
                 }
             }
@@ -477,5 +479,16 @@ public class Simplify {
         }
 
         return node.equals(last);
+    }
+
+    public static void Run (String eq) throws Exception{
+        Node n = Parser.CreateNode(eq);
+        Parser.MarkUp(n);
+        System.out.println(Parser.ReadNode(n));
+        for (int i = 0; i < 1000; i++) {
+            Parser.MarkUp(n);
+            System.out.println(Parser.ReadNode(n));
+            if (Step(n)) break;
+        }
     }
 }

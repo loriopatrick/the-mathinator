@@ -81,7 +81,7 @@ public class Parser {
                 return current;
             } else if (c == '^' || c == '/') {
                 Node temp = new Node(s);
-                if (current.nodes.size() > 0 && !eq[i - 1].equals(")")) {
+                if (current.nodes.size() > 0 && !(eq[i - 1].equals(")") && eq[start].equals(")"))) {
                     temp.nodes.add(current.nodes.get(current.nodes.size() - 1));
                     current.nodes.set(current.nodes.size() - 1, temp);
                     temp.parent = current;
@@ -166,7 +166,7 @@ public class Parser {
     public static void MarkUp (Node n, String target) {
         if (n.nodes.size() == 0) {
             boolean t = n.value.equals(target) || n.value.equals("-" + target);
-            if (!t) n.targets = 0;
+            n.targets = 0;
             Node temp = n;
             temp.height = 0;
             while (temp != null) {
@@ -183,6 +183,7 @@ public class Parser {
         for (int i = 0; i < n.nodes.size(); i++) {
             Node c = n.nodes.get(i);
             c.parent = n;
+            c.targets = 0;
             MarkUp(c, target);
         }
     }

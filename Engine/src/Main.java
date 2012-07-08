@@ -6,15 +6,14 @@ import com.mathenator.engine.Solve;
 public class Main {
     public static void main (String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
-        Node n = Parser.CreateNode("x*2=x", "x"); // needs fixing in parser!!
-        System.out.println(Parser.ReadNode(n));
-        for (int i = 0; i < 5000; i++) {
-            if (Solve.Step(n, "x")) break;
-            Parser.MarkUp(n);
-            System.out.println(Parser.ReadNode(n));
-        }
-        Parser.MarkUp(n);
-        System.out.println(Parser.ReadNode(n));
-        System.out.println("Done...");
+
+        Simplify.Run("1+(1+x)/(3+x)");
+        /*
+            1/(2*x)+(x-1)/(2*x^2)
+            ((x-1)*(2*x)+(2*x^2))/((2*x^2)*(x-1))
+            ( 2*x^2 - 2*x + 2*x^2 )
+            ( 4*x^2 - 2*x )
+         */
+
     }
 }

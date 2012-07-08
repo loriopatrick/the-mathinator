@@ -87,6 +87,22 @@ public class Solve {
             }
         }
 
+        if (y.targets > 0 && x.targets > 0 && x.height <= 2 && y.height <= 2) {
+            if (y.value.equals("*") || x.value.equals("*")) {
+                eq.nodes.set(toLeft? 0 : 1, new Node("+", new Node[] {
+                        x,
+                        new Node("*", new Node[] {
+                                new Node("-1"),
+                                y
+
+                        })
+                }));
+
+                eq.nodes.set(toLeft? 1 : 0, new Node("0"));
+                return;
+            }
+        }
+
         if (x.value.equals("*")) {
             for (int i = 0; i < x.nodes.size(); i++) {
                 Node c = x.nodes.get(i);
@@ -129,7 +145,7 @@ public class Solve {
                 }));
             }
         } else if (x.value.equals("^")) {
-            if ((y.targets == 0 || y.value.equals("^")) && x.nodes.get(1).targets == 0) {
+            if (x.nodes.get(1).targets == 0) {
                 eq.nodes.set(toLeft? 1 : 0, new Node("^", new Node[] {
                         y,
                         new Node("/", new Node[] {
@@ -142,15 +158,42 @@ public class Solve {
                 return;
             }
         }
+
+        if (y.value.equals("^")) {
+
+        }
     }
 
-    public static boolean Step(Node eq, String target) {
+    public static boolean Step(Node eq, String target, boolean e) {
         Node last = eq.clone();
 
         Parser.MarkUp(eq, target);
         if (!Simplify.Step(eq)) return false;
         Solve.Solve(eq, target);
 
+        if (!e && eq.equals(last)) {
+            return Step(eq, target, true);
+        }
         return eq.equals(last);
+    }
+
+    public static boolean Step(Node eq, String target) {
+        return Step(eq, target, false);
+    }
+
+
+    public static void Run (String eq, String target) throws Exception {
+        System.out.println("\nRUN...");
+        Node n = Parser.CreateNode(eq, target);
+        System.out.println(Parser.ReadNode(n));
+        int i;
+        for (i = 0; i < 5000; i++) {
+            if (Solve.Step(n, target)) break;
+            Parser.MarkUp(n);
+            System.out.println(Parser.ReadNode(n));
+        }
+        Parser.MarkUp(n);
+        System.out.println(Parser.ReadNode(n));
+        System.out.println("Done... " + i);
     }
 }
