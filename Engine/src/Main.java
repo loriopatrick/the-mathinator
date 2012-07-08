@@ -7,7 +7,15 @@ public class Main {
     public static void main (String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Simplify.Run("(x+21)*y+(x*4+2)*y");
+        Node n = Parser.CreateNode("1+(4+5)*6");
+
+        Simplify.Run("(1+2)*3+(4+5)*6");
+
+        //   (1+2)/3 :: !(true && true)
+        //   -10*(x-10)^(1/2) :: !(true && false)
+
+        //   !(eq[i - 1].equals(")") && eq[start].equals(")"))
+
         /*
             1/(2*x)+(x-1)/(2*x^2)
             ((x-1)*(2*x)+(2*x^2))/((2*x^2)*(x-1))

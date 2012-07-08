@@ -89,7 +89,7 @@ public class Parser {
                 return current;
             } else if (c == '^' || c == '/') {
                 Node temp = new Node(s);
-                if (current.nodes.size() > 0 && !(eq[i - 1].equals(")") && eq[start].equals(")"))) {
+                if (current.nodes.size() > 0 && current.temp == -1) {
                     temp.nodes.add(current.nodes.get(current.nodes.size() - 1));
                     current.nodes.set(current.nodes.size() - 1, temp);
                     temp.parent = current;
@@ -138,7 +138,7 @@ public class Parser {
                         go = true;
                         break;
                     }
-                    if (temp.value.charAt(0) == '+' && !eq[i - 1].equals(")")) {
+                    if (temp.value.charAt(0) == '+' && temp.temp == -1) {
                         current = temp;
                         temp = new Node(s);
                         temp.nodes.add(current.nodes.get(current.nodes.size() - 1));
