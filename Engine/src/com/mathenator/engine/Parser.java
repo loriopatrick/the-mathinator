@@ -34,7 +34,7 @@ public class Parser {
         for (int i = 0; i < eq.length(); i++) {
             char c = eq.charAt(i);
             int type = type(c);
-            if (c == '-') {
+            if (c == 45 || c == 8722) {
                 neg = true;
             } else if (type == 3) {
                 if (temp.length() > 0) res.add(temp.toString());
@@ -258,18 +258,25 @@ public class Parser {
         return sb.toString();
     }
 
-    public static String ReadNodeLatex (Node node) {
-        if (node.height == 0) {
-            return node.value;
-        }
+    public static String ReadNodeLatex(Node node) {
 
         StringBuilder sb = new StringBuilder();
-        boolean fn = false;
+
+        if (node.changed) {
+            sb.append("\\bbox[red,5px]{");
+        }
+
+        if (node.height == 0) {
+            sb.append(node.value);
+            if (node.changed) sb.append('}');
+            return sb.toString();
+        }
 
         if (Bools.isFn(node.value)) {
             sb.append("\\").append(node.value).append('{');
             sb.append(ReadNode(node.nodes.get(0)));
             sb.append("}");
+            if (node.changed) sb.append('}');
             return sb.toString();
         }
 
@@ -280,6 +287,7 @@ public class Parser {
             sb.append("}{");
             sb.append(ReadNode(node.nodes.get(1)));
             sb.append("}");
+            if (node.changed) sb.append('}');
             return sb.toString();
         }
 
@@ -289,6 +297,7 @@ public class Parser {
             sb.append("}^{");
             sb.append(ReadNodeLatex(node.nodes.get(1)));
             sb.append("}");
+            if (node.changed) sb.append('}');
             return sb.toString();
         }
 
@@ -312,7 +321,7 @@ public class Parser {
         }
 
         if (p) sb.append(')');
-
+        if (node.changed) sb.append('}');
         return sb.toString();
     }
 

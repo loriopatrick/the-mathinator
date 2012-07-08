@@ -61,6 +61,26 @@ public class Tests {
                 }),
                 new Node("6")
         }))) assert false;
+
+        if (!Parse("(x+21)*y+(x*4+2)*y", new Node("+", new Node[]{
+                new Node("*", new Node[]{
+                        new Node("+", new Node[]{
+                                new Node("x"),
+                                new Node("21")
+                        }),
+                        new Node("y")
+                }),
+                new Node("*", new Node[]{
+                        new Node("+", new Node[]{
+                                new Node("*", new Node[] {
+                                        new Node("x"),
+                                        new Node("4")
+                                }),
+                                new Node("2")
+                        }),
+                        new Node("y")
+                })
+        }))) assert false;
     }
 
     public boolean NodeToString(Node n) {

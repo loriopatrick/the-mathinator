@@ -66,4 +66,6 @@ public class Node {
     public int height = -1;
     public boolean simple = false;
     public int temp = -1;
+    public boolean changed = false;
+    public String message;
 }

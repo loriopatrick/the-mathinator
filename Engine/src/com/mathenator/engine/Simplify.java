@@ -1,7 +1,12 @@
 package com.mathenator.engine;
 
+import sun.tools.tree.NewArrayExpression;
+
 public class Simplify {
     public static boolean Simplify(Node node) {
+        node.changed = false;
+        node.message = null;
+
         for (int i = 0; i < node.nodes.size(); i++) {
             if (!node.nodes.get(i).simple)
                 if (Simplify(node.nodes.get(i))) return true;
@@ -9,9 +14,13 @@ public class Simplify {
         if (node.nodes.size() == 0) {
             if (node.value.equals("+")) {
                 node.value = "0";
+
+                node.changed = true;
                 return true;
             } else if (node.value.equals("*")) {
                 node.value = "1";
+
+                node.changed = true;
                 return true;
             }
             return false;
@@ -42,12 +51,19 @@ public class Simplify {
                     if (Bools.isNum(a.value) && Bools.isNum(b.value)) {
                         sum = Float.parseFloat(a.value) + Float.parseFloat(b.value);
 
+                        Node temp = new Node(sum + "");
+                        temp.changed = true;
+                        temp.message = "Added " + a.value
+                                + " and " + b.value
+                                + " and got " + sum + '\n'
+                                + '(' + a.value + '+' + b.value + '=' + sum + ')';
+
                         if (i > j) {
                             node.nodes.remove(i);
-                            node.nodes.set(j, new Node(sum + ""));
+                            node.nodes.set(j, temp);
                         } else {
                             node.nodes.remove(j);
-                            node.nodes.set(i, new Node(sum + ""));
+                            node.nodes.set(i, temp);
                         }
 
                         return true;
@@ -57,6 +73,10 @@ public class Simplify {
                                 new Node("2"),
                                 a
                         });
+
+                        temp.changed = true;
+                        temp.message = "x+x = 2*x";
+
                         if (i > j) {
                             node.nodes.remove(i);
                             node.nodes.set(j, temp);
@@ -75,32 +95,37 @@ public class Simplify {
                                             int n1 = n == 1 ? 0 : 1,
                                                     g1 = g == 1 ? 0 : 1;
 
-                                            if (Bools.isNum(a.nodes.get(n1).value) && Bools.isNum(b.nodes.get(g1).value)) {
-                                                a.nodes.get(n1).value = (
-                                                        Float.parseFloat(a.nodes.get(n1).value) +
-                                                                Float.parseFloat(b.nodes.get(g1).value)
-                                                ) + "";
-                                                node.nodes.remove(j);
-                                                return true;
-                                            }
-
-                                            if (a.nodes.get(n1).value.equals("/")
-                                                    && a.nodes.get(n1).height == 1
-                                                    && a.nodes.get(n1).targets == 0
-
-                                                    && b.nodes.get(g1).value.equals("/")
-                                                    && b.nodes.get(g1).height == 1
-                                                    && b.nodes.get(g1).targets == 0) {
-
-
-                                                a.nodes.set(n1, new Node("+", new Node[]{
+//                                            if (Bools.isNum(a.nodes.get(n1).value) && Bools.isNum(b.nodes.get(g1).value)) {
+                                                a.nodes.set(n1, new Node("+", new Node[] {
                                                         a.nodes.get(n1),
                                                         b.nodes.get(g1)
                                                 }));
-
                                                 node.nodes.remove(j);
+
+                                                a.changed = true;
+                                                a.message = "x*y+z*y = y*(x+z)";
                                                 return true;
-                                            }
+//                                            }
+
+//                                            if (a.nodes.get(n1).value.equals("/")
+//                                                    && a.nodes.get(n1).height == 1
+//                                                    && a.nodes.get(n1).targets == 0
+//
+//                                                    && b.nodes.get(g1).value.equals("/")
+//                                                    && b.nodes.get(g1).height == 1
+//                                                    && b.nodes.get(g1).targets == 0) {
+//
+//
+//                                                a.nodes.set(n1, new Node("+", new Node[]{
+//                                                        a.nodes.get(n1),
+//                                                        b.nodes.get(g1)
+//                                                }));
+//
+//                                                node.nodes.remove(j);
+//
+//                                                node.changed = true;
+//                                                return true;
+//                                            }
                                         }
                                     }
                                 }
@@ -111,12 +136,16 @@ public class Simplify {
                                     if (Bools.isNum(a.nodes.get(1).value)) {
                                         a.nodes.get(1).value = (Float.parseFloat(a.nodes.get(1).value) + 1) + "";
                                         node.nodes.remove(j);
+
+                                        node.changed = true;
                                         return true;
                                     }
                                 } else if (a.nodes.get(1).equals(b)) {
                                     if (Bools.isNum(a.nodes.get(0).value)) {
                                         a.nodes.get(0).value = (Float.parseFloat(a.nodes.get(0).value) + 1) + "";
                                         node.nodes.remove(j);
+
+                                        node.changed = true;
                                         return true;
                                     }
                                 }
@@ -133,6 +162,8 @@ public class Simplify {
                                         a.nodes.get(1)
                                 }));
                                 node.nodes.remove(j);
+
+                                node.changed = true;
                                 return true;
                             }
 
@@ -154,6 +185,8 @@ public class Simplify {
                             }));
 
                             node.nodes.remove(j);
+
+                            node.changed = true;
                             return true;
                         }
 
@@ -181,6 +214,7 @@ public class Simplify {
 
                             node.nodes.remove(j);
 
+                            node.changed = true;
                             return true;
                         }
                     }
@@ -197,12 +231,16 @@ public class Simplify {
                         float val = Float.parseFloat(a.value);
                         if (val == 1) {
                             node.nodes.remove(i);
+
+                            node.changed = true;
                             return true;
                         }
 
                         if (val == 0) {
                             node.value = "0";
                             node.nodes.clear();
+
+                            node.changed = true;
                             return true;
                         }
                     }
@@ -211,6 +249,8 @@ public class Simplify {
                         float res = Float.parseFloat(a.value) * Float.parseFloat(b.value);
                         node.nodes.set(i, new Node(res + ""));
                         node.nodes.remove(j);
+
+                        node.changed = true;
                         return true;
                     }
 
@@ -223,6 +263,8 @@ public class Simplify {
                         }
 
                         node.nodes.remove(i);
+
+                        node.changed = true;
                         return true;
                     }
 
@@ -232,6 +274,8 @@ public class Simplify {
                                 new Node("2")
                         }));
                         node.nodes.remove(j);
+
+                        node.changed = true;
                         return true;
                     }
 
@@ -244,14 +288,17 @@ public class Simplify {
                                 });
 
                                 a.nodes.set(1, temp);
-
                                 node.nodes.remove(j);
+
+                                node.changed = true;
                                 return true;
                             }
                         } else {
                             if (Bools.isNum(a.nodes.get(1).value) && a.nodes.get(0).equals(b)) {
                                 a.nodes.get(1).value = (Float.parseFloat(a.nodes.get(1).value) + 1) + "";
                                 node.nodes.remove(j);
+
+                                node.changed = true;
                                 return true;
                             }
                         }
@@ -270,6 +317,8 @@ public class Simplify {
                                     })
                             }));
                             node.nodes.remove(j);
+
+                            node.changed = true;
                             return true;
                         }
 
@@ -282,6 +331,8 @@ public class Simplify {
                         }));
 
                         node.nodes.remove(j);
+
+                        node.changed = true;
                         return true;
                     }
                 }
@@ -294,12 +345,16 @@ public class Simplify {
             if (n.value.equals("0")) {
                 node.value = "0";
                 node.nodes.clear();
+
+                node.changed = true;
                 return true;
             }
 
             if (n.equals(d)) {
                 node.value = "1";
                 node.nodes.clear();
+
+                node.changed = true;
                 return true;
             }
 
@@ -312,6 +367,8 @@ public class Simplify {
                 if (Math.floor(res) == res) {
                     node.value = res + "";
                     node.nodes.clear();
+
+                    node.changed = true;
                     return true;
                 }
 
@@ -319,6 +376,8 @@ public class Simplify {
                 if (Simple != null && Simple[0] != a) {
                     node.nodes.set(0, new Node(Simple[0] + ""));
                     node.nodes.set(1, new Node(Simple[1] + ""));
+
+                    node.changed = true;
                     return true;
                 }
             }
@@ -332,6 +391,8 @@ public class Simplify {
                         n.nodes.get(1),
                         d.nodes.get(0)
                 }));
+
+                node.changed = true;
                 return true;
             }
 
@@ -341,6 +402,8 @@ public class Simplify {
                         n.nodes.get(1),
                         d
                 }));
+
+                node.changed = true;
                 return true;
             }
 
@@ -351,6 +414,8 @@ public class Simplify {
                         d.nodes.get(1)
                 }));
                 node.nodes.set(1, d.nodes.get(0));
+
+                node.changed = true;
                 return true;
             }
 
@@ -364,6 +429,7 @@ public class Simplify {
                             n.nodes.remove(i);
                             d.nodes.remove(j);
 
+                            node.changed = true;
                             return true;
                         }
 
@@ -378,6 +444,7 @@ public class Simplify {
                                 }));
                                 d.nodes.remove(j);
 
+                                node.changed = true;
                                 return true;
                             }
                         } else if (a.value.equals("^")) {
@@ -388,6 +455,7 @@ public class Simplify {
                                 }));
                                 d.nodes.remove(j);
 
+                                node.changed = true;
                                 return true;
                             }
                         } else if (b.value.equals("^")) {
@@ -398,6 +466,7 @@ public class Simplify {
                                 }));
                                 n.nodes.remove(i);
 
+                                node.changed = true;
                                 return true;
                             }
                         }
@@ -409,6 +478,8 @@ public class Simplify {
                     if (a.equals(d)) {
                         n.nodes.remove(i);
                         node.nodes.remove(1);
+
+                        node.changed = true;
                         return true;
                     }
 
@@ -422,6 +493,8 @@ public class Simplify {
                                     })
                             }));
                             node.nodes.remove(1);
+
+                            node.changed = true;
                             return true;
                         }
                     }
@@ -450,6 +523,8 @@ public class Simplify {
                             norms,
                             d
                     }));
+
+                    node.changed = true;
                     return true;
                 }
             }
@@ -461,12 +536,16 @@ public class Simplify {
             if (e.value.equals("1")) {
                 node.value = b.value;
                 node.nodes = b.nodes;
+
+                node.changed = true;
                 return true;
             }
 
             if (e.value.equals("0")) {
                 node.value = "1";
                 node.nodes.clear();
+
+                node.changed = true;
                 return true;
             }
 
@@ -474,6 +553,8 @@ public class Simplify {
                 double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
                 node.value = val + "";
                 node.nodes.clear();
+
+                node.changed = true;
                 return true;
             } else if (Bools.isNum(b.value) && e.equals(new Node("/", new Node[] {
                     new Node("1"),
@@ -483,6 +564,8 @@ public class Simplify {
                 if (val == Math.floor(val)) {
                     node.value = val + "";
                     node.nodes.clear();
+
+                    node.changed = true;
                     return true;
                 }
             } else if (b.value.equals("^")) {
@@ -492,6 +575,8 @@ public class Simplify {
                 }));
                 node.value = b.value;
                 node.nodes = b.nodes;
+
+                node.changed = true;
                 return true;
             }
         }
@@ -516,7 +601,7 @@ public class Simplify {
         System.out.println(Parser.ReadNode(n));
         for (int i = 0; i < 1000; i++) {
             Parser.MarkUp(n);
-            System.out.println(Parser.ReadNodeLatex(n));
+            System.out.println(Parser.ReadNode(n));
             if (Step(n)) break;
         }
     }
