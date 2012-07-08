@@ -7,9 +7,7 @@ public class Main {
     public static void main (String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Node n = Parser.CreateNode("1+(4+5)*6");
-
-        Simplify.Run("(1+2)*3+(4+5)*6");
+        Simplify.Run("(x+21)*y+(x*4+2)*y");
 
         //   (1+2)/3 :: !(true && true)
         //   -10*(x-10)^(1/2) :: !(true && false)

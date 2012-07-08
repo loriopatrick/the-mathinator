@@ -21,6 +21,8 @@ public class Solve {
         if (x.equals(y)) {
             eq.nodes.set(1, new Node("0"));
             eq.nodes.set(0, new Node("0"));
+
+            eq.changed = true;
             return;
         }
 
@@ -29,11 +31,14 @@ public class Solve {
                 Node c = x.nodes.get(i);
 
                 if (c.targets == 0) {
-                    y.nodes.add(new Node("*", new Node[]{
+                    Node temp = new Node("*", new Node[]{
                             new Node("-1"),
                             c
-                    }));
+                    });
+                    temp.changed = true;
+                    y.nodes.add(temp);
                     x.nodes.remove(i);
+
                     return;
                 }
             }
@@ -42,11 +47,14 @@ public class Solve {
                 Node c = y.nodes.get(i);
 
                 if (c.targets > 0) {
-                    x.nodes.add(new Node("*", new Node[]{
+                    Node temp = new Node("*", new Node[]{
                             new Node("-1"),
                             c
-                    }));
+                    });
+                    temp.changed = true;
+                    x.nodes.add(temp);
                     y.nodes.remove(i);
+
                     return;
                 }
             }
@@ -56,12 +64,14 @@ public class Solve {
 
                 if (c.targets == 0) {
                     int pos = toLeft ? 1 : 0;
+                    Node temp = new Node("*", new Node[]{
+                            new Node("-1"),
+                            c
+                    });
+                    temp.changed = true;
                     eq.nodes.set(pos, new Node("+", new Node[]{
                             eq.nodes.get(pos),
-                            new Node("*", new Node[]{
-                                    new Node("-1"),
-                                    c
-                            })
+                            temp
                     }));
 
                     x.nodes.remove(i);
@@ -74,14 +84,17 @@ public class Solve {
 
                 if (c.targets > 0) {
                     int pos = toLeft ? 0 : 1;
+                    Node temp = new Node("*", new Node[]{
+                            new Node("-1"),
+                            c
+                    });
+                    temp.changed = true;
                     eq.nodes.set(pos, new Node("+", new Node[]{
                             eq.nodes.get(pos),
-                            new Node("*", new Node[]{
-                                    new Node("-1"),
-                                    c
-                            })
+                            temp
                     }));
                     y.nodes.remove(i);
+
                     return;
                 }
             }
@@ -89,16 +102,19 @@ public class Solve {
 
         if (y.targets > 0 && x.targets > 0 && x.height <= 2 && y.height <= 2) {
             if (y.value.equals("*") || x.value.equals("*")) {
-                eq.nodes.set(toLeft? 0 : 1, new Node("+", new Node[] {
+                eq.nodes.set(toLeft ? 0 : 1, new Node("+", new Node[]{
                         x,
-                        new Node("*", new Node[] {
+                        new Node("*", new Node[]{
                                 new Node("-1"),
                                 y
 
                         })
                 }));
 
-                eq.nodes.set(toLeft? 1 : 0, new Node("0"));
+                eq.nodes.set(toLeft ? 1 : 0, new Node("0"));
+
+                eq.nodes.get(1).changed = true;
+                eq.nodes.get(0).changed = true;
                 return;
             }
         }
@@ -113,6 +129,8 @@ public class Solve {
                             y.nodes.get(1).nodes.add(c);
 
                             x.nodes.remove(i);
+
+                            y.nodes.get(1).changed = true;
                             return;
                         } else {
                             y.nodes.set(1, new Node("*", new Node[]{
@@ -121,40 +139,46 @@ public class Solve {
                             }));
 
                             x.nodes.remove(i);
+
+                            y.nodes.get(1).changed = true;
                             return;
                         }
                     } else {
                         int pos = toLeft ? 1 : 0;
 
-                        eq.nodes.set(pos, new Node("/", new Node[] {
+                        eq.nodes.set(pos, new Node("/", new Node[]{
                                 y,
                                 c
                         }));
 
                         x.nodes.remove(i);
+
+                        eq.nodes.get(pos).changed = true;
                         return;
                     }
                 }
             }
         } else if (x.value.equals("/")) {
             if (x.nodes.get(1).targets == 0) {
-                eq.nodes.set(toLeft? 0 : 1, x.nodes.get(0));
-                eq.nodes.set(toLeft? 1 : 0, new Node("*", new Node[] {
+                eq.nodes.set(toLeft ? 0 : 1, x.nodes.get(0));
+                eq.nodes.set(toLeft ? 1 : 0, new Node("*", new Node[]{
                         y,
                         x.nodes.get(1)
                 }));
             }
         } else if (x.value.equals("^")) {
             if (x.nodes.get(1).targets == 0) {
-                eq.nodes.set(toLeft? 1 : 0, new Node("^", new Node[] {
+                eq.nodes.set(toLeft ? 1 : 0, new Node("^", new Node[]{
                         y,
-                        new Node("/", new Node[] {
+                        new Node("/", new Node[]{
                                 new Node("1"),
                                 x.nodes.get(1)
                         })
                 }));
                 x.value = x.nodes.get(0).value;
                 x.nodes = x.nodes.get(0).nodes;
+
+                x.changed = true;
                 return;
             }
         }
@@ -182,7 +206,7 @@ public class Solve {
     }
 
 
-    public static void Run (String eq, String target) throws Exception {
+    public static void Run(String eq, String target) throws Exception {
         System.out.println("\nRUN...");
         Node n = Parser.CreateNode(eq, target);
         System.out.println(Parser.ReadNode(n));
