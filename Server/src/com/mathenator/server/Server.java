@@ -18,11 +18,11 @@ public class Server {
     protected InetSocketAddress address;
     protected HttpServer server;
 
-    public void start () throws IOException {
+    public void start (String dir) throws IOException {
         server = HttpServer.create(address, 0);
 
         server.createContext("/calc", new Calc());
-        server.createContext("/", new Get("www"));
+        server.createContext("/", new Get(dir));
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
     }

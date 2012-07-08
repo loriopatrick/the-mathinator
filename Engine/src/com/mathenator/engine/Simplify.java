@@ -123,37 +123,40 @@ public class Simplify {
                             }
                         }
                     } else if (a.value.equals("/") && b.value.equals("/")) {
-                        if (a.nodes.get(1).equals(b.nodes.get(1))) {
-                            node.nodes.set(i, new Node("/", new Node[]{
+                        if ((a.targets > 0 && b.targets > 0) || (a.targets == 0 && b.targets == 0)) {
+                            if (a.nodes.get(1).equals(b.nodes.get(1))) {
+                                node.nodes.set(i, new Node("/", new Node[]{
+                                        new Node("+", new Node[]{
+                                                a.nodes.get(0),
+                                                b.nodes.get(0)
+                                        }),
+                                        a.nodes.get(1)
+                                }));
+                                node.nodes.remove(j);
+                                return true;
+                            }
+
+                            node.nodes.set(i, new Node("/", new Node[] {
                                     new Node("+", new Node[]{
-                                            a.nodes.get(0),
-                                            b.nodes.get(0)
+                                            new Node("*", new Node[]{
+                                                    b.nodes.get(1),
+                                                    a.nodes.get(0)
+                                            }),
+                                            new Node("*", new Node[]{
+                                                    a.nodes.get(1),
+                                                    b.nodes.get(0)
+                                            })
                                     }),
-                                    a.nodes.get(1)
+                                    new Node("*", new Node[]{
+                                            a.nodes.get(1),
+                                            b.nodes.get(1)
+                                    })
                             }));
+
                             node.nodes.remove(j);
                             return true;
                         }
 
-                        node.nodes.set(i, new Node("/", new Node[] {
-                                new Node("+", new Node[]{
-                                        new Node("*", new Node[]{
-                                                b.nodes.get(1),
-                                                a.nodes.get(0)
-                                        }),
-                                        new Node("*", new Node[]{
-                                                a.nodes.get(1),
-                                                b.nodes.get(0)
-                                        })
-                                }),
-                                new Node("*", new Node[]{
-                                        a.nodes.get(1),
-                                        b.nodes.get(1)
-                                })
-                        }));
-
-                        node.nodes.remove(j);
-                        return true;
                     } else if (a.value.equals("/") || b.value.equals("/")) {
                         Node div, base;
                         if (a.value.equals("/")) {
@@ -423,6 +426,32 @@ public class Simplify {
                         }
                     }
                 }
+            } else if (n.value.equals("+")) {
+                Node targets = new Node("+");
+                Node norms = new Node("+");
+
+                for (int i = 0; i < n.nodes.size(); i++) {
+                    Node c = n.nodes.get(i);
+                    if (c.targets > 0) {
+                        targets.nodes.add(c);
+                    } else {
+                        norms.nodes.add(c);
+                    }
+                }
+
+                if (targets.nodes.size() > 0 && norms.nodes.size() > 0) {
+                    node.value = "+";
+                    node.nodes.clear();
+                    node.nodes.add(new Node("/", new Node[] {
+                            targets,
+                            d
+                    }));
+                    node.nodes.add(new Node("/", new Node[] {
+                            norms,
+                            d
+                    }));
+                    return true;
+                }
             }
 
         } else if (node.value.equals("^")) {
@@ -487,7 +516,7 @@ public class Simplify {
         System.out.println(Parser.ReadNode(n));
         for (int i = 0; i < 1000; i++) {
             Parser.MarkUp(n);
-            System.out.println(Parser.ReadNode(n));
+            System.out.println(Parser.ReadNodeLatex(n));
             if (Step(n)) break;
         }
     }

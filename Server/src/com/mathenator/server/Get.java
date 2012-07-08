@@ -14,20 +14,19 @@ public class Get implements HttpHandler {
 
     public void handle(HttpExchange ex) {
         String path = ex.getRequestURI().toString();
+
+
         if (path.equals("/")) path = "/index.html";
+        System.out.println("GET: " + path);
 
         Headers responseHeaders = ex.getResponseHeaders();
-        responseHeaders.set("Content-Type", "text/plain");
+//        responseHeaders.set("Content-Type", "text/plain");
 
         try {
-            IO.ReadTo(root + path, ex.getResponseBody());
             ex.sendResponseHeaders(200, 0);
+            IO.ReadTo(root + path, ex.getResponseBody());
         } catch (Exception e) {
-            try {
-                ex.sendResponseHeaders(500, 0);
-            } catch (Exception e2) {
-                System.out.println(e2);
-            }
+            System.out.println(e);
         }
 
         ex.close();

@@ -2,15 +2,19 @@
 <html>
 <head>
     <script type="text/javascript" src="lib/jquery.min.js"></script>
-    <script type="text/javascript" src="render.js"></script>
 
-    <link rel="stylesheet" href="render.css" />
+    <link rel="stylesheet" href="render.css"/>
+    <script type="text/javascript" src="run.js"></script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
 </head>
 <body>
+<input id="eq" type="text"/>
+<a href="#" onclick="calc($('#eq').val())">run</a>
 
-<div>
+<div id="res"></div>
 
-</div>
 
 </body>
 </html>

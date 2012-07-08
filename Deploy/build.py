@@ -1,26 +1,23 @@
 import os
 import shutil
 
-LOC = 'out/'
 
 def ex (cmd):
 	return os.popen (cmd).read()
 
-def clean ():
-	print 'cleaning...'
-	ex('rm -r %s' % LOC)
-	ex('mkdir %s' % LOC)
-	print ' ----- done'
-
 def buildEngine ():
-	print 'building...'
+	print 'building engine...'
 	ex('echo $(cd ../Engine; ant clean; ant build; ant jar)')
 	print ' ------ done'
 
-	print 'copying...'
-	ex('cp ../Engine/build/jar/engine.jar %s' % LOC)
+	print 'copying engine.jar to server...'
+	ex('cp ../Engine/build/jar/engine.jar ../Server/lib')
 	print ' ------ done'
 
+def buildServer ():
+	print 'building server...'
+	ex('echo $(cd ../Server; ant clean; ant build; ant jar)')
+	print ' ------ done'
 
-clean()
 buildEngine()
+buildServer()

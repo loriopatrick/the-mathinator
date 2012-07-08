@@ -6,15 +6,15 @@
 
     <target name="build">
         <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes" classpath="lib/junit.jar" />
+        <javac srcdir="src" destdir="build/classes" classpath="lib/junit.jar">
+            <excludesfile name="src/Main.java" />
+        </javac>
     </target>
 
     <target name="jar">
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/engine.jar" basedir="build/classes">
-            <manifest>
-                <attribute name="Main-Class" value="Main"/>
-            </manifest>
+            <zipgroupfileset dir="lib" includes="*.jar"/>
         </jar>
     </target>
 </project>

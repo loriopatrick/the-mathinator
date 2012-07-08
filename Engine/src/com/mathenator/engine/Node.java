@@ -49,6 +49,10 @@ public class Node {
         return res;
     }
 
+    public String toString () {
+        return Parser.ReadNode(this);
+    }
+
     public void changeTo(Node n) {
         this.value = n.value;
         this.nodes = n.nodes;

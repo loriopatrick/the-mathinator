@@ -4,19 +4,27 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public static int type (char c) {
-        int i = (int)c;
+    public static int type(char c) {
+        int i = (int) c;
         if ((i >= 48 && i <= 57) || i == 46) return 1; // Number
         if (i >= 97 && i <= 122) return 2; // Letter
         switch (i) {
-            case 42:case 43:case 45:case 47:case 94:case 61:case (int)')':case (int)'(':case (int)',':
+            case 42:
+            case 43:
+            case 45:
+            case 47:
+            case 94:
+            case 61:
+            case (int) ')':
+            case (int) '(':
+            case (int) ',':
                 return 3; // Operator
         }
         if (i >= 65 && i <= 90) return 4; // Cap letter
         return 0;
     }
 
-    public static String[] Block (String eq) {
+    public static String[] Block(String eq) {
         eq = eq.replace(")-", ")+-"); // put into parse
         ArrayList<String> res = new ArrayList<String>();
         StringBuilder temp = new StringBuilder();
@@ -56,7 +64,7 @@ public class Parser {
         return Res;
     }
 
-    public static Node Parse (String[] eq, int start) throws Exception {
+    public static Node Parse(String[] eq, int start) throws Exception {
         Node current;
 
         if (eq[start].equals("(")) {
@@ -101,7 +109,7 @@ public class Parser {
                 Node temp = current;
                 boolean go = false;
 
-                for (;;) {
+                for (; ; ) {
                     if (temp.value.charAt(0) == c) {
                         go = true;
                         current = temp;
@@ -124,7 +132,7 @@ public class Parser {
                 Node temp = current;
                 boolean go = false;
 
-                for (;;) {
+                for (; ; ) {
                     if (temp.value.charAt(0) == '*') {
                         current = temp;
                         go = true;
@@ -159,11 +167,12 @@ public class Parser {
         while (current.parent != null) current = current.parent;
         return current;
     }
-    public static Node Parse (String[] eq) throws Exception {
+
+    public static Node Parse(String[] eq) throws Exception {
         return Parse(eq, 0);
     }
 
-    public static void MarkUp (Node n, String target) {
+    public static void MarkUp(Node n, String target) {
         if (n.nodes.size() == 0) {
             boolean t = n.value.equals(target) || n.value.equals("-" + target);
             n.targets = 0;
@@ -187,11 +196,12 @@ public class Parser {
             MarkUp(c, target);
         }
     }
-    public static void MarkUp (Node n) {
-        MarkUp(n, "");
+
+    public static void MarkUp(Node n) {
+        MarkUp(n, "x");
     }
 
-    public static Node CreateNode (String eq, String target) throws Exception {
+    public static Node CreateNode(String eq, String target) throws Exception {
         String[] parts = eq.split("=");
         if (parts.length == 1) {
             String[] block = Block(eq);
@@ -203,7 +213,7 @@ public class Parser {
             if (target == null) throw new Exception("has \"=\", needs variable");
             Node left = Parse(Block(parts[0])),
                     right = Parse(Block(parts[1]));
-            Node res = new Node("=", new Node[] {
+            Node res = new Node("=", new Node[]{
                     left, right
             });
             left.parent = res;
@@ -213,11 +223,12 @@ public class Parser {
         }
         return null;
     }
-    public static Node CreateNode (String eq) throws Exception {
+
+    public static Node CreateNode(String eq) throws Exception {
         return CreateNode(eq, "  ");
     }
 
-    public static String ReadNode (Node node) {
+    public static String ReadNode(Node node) {
         if (node.height == 0) {
             return node.value;
         }
@@ -237,7 +248,7 @@ public class Parser {
                 sb.append(ReadNode(node.nodes.get(i)));
             }
             if (i < node.nodes.size() - 1) {
-                if (!(node.value.equals("+") && node.nodes.get(i+1).value.startsWith("-")))
+                if (!(node.value.equals("+") && node.nodes.get(i + 1).value.startsWith("-")))
                     sb.append(node.value);
             }
         }
@@ -246,4 +257,63 @@ public class Parser {
         }
         return sb.toString();
     }
+
+    public static String ReadNodeLatex (Node node) {
+        if (node.height == 0) {
+            return node.value;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        boolean fn = false;
+
+        if (Bools.isFn(node.value)) {
+            sb.append("\\").append(node.value).append('{');
+            sb.append(ReadNode(node.nodes.get(0)));
+            sb.append("}");
+            return sb.toString();
+        }
+
+
+        if (node.value.equals("/")) {
+            sb.append("\\frac{");
+            sb.append(ReadNodeLatex(node.nodes.get(0)));
+            sb.append("}{");
+            sb.append(ReadNode(node.nodes.get(1)));
+            sb.append("}");
+            return sb.toString();
+        }
+
+        if (node.value.equals("^")) {
+            sb.append("{");
+            sb.append(ReadNodeLatex(node.nodes.get(0)));
+            sb.append("}^{");
+            sb.append(ReadNodeLatex(node.nodes.get(1)));
+            sb.append("}");
+            return sb.toString();
+        }
+
+
+        boolean p = node.parent != null && node.value.equals("+") && node.parent.value.equals("*");
+
+        if (p) sb.append('(');
+
+        for (int i = 0; i < node.nodes.size(); i++) {
+            if (node.nodes.get(i).height != 0) {
+                sb.append('{');
+                sb.append(ReadNodeLatex(node.nodes.get(i)));
+                sb.append('}');
+            } else {
+                sb.append(ReadNodeLatex(node.nodes.get(i)));
+            }
+            if (i < node.nodes.size() - 1) {
+                if (!(node.value.equals("+") && node.nodes.get(i + 1).value.startsWith("-")))
+                    sb.append(node.value);
+            }
+        }
+
+        if (p) sb.append(')');
+
+        return sb.toString();
+    }
+
 }

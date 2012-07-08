@@ -7,7 +7,7 @@ public class Main {
     public static void main (String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Simplify.Run("1+(1+x)/(3+x)");
+        Simplify.Run("17*6+54-7*(x+2)/5");
         /*
             1/(2*x)+(x-1)/(2*x^2)
             ((x-1)*(2*x)+(2*x^2))/((2*x^2)*(x-1))

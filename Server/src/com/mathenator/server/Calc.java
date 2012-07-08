@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.mathenator.engine.*;
 
 import java.io.OutputStream;
+import java.io.InputStream;
 import java.io.IOException;
 
 public class Calc implements HttpHandler {
@@ -16,10 +17,20 @@ public class Calc implements HttpHandler {
         out.write(data.getBytes());
     }
 
-    public void handle(HttpExchange ex) {
+    public String Read(InputStream inputStream) throws IOException {
+        StringBuilder sb = new StringBuilder();
 
-        String eq = ex.getRequestBody().toString();
-        System.out.println("CALC: " + eq);
+        int r;
+        while ((r = inputStream.read()) != -1) {
+            sb.append((char) r);
+        }
+
+        inputStream.close();
+
+        return sb.toString();
+    }
+
+    public void handle(HttpExchange ex) {
 
         Headers responseHeaders = ex.getResponseHeaders();
         responseHeaders.set("Content-Type", "text/plain");
@@ -27,21 +38,32 @@ public class Calc implements HttpHandler {
         OutputStream outputStream = ex.getResponseBody();
 
         try {
+            String eq = Read(ex.getRequestBody());
+            System.out.println("CALC: " + eq);
+
             ex.sendResponseHeaders(200, 0);
-            Node n = Parser.CreateNode(eq);
-            Parser.MarkUp(n);
-            Write(Parser.ReadNode(n), outputStream);
-            for (int i = 0; i < 1000; i++) {
+
+            if (eq.contains("=")) {
+                Node n = Parser.CreateNode(eq);
                 Parser.MarkUp(n);
-                Write(Parser.ReadNode(n), outputStream);
-                if (Simplify.Step(n)) break;
+                Write(Parser.ReadNodeLatex(n), outputStream);
+                for (int i = 0; i < 1000; i++) {
+                    Parser.MarkUp(n);
+                    Write(Parser.ReadNodeLatex(n), outputStream);
+                    if (Solve.Step(n, "x")) break;
+                }
+            } else {
+                Node n = Parser.CreateNode(eq);
+                Parser.MarkUp(n);
+                Write(Parser.ReadNodeLatex(n), outputStream);
+                for (int i = 0; i < 1000; i++) {
+                    Parser.MarkUp(n);
+                    Write(Parser.ReadNodeLatex(n), outputStream);
+                    if (Simplify.Step(n)) break;
+                }
             }
         } catch (Exception e) {
-            try {
-                Write("Error", outputStream);
-            } catch (Exception e2) {
-
-            }
+            System.out.println(e);
         }
 
         ex.close();
