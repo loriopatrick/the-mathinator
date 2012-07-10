@@ -293,11 +293,18 @@ public class Parser {
         }
 
         if (node.value.equals("^")) {
-            sb.append("{");
-            sb.append(ReadNodeLatex(node.nodes.get(0)));
-            sb.append("}^{");
-            sb.append(ReadNodeLatex(node.nodes.get(1)));
-            sb.append("}");
+            if (node.nodes.get(1).value.equals("/") && node.nodes.get(1).nodes.get(0).value.equals("1")) {
+                sb.append("\\sqrt");
+                if (!node.nodes.get(1).nodes.get(1).value.equals("2"))
+                    sb.append('[').append(ReadNodeLatex(node.nodes.get(1).nodes.get(1))).append(']');
+                sb.append('{').append(ReadNodeLatex(node.nodes.get(0))).append('}');
+            } else {
+                sb.append("{");
+                sb.append(ReadNodeLatex(node.nodes.get(0)));
+                sb.append("}^{");
+                sb.append(ReadNodeLatex(node.nodes.get(1)));
+                sb.append("}");
+            }
             if (node.changed) sb.append('}');
             return sb.toString();
         }

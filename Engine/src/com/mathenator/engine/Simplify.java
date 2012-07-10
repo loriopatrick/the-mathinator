@@ -595,6 +595,22 @@ public class Simplify {
 
                 node.changed = true;
                 return true;
+            } else if (b.value.equals("/")) {
+                Node temp = new Node("/", new Node[] {
+                        new Node("^", new Node[] {
+                                b.nodes.get(0),
+                                e.clone()
+                        }),
+                        new Node("^", new Node[] {
+                                b.nodes.get(1),
+                                e.clone()
+                        })
+                });
+                node.value = temp.value;
+                node.nodes = temp.nodes;
+
+                node.changed = true;
+                return true;
             }
         }
 
