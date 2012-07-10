@@ -263,7 +263,8 @@ public class Parser {
         StringBuilder sb = new StringBuilder();
 
         if (node.changed) {
-            sb.append("\\bbox[red,5px]{");
+            sb.append("\\bbox[#93e7ff,5px,border:2px solid blue;border-radius:15px;]{");
+            // border-radius: 10px
         }
 
         if (node.height == 0) {

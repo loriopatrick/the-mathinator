@@ -146,6 +146,11 @@
         text-align: center;
         float: left;
     }
+
+    .t {
+        color: #93e7ff;
+        border-radius: 10px;
+    }
 </style>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
 <script type="text/javascript" src="lib/spin.min.js"></script>
@@ -170,6 +175,7 @@
         });
     }
     function big(callback) {
+        $('#eq').focus();
         if (isBig) return;
         isBig = true;
         $('#head').animate({
@@ -222,6 +228,7 @@
 
         return res.join('');
     }
+    var last = '';
     function run() {
         var eq = $('#eq').val();
         eq = check(eq);
@@ -231,7 +238,14 @@
             return;
         }
 
-        var spin = new Spinner({top: 20, className: 'spinner'}).spin(document.body);
+        if (eq == last) {
+            small();
+            return;
+        }
+
+        last = eq;
+
+        var spin = new Spinner({top:20, className:'spinner'}).spin(document.body);
 
         query(eq, function (data) {
             $('#raw').html(eq);
@@ -250,13 +264,16 @@
         });
     }
     $(document).ready(function () {
-//        MathJax.Hub.Config({
-//            styles: {
-//                ".MathJax": {
-//                    color: "#CC5522"
-//                }
-//            }
-//        });
+        $('#eq').focus();
+        $(window).keydown(function (e) {
+            if (e.keyCode == 13) {
+                if (isBig) {
+                    run();
+                } else {
+                    big();
+                }
+            }
+        });
     });
 </script>
 </head>
