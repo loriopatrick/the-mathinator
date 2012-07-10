@@ -30,6 +30,8 @@ public class Calc implements HttpHandler {
         return sb.toString();
     }
 
+    public static int steps = 30;
+
     public void handle(HttpExchange ex) {
 
         Headers responseHeaders = ex.getResponseHeaders();
@@ -47,7 +49,7 @@ public class Calc implements HttpHandler {
                 Node n = Parser.CreateNode(eq);
                 Parser.MarkUp(n);
                 Write(Parser.ReadNodeLatex(n), outputStream);
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < steps; i++) {
                     Parser.MarkUp(n);
                     Write(Parser.ReadNodeLatex(n), outputStream);
                     if (Solve.Step(n, "x")) break;
@@ -56,7 +58,7 @@ public class Calc implements HttpHandler {
                 Node n = Parser.CreateNode(eq);
                 Parser.MarkUp(n);
                 Write(Parser.ReadNodeLatex(n), outputStream);
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < steps; i++) {
                     Parser.MarkUp(n);
                     Write(Parser.ReadNodeLatex(n), outputStream);
                     if (Simplify.Step(n)) break;

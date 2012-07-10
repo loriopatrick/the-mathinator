@@ -31,6 +31,7 @@ public class Simplify {
             node.nodes.clear();
             node.value = n.value;
             node.nodes.addAll(n.nodes);
+            return false;
         }
         if (node.parent != null && node.value.equals(node.parent.value)) {
             if (!(node.value.equals("^") || node.value.equals("/"))) {
@@ -89,7 +90,7 @@ public class Simplify {
                         return true;
                     } else if (a.value.equals("*")) {
                         if (b.value.equals("*")) {
-                            if (b.nodes.size() == 2) {
+                            if (a.nodes.size() == 2 && b.nodes.size() == 2) {
                                 for (int n = 0; n <= 1; n++) {
                                     for (int g = 0; g <= 1; g++) {
                                         if (a.nodes.get(n).equals(b.nodes.get(g))) {
@@ -255,7 +256,7 @@ public class Simplify {
 //                        if (Bools.isNum(b.value)) {
                             for (int n = 0; n < a.nodes.size(); n++) {
                                 a.nodes.set(n, new Node("*", new Node[]{
-                                        b,
+                                        b.clone(),
                                         a.nodes.get(n)
                                 }));
 
