@@ -275,7 +275,7 @@ public class Parser {
 
         if (Bools.isFn(node.value)) {
             sb.append("\\").append(node.value).append('{');
-            sb.append(ReadNode(node.nodes.get(0)));
+            sb.append(ReadNodeLatex(node.nodes.get(0)));
             sb.append("}");
             if (node.changed) sb.append('}');
             return sb.toString();
@@ -286,7 +286,7 @@ public class Parser {
             sb.append("\\frac{");
             sb.append(ReadNodeLatex(node.nodes.get(0)));
             sb.append("}{");
-            sb.append(ReadNode(node.nodes.get(1)));
+            sb.append(ReadNodeLatex(node.nodes.get(1)));
             sb.append("}");
             if (node.changed) sb.append('}');
             return sb.toString();
