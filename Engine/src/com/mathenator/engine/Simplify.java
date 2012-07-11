@@ -611,6 +611,18 @@ public class Simplify {
 
                 node.changed = true;
                 return true;
+            } else if (b.value.equals("*")) {
+                for (int i = 0; i < b.nodes.size(); i++) {
+                    b.nodes.set(i, new Node("^", new Node[] {
+                            b.nodes.get(i),
+                            e.clone()
+                    }));
+                }
+                node.value = "*";
+                node.nodes = b.nodes;
+
+                node.changed = true;
+                return true;
             }
         }
 
