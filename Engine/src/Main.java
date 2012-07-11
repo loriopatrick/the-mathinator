@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Solve.Run("(x/10)^(1/2)=(3*x-58)^(1/2)", "x");
+        Solve.Run("5*x^2+x+18=0", "x");
 
         //   (1+2)/3 :: !(true && true)
         //   -10*(x-10)^(1/2) :: !(true && false)

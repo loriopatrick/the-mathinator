@@ -4,30 +4,17 @@ by Patrick Lorio
 #### Math done step by step
 
 #### Progress
-* Work on parser of Mathenator
-	* Bugs
-		* Block
-			* ")-" => ")+-" ~
-		* Parser
-			* equations that start with "(" -
-			* "(2^3)^4" powers -
-			* "(1/2)/3" division -
-			* "(x^2)/(x^5)" ?? -
-			* "(1+2)/3" - 
-		* Parser
-		* String to Tree -
-		* Tree to String -
-	* Math
-		* Get Base Muliples -
-		* Simplify Fraction -
-	* Evaluate
-		* Add -
-		* Multiply -
-		* Divide -
-		* Power -
-	* Solve
-		* Factor
-		* Logic
-		* ...
-	* Future
-		* Incoperate Trig, Calc -
+* Need to
+	* work in "+/-" & "-/+" operators
+	* get "a*x^2 + b*x + c = 0" working correctly
+	* do simplify on trig
+	* clean up code
+		* break simplify up into sections based off of node value
+	* add more unit tests & TEST TEST TEST!!!
+	* get imaginary numbers
+	* get more support for algebra, (do everything that mathway can + more)
+* Would like to
+	* start calculus stuff
+		* derivatives
+		* intergrals
+	* log all problems done (server)

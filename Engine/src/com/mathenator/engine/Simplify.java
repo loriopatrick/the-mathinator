@@ -566,6 +566,10 @@ public class Simplify {
                 return true;
             }
 
+            if (b.value.charAt(0) == '-') {
+                // handle issue or do imaginary #s
+            }
+
             if (Bools.isNum(b.value) && Bools.isNum(e.value)) {
                 double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
                 node.value = val + "";
