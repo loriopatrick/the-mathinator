@@ -230,6 +230,9 @@ public class Parser {
 
     public static String ReadNode(Node node) {
         if (node.height == 0) {
+            if (node.value.equals(Math.PI + "")) {
+                return "pi";
+            }
             return node.value;
         }
         StringBuilder sb = new StringBuilder();

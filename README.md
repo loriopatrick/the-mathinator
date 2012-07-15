@@ -13,6 +13,11 @@ by Patrick Lorio
 	* add more unit tests & TEST TEST TEST!!!
 	* get imaginary numbers
 	* get more support for algebra, (do everything that mathway can + more)
+		* factoring !!!
+	* work in constants
+		* pi
+		* e
+		* ...
 * Would like to
 	* start calculus stuff
 		* derivatives

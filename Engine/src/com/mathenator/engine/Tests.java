@@ -81,6 +81,13 @@ public class Tests {
                         new Node("y")
                 })
         }))) assert false;
+
+        if (!Parse("sin(pi/2)", new Node("sin", new Node[] {
+                new Node("/", new Node[] {
+                        new Node("pi"),
+                        new Node("2")
+                })
+        }))) assert false;
     }
 
     public boolean NodeToString(Node n) {
@@ -189,6 +196,13 @@ public class Tests {
         if (!Solve("(2*x+40)^(1/2)=(-16-2*x)^(1/2)", new Node("-14"), "x")) assert false;
         if (!Solve("(x/10)^(1/2)=(3*x-58)^(1/2)", new Node("20"), "x")) assert false;
         if (!Solve("(x+8)^(1/2)=(3*x+8)^(1/2)", new Node("0"), "x")) assert false;
-//        if (!Solve("(8*x)^(1/2)=x", new Node("0"), "x")) assert false;
+        if (!Solve("x=x*2", new Node("0"), "x")) assert false;
+        if (!Solve("x^2+32=5*x^2", new Node("^", new Node[] {
+                new Node("8"),
+                new Node("/", new Node[] {
+                        new Node("1"),
+                        new Node("2")
+                })
+        }), "x")) assert false;
     }
 }

@@ -7,11 +7,17 @@ public class Simplify {
         node.changed = false;
         node.message = null;
 
+        if (node.value.equalsIgnoreCase("pi")) {
+            node.value = Math.PI + "";
+            node.nodes.clear();
+        }
+
         for (int i = 0; i < node.nodes.size(); i++) {
             node.nodes.get(i).changed = false;
-            if (!node.nodes.get(i).simple)
-                if (Simplify(node.nodes.get(i))) return true;
+            if (Simplify(node.nodes.get(i))) return true;
         }
+
+
         if (node.nodes.size() == 0) {
             if (node.value.equals("+")) {
                 node.value = "0";
@@ -254,18 +260,18 @@ public class Simplify {
 
                     if (a.value.equals("+")) {
 //                        if (Bools.isNum(b.value)) {
-                            for (int n = 0; n < a.nodes.size(); n++) {
-                                a.nodes.set(n, new Node("*", new Node[]{
-                                        b.clone(),
-                                        a.nodes.get(n)
-                                }));
+                        for (int n = 0; n < a.nodes.size(); n++) {
+                            a.nodes.set(n, new Node("*", new Node[]{
+                                    b.clone(),
+                                    a.nodes.get(n)
+                            }));
 
-                            }
-                            a.changed = true;
-                            a.message = "distributed x*(y+z) = x*y + x*z";
+                        }
+                        a.changed = true;
+                        a.message = "distributed x*(y+z) = x*y + x*z";
 
-                            node.nodes.remove(j);
-                            return true;
+                        node.nodes.remove(j);
+                        return true;
 //                        }
                     }
 
@@ -600,12 +606,12 @@ public class Simplify {
                 node.changed = true;
                 return true;
             } else if (b.value.equals("/")) {
-                Node temp = new Node("/", new Node[] {
-                        new Node("^", new Node[] {
+                Node temp = new Node("/", new Node[]{
+                        new Node("^", new Node[]{
                                 b.nodes.get(0),
                                 e.clone()
                         }),
-                        new Node("^", new Node[] {
+                        new Node("^", new Node[]{
                                 b.nodes.get(1),
                                 e.clone()
                         })
@@ -617,7 +623,7 @@ public class Simplify {
                 return true;
             } else if (b.value.equals("*")) {
                 for (int i = 0; i < b.nodes.size(); i++) {
-                    b.nodes.set(i, new Node("^", new Node[] {
+                    b.nodes.set(i, new Node("^", new Node[]{
                             b.nodes.get(i),
                             e.clone()
                     }));
@@ -628,6 +634,19 @@ public class Simplify {
                 node.changed = true;
                 return true;
             }
+        } else if (Bools.isFn(node.value)) {
+            if (Bools.isNum(node.nodes.get(0).value)) {
+                double val = Double.parseDouble(node.nodes.get(0).value), res;
+
+                if (node.value.equalsIgnoreCase("sin")) {
+                    res = Math.sin(val);
+                }
+
+                node.value = val + "";
+                node.nodes.clear();
+
+                return true;
+            }
         }
 
         return false;
@@ -635,12 +654,7 @@ public class Simplify {
 
     public static boolean Step(Node node) {
         Node last = node.clone();
-
-        int count = 0;
-        while (!Simplify(node)) {
-            if (++count > 5) break;
-        }
-
+        Simplify(node);
         return node.equals(last);
     }
 

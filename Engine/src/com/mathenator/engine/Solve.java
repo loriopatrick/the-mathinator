@@ -26,6 +26,8 @@ public class Solve {
             return;
         }
 
+        // need to check if needs factoring
+
         // NEEDS WORK OPEN
         if (y.value.equals("0")) {
             if (x.value.equals("+")) {
@@ -101,7 +103,7 @@ public class Solve {
                 if (!bad) {
                     eq.nodes.set(toLeft? 0 : 1, new Node(target));
                     eq.nodes.set(toLeft? 1 : 0, new Node("/", new Node[] {
-                            new Node("+", new Node[] {
+                            new Node("+/-", new Node[] {
                                     new Node("*", new Node[] {
                                             new Node("-1"),
                                             parts[1].clone()
@@ -294,7 +296,6 @@ public class Solve {
         }
 
         if (y.value.equals("^")) {
-
         }
     }
 

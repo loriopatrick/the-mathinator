@@ -13,6 +13,7 @@
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/server.jar" basedir="build/classes">
             <zipgroupfileset dir="lib" includes="*.jar"/>
+            <zipgroupfileset dir="../Website" includes="*"/>
             <manifest>
                 <attribute name="Main-Class" value="Run"/>
             </manifest>

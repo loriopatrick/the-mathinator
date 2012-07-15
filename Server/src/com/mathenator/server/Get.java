@@ -19,9 +19,6 @@ public class Get implements HttpHandler {
         if (path.equals("/")) path = "/index.html";
         System.out.println("GET: " + path);
 
-        Headers responseHeaders = ex.getResponseHeaders();
-//        responseHeaders.set("Content-Type", "text/plain");
-
         try {
             ex.sendResponseHeaders(200, 0);
             IO.ReadTo(root + path, ex.getResponseBody());
