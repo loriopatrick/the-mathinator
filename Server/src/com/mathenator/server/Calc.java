@@ -6,11 +6,27 @@ import com.sun.net.httpserver.HttpHandler;
 
 import com.mathenator.engine.*;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.Date;
 
 public class Calc implements HttpHandler {
+
+    public static String logFile = "math.log.txt";
+
+    public Calc () {
+        try{
+            File f = new File(logFile);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
 
     public void Write(String data, OutputStream out) throws IOException {
         data += "\n";
@@ -42,6 +58,9 @@ public class Calc implements HttpHandler {
         try {
             String eq = Read(ex.getRequestBody());
             System.out.println("CALC: " + eq);
+
+            IO.Append(logFile, new Date().getTime() +
+                    "\t" + ex.getLocalAddress().getHostName() + "\t" + eq + '\n');
 
             ex.sendResponseHeaders(200, 0);
 

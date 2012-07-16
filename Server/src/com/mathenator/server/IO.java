@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 public class IO {
     public static void WriteFrom(String path, InputStream in) throws IOException {
@@ -35,6 +37,13 @@ public class IO {
         fs.close();
         bs.close();
         dos.close();
+    }
+
+    public static void Append(String path, String content) throws IOException {
+        FileWriter fstream = new FileWriter(path, true);
+        BufferedWriter out = new BufferedWriter(fstream);
+        out.write(content);
+        out.close();
     }
 
     public static void ReadTo(InputStream in, OutputStream out) throws IOException {

@@ -211,5 +211,7 @@ public class Tests {
                         new Node("2")
                 })
         }), "x")) assert false;
+
+        // >>> 5*x/x^2=5
     }
 }
