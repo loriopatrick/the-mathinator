@@ -1,5 +1,7 @@
-package com.mathenator.engine;
-
+import com.mathenator.engine.Node;
+import com.mathenator.engine.Parser;
+import com.mathenator.engine.Simplify;
+import com.mathenator.engine.Solve;
 import org.junit.*;
 
 public class Tests {
@@ -168,6 +170,11 @@ public class Tests {
         if (!Simplify("(x^2)^2", new Node("^", new Node[] {
                 new Node("x"),
                 new Node("4")
+        }))) assert false;
+
+        if (!Simplify("(x^2*5)/x", new Node("*", new Node[] {
+                new Node("x"),
+                new Node("5")
         }))) assert false;
     }
 

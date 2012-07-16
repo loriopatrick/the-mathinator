@@ -6,14 +6,17 @@
 
     <target name="build">
         <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes" classpath="lib/engine.jar" />
+        <javac srcdir="src" destdir="build/classes" classpath="../Engine/build/jar/engine.jar" />
     </target>
 
     <target name="jar">
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/server.jar" basedir="build/classes">
-            <zipgroupfileset dir="lib" includes="*.jar"/>
-            <zipgroupfileset dir="../Website" includes="*"/>
+            <zipgroupfileset dir="../Engine/build/jar" includes="*.jar" />
+            <fileset dir="../Website">
+                <include name="www/*"/>
+                <include name="www/*/*"/>
+            </fileset>
             <manifest>
                 <attribute name="Main-Class" value="Run"/>
             </manifest>

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class IO {
-    public static void WriteFrom (String path, InputStream in) throws IOException {
+    public static void WriteFrom(String path, InputStream in) throws IOException {
         FileOutputStream fs = new FileOutputStream(path);
         BufferedOutputStream bs = new BufferedOutputStream(fs);
         DataOutputStream dos = new DataOutputStream(bs);
@@ -25,7 +25,7 @@ public class IO {
         dos.close();
     }
 
-    public static void Write (String path, String content) throws IOException {
+    public static void Write(String path, String content) throws IOException {
         FileOutputStream fs = new FileOutputStream(path);
         BufferedOutputStream bs = new BufferedOutputStream(fs);
         DataOutputStream dos = new DataOutputStream(bs);
@@ -37,7 +37,17 @@ public class IO {
         dos.close();
     }
 
-    public static void ReadTo (String path, OutputStream out) throws IOException {
+    public static void ReadTo(InputStream in, OutputStream out) throws IOException {
+        int r;
+        while ((r = in.read()) != -1) {
+            out.write(r);
+        }
+
+        in.close();
+        in.close();
+    }
+
+    public static void ReadTo(String path, OutputStream out) throws IOException {
         FileInputStream fs = new FileInputStream(path);
         InputStream in = new BufferedInputStream(fs);
 
@@ -50,14 +60,14 @@ public class IO {
         in.close();
     }
 
-    public static String Read (String path) throws IOException {
+    public static String Read(String path) throws IOException {
         StringBuilder sb = new StringBuilder();
         FileInputStream fs = new FileInputStream(path);
         InputStream in = new BufferedInputStream(fs);
 
         int r;
         while ((r = in.read()) != -1) {
-            sb.append((char)r);
+            sb.append((char) r);
         }
 
         fs.close();

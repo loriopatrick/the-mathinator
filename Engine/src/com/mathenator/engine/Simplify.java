@@ -518,6 +518,28 @@ public class Simplify {
                             node.nodes.remove(1);
                             return true;
                         }
+                    } else if (a.value.equals("^")) {
+                        if (a.nodes.get(0).equals(d)) {
+                            a.nodes.set(1, new Node("+", new Node[]{
+                                    a.nodes.get(1),
+                                    new Node("-1")
+                            }));
+
+                            a.nodes.get(1).changed = true;
+                            node.nodes.remove(1);
+                            return true;
+                        }
+                    } else if (d.value.equals("^")) {
+                        if (d.nodes.get(0).equals(a)) {
+                            d.nodes.set(1, new Node("+", new Node[]{
+                                    d.nodes.get(1),
+                                    new Node("-1")
+                            }));
+
+                            d.nodes.get(1).changed = true;
+                            n.nodes.remove(i);
+                            return true;
+                        }
                     }
                 }
             } else if (n.value.equals("+")) {
@@ -554,22 +576,25 @@ public class Simplify {
             Node b = node.nodes.get(0),
                     e = node.nodes.get(1);
 
-            if (e.value.equals("1")) {
-                node.value = b.value;
-                node.nodes = b.nodes;
+            if (Bools.isNum(e.value)) {
+                float val = Float.parseFloat(e.value);
+                if (val == 1) {
+                    node.value = b.value;
+                    node.nodes = b.nodes;
 
-                node.changed = true;
-                node.message = "x^1 = x";
-                return true;
-            }
+                    node.changed = true;
+                    node.message = "x^1 = x";
+                    return true;
+                }
 
-            if (e.value.equals("0")) {
-                node.value = "1";
-                node.nodes.clear();
+                if (val == 0) {
+                    node.value = "1";
+                    node.nodes.clear();
 
-                node.changed = true;
-                node.message = "x^0 = 1";
-                return true;
+                    node.changed = true;
+                    node.message = "x^0 = 1";
+                    return true;
+                }
             }
 
             if (b.value.charAt(0) == '-') {

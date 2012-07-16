@@ -17,11 +17,10 @@ public class Get implements HttpHandler {
 
 
         if (path.equals("/")) path = "/index.html";
-        System.out.println("GET: " + path);
 
         try {
             ex.sendResponseHeaders(200, 0);
-            IO.ReadTo(root + path, ex.getResponseBody());
+            IO.ReadTo(getClass().getClassLoader().getResourceAsStream(root + path), ex.getResponseBody());
         } catch (Exception e) {
             System.out.println(e);
         }

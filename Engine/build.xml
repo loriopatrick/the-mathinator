@@ -7,7 +7,7 @@
     <target name="build">
         <mkdir dir="build/classes"/>
         <javac srcdir="src" destdir="build/classes" classpath="lib/junit.jar">
-            <excludesfile name="src/Main.java" />
+            <excludesfile name="src/Experiment.java" />
         </javac>
     </target>
 
