@@ -60,7 +60,7 @@ public class Calc implements HttpHandler {
             System.out.println("CALC: " + eq);
 
             IO.Append(logFile, new Date().getTime() +
-                    "\t" + ex.getLocalAddress().getHostName() + "\t" + eq + '\n');
+                    "\t" + ex.getRemoteAddress().getAddress().toString() + "\t" + eq + '\n');
 
             ex.sendResponseHeaders(200, 0);
 

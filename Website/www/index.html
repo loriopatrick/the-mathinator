@@ -202,7 +202,7 @@
         }
     }
     function query(eq, callback) {
-        $.post('http://127.0.0.1:8080/calc/', eq, function (data) {
+        $.post('/calc/', eq, function (data) {
             callback(data.split('\n'));
         }, 'text');
     }
@@ -280,7 +280,7 @@
 <body>
 <div id="head">
     <div class="center">
-        <div class="title"><a href="#" onclick="big()">THE MATHENATOR <span style="font-size: 18px;">ALPHA</span></a>
+        <div class="title"><a href="#" onclick="big()">THE MATHINATOR <span style="font-size: 18px;">ALPHA</span></a>
         </div>
         <input id="eq" name="eq" type="text" value="" placeholder="4*(9*x+18*x/5)=32*x+6"/>
         <span class="btn">
@@ -291,13 +291,13 @@
 <div id="body">
     <div class="width: 802px">
         <div class="result">
-            <span class="message">You Inputted: <span class="eq" id="raw"></span></span>
+            <span class="message">You Gave Us: <span class="eq" id="raw"></span></span>
             <br/>
             <span class="message">We Read: <span class="eqSty" id="preview"></span></span>
             <br/>
 
             <div class="message">
-                We Calculated
+                We Calculated:
                 <div class="eqSty" id="res">
 
                 </div>
