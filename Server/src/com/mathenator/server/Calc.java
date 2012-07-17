@@ -72,7 +72,7 @@ public class Calc implements HttpHandler {
                     try {
                         Write(Parser.ReadNodeLatex(n), outputStream);
                     } catch (Exception e) {}
-                    if (Solve.Step(n, "x")) break;
+                    if (Solve2.Step(n, "x")) break;
                 }
             } else {
                 Node n = Parser.CreateNode(eq);
