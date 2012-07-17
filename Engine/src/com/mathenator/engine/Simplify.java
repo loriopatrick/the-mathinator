@@ -53,6 +53,7 @@ public class Simplify {
         if (Divide(node)) return true;
         if (Power(node)) return true;
         if (Function(node)) return true;
+        if (Derive(node)) return true;
 
         return false;
     }
@@ -68,6 +69,163 @@ public class Simplify {
 
                 node.value = val + "";
                 node.nodes.clear();
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean Derive(Node node) {
+
+        if (node.value.equals("D")) {
+            Node a = node.nodes.get(0);
+            Node target = new Node("x");
+            if (a.value.equals(",")) {
+                target = a.nodes.get(1);
+                a = a.nodes.get(0);
+            }
+
+            if (a.value.equals("D")) {
+                boolean run = false;
+                if (a.nodes.get(0).value.equals(",")) {
+                    if (a.nodes.get(0).nodes.get(1).equals(target)) run = true;
+                } else if (target.equals(new Node("x"))) run = true;
+
+                if (run) {
+                    node.value = a.value;
+                    node.nodes = a.nodes;
+                }
+            }
+
+            if (a.value.equals("+")) {
+                Node res = new Node("+");
+                for (int i = 0; i < a.nodes.size(); i++) {
+                    Node c = a.nodes.get(i);
+
+                    if (!c.contains(target)) {
+                        a.nodes.remove(i);
+                        return true;
+                    }
+
+                    res.nodes.add(new Node("D", new Node[] {
+                            new Node(",", new Node[] {
+                                    c,
+                                    target
+                            })
+                    }));
+                }
+
+                node.value = res.value;
+                node.nodes = res.nodes;
+                node.changed = true;
+
+                return true;
+            }
+
+            if (a.value.equals("*")) {
+                Node f = a.nodes.get(0),
+                        b = a.nodes.get(1);
+
+                Node temp = new Node("+", new Node[] {
+                        new Node("*", new Node[] {
+                                new Node("D", new Node[] {
+                                        new Node(",", new Node[] {
+                                                f.clone()
+                                        }),
+                                        target
+                                }),
+                                b
+                        }),
+                        new Node("*", new Node[] {
+                                new Node("D", new Node[] {
+                                        new Node(",", new Node[] {
+                                                b.clone()
+                                        }),
+                                        target
+                                }),
+                                f
+                        })
+                });
+
+                temp.changed = true;
+                a.nodes.set(0, temp);
+                a.nodes.remove(1);
+
+                return true;
+            }
+
+            if (a.equals(target)) {
+                node.value = "1";
+                node.nodes.clear();
+
+                return true;
+            }
+
+            if (a.value.equals("^")) {
+                Node b = a.nodes.get(0),
+                        e = a.nodes.get(1);
+
+                Node temp = new Node("*", new Node[] {
+                        e.clone(),
+                        new Node("D", new Node[] {
+                                new Node(",", new Node[] {
+                                        b.clone(),
+                                        target
+                                })
+                        }),
+                        new Node("^", new Node[] {
+                                b,
+                                new Node("+", new Node[] {
+                                        e,
+                                        new Node("-1")
+                                })
+                        })
+                });
+
+                node.value = temp.value;
+                node.nodes = temp.nodes;
+                node.changed = true;
+
+                return true;
+            }
+
+            if (a.value.equals("/")) {
+                Node n = a.nodes.get(0),
+                        d = a.nodes.get(1);
+
+                Node temp = new Node("/", new Node[] {
+                        new Node("+", new Node[] {
+                                new Node("*", new Node[] {
+                                        d.clone(),
+                                        new Node("D", new Node[] {
+                                                new Node(",", new Node[] {
+                                                        n.clone(),
+                                                        target
+                                                })
+                                        })
+                                }),
+                                new Node("*", new Node[] {
+                                        new Node("-1"),
+                                        n,
+                                        new Node("D", new Node[] {
+                                                new Node(",", new Node[] {
+                                                        d.clone(),
+                                                        target
+                                                })
+                                        })
+                                })
+                        }),
+                        new Node("^", new Node[] {
+                                d,
+                                new Node("2")
+                        })
+                });
+
+                a.value = temp.value;
+                a.nodes = temp.nodes;
+                a.changed = true;
 
                 return true;
             }
@@ -782,10 +940,15 @@ public class Simplify {
         Node n = Parser.CreateNode(eq);
         Parser.MarkUp(n);
         System.out.println(Parser.ReadNode(n));
+        int t = 0;
         for (int i = 0; i < 1000; i++) {
             Parser.MarkUp(n);
             System.out.println(Parser.ReadNode(n));
-            if (Step(n)) break;
+            if (Step(n)) ++t;
+            else t = 0;
+            if (t >= 5) break;
         }
+        Parser.MarkUp(n);
+        System.out.println(Parser.ReadNode(n));
     }
 }

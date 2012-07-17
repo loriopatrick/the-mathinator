@@ -30,8 +30,8 @@ public class Bools {
         if (s.equals("atan")) return true;
         if (s.equals("ln")) return true;
         if (s.equals("log")) return true;
-        if (s.equals("D")) return true;
-        if (s.equals("I")) return true;
+        if (s.equals("d")) return true;
+        if (s.equals("i")) return true;
         if (s.equals("atan2")) return true;
 
         return false;

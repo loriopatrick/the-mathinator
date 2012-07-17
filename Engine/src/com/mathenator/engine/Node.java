@@ -54,6 +54,14 @@ public class Node {
         return res;
     }
 
+    public boolean contains (Node node) {
+        if (this.equals(node)) return true;
+        for (Node n : this.nodes) {
+            if (n.contains(node)) return true;
+        }
+        return false;
+    }
+
     public String toString () {
         return Parser.ReadNode(this);
     }

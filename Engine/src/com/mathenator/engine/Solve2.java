@@ -66,10 +66,6 @@ public class Solve2 {
                             return true;
                         }
                     }
-                    if (c.value.equals("+")) {
-                        if (c.nodes.size() > 2) return true;
-                        
-                    }
                 }
             }
         }

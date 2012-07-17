@@ -4,9 +4,9 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-//        Simplify.Run("(x^2)/x");
+        Simplify.Run("D(x^2*(x^5+9),x)");
 
-        Solve2.Run("x=(2-x)^(1/2)", "x");
+//        Solve2.Run("x=(2-x)^(1/2)", "x");
 
         //   (1+2)/3 :: !(true && true)
         //   -10*(x-10)^(1/2) :: !(true && false)
