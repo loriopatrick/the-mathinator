@@ -55,12 +55,11 @@ public class Calc implements HttpHandler {
 
         OutputStream outputStream = ex.getResponseBody();
 
+        String eq = null;
         try {
-            String eq = Read(ex.getRequestBody());
+            eq = Read(ex.getRequestBody());
             System.out.println("CALC: " + eq);
 
-            IO.Append(logFile, new Date().getTime() +
-                    "\t" + ex.getRemoteAddress().getAddress().toString() + "\t" + eq + '\n');
 
             ex.sendResponseHeaders(200, 0);
 
@@ -89,5 +88,11 @@ public class Calc implements HttpHandler {
 
         ex.close();
 
+        try {
+            IO.Append(logFile, new Date().getTime() +
+                    "\t" + ex.getRemoteAddress().getAddress().toString() + "\t" + eq + '\n');
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

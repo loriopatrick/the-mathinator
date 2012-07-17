@@ -3,13 +3,10 @@
 <html>
 <head>
     <title></title>
-    <link rel="STYLESHEET" href="style.css"/>
-    <script type="text/javascript" src="lib/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/spin.min.js"></script>
+    <link rel="STYLESHEET" href="style.css" />
     <script type="text/javascript"
             src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
-    <script type="text/javascript" src="run.js"></script>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -22,41 +19,45 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
 
-        function log (eq) {
-            _gaq.push(['_trackEvent', 'Inputs', 'Application', eq, null, true]);
-        }
-
     </script>
 </head>
 <body>
-<div id="head">
+<div id="head" style="padding-top: 10px; height: 35px;">
     <div class="nav">
         <a href="about.html">About</a>
-        <a href="how.html">How to use</a>
+        <a href="#">How to use</a>
     </div>
     <div class="center">
-        <div class="title"><a href="#" onclick="big()">THE MATHINATOR <span style="font-size: 18px;">ALPHA</span></a>
+        <div class="title" style="font-size: 24px; width: 300px;"><a href="index.html">THE MATHINATOR <span
+                style="font-size: 18px;">ALPHA</span></a>
         </div>
-        <input id="eq" name="eq" type="text" value="" placeholder="4*(9*x+18*x/5)=32*x+6"/>
-        <span class="btn">
-            <a href="#" class="btn" onclick="run();">Solve / Simplify</a>
-        </span>
     </div>
 </div>
 <div id="body">
     <div class="width: 802px">
         <div class="result">
-            <span class="message">You Gave Us: <span class="eq" id="raw"></span></span>
-            <br/>
-            <span class="message">We Read: <span class="eqSty" id="preview"></span></span>
-            <br/>
+            <span class="message" style="max-width: 600px;">
+                <h4>How to use The Mathinator</h4>
 
-            <div class="message">
-                We Calculated:
-                <div class="eqSty" id="res">
+                Lets say you wanted to slove for x in the equation: \[ {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6} \]
 
-                </div>
-            </div>
+                simply input : 4*(9*x+18*x/5)=32*x+6 <br/>
+                click: Solve/Simplify
+
+                <br/><br/>
+
+                Or you wanted to simplify: \[ \frac{{{x}^{5}}*{{y}^{7}}*{{z}^{-2}}}{{{x}^{3}}*{{z}^{-10}}*y} \]
+
+                simplify input : (x^5*y^7*z^-2)/(x^3*z^-10*y) <br/>
+                click: Solve/Simplify
+
+                <br/><br/><br/>
+
+                The Mathinator is currenly in alpha state. If you don't get what you want make sure of the following:
+                <br/><br/>
+                5x is 5*x<br/>
+                x^2/5+2 is (x^2)/5+2<br/>
+            </span>
         </div>
         <div class="sponsors">
             <div id="guts">
