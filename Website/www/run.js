@@ -46,6 +46,22 @@ function query(eq, callback) {
         callback(data.split('\n'));
     }, 'text');
 }
+function type (s) {
+    if (s[0] == '-') return type(s[1]);
+    var c = s[0];
+    if (c == '0'
+        || c == '1'
+        || c == '2'
+        || c == '3'
+        || c == '4'
+        || c == '5'
+        || c == '6'
+        || c == '7'
+        || c == '8'
+        || c == '9') return 1;
+    if (c == 'x') return 2;
+    return 3;
+}
 function check(eq) {
     eq = eq.split(' ').join('');
 
@@ -53,18 +69,31 @@ function check(eq) {
         return (input - 0) == input && input.length > 0;
     }
 
+    function isOp (c) {
+        return '+-()*^/'.indexOf(c) > -1;
+    }
+
     var res = [];
     var lastN = false;
+    var lastO = true;
+
     for (var i = 0; i < eq.length; i++) {
         var num = isNum(eq[i]);
+        var op = isOp(eq[i]);
+
         if ((eq[i] == '(' && lastN)
             || (i > 0 && eq[i - 1] == ')' && num)
             || (eq[i - 1] == ')' && eq[i] == '(')) {
             res.push('*');
         }
 
+        if ((lastN && !num && !op) || !lastN && !lastO && !op) {
+            res.push('*');
+        }
+
         res.push(eq[i]);
         lastN = num;
+        lastO = op;
     }
 
     return res.join('');
@@ -72,6 +101,7 @@ function check(eq) {
 var last = '';
 function run() {
     var eq = $('#eq').val();
+    $('#raw').html(eq);
 
     log(eq);
 
@@ -92,11 +122,13 @@ function run() {
     var spin = new Spinner({top:20, className:'spinner'}).spin(document.body);
 
     query(eq, function (data) {
-        $('#raw').html(eq);
         $('#preview').html('\\[' + data[0] + '\\]');
 
         var res = [];
+        var last = '';
         for (var i = 0; i < data.length; i++) {
+            if (last == data[i]) continue;
+            last = data[i];
             res.push('\\[' + data[i] + '\\]');
         }
 

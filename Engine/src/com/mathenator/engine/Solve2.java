@@ -1,10 +1,8 @@
 package com.mathenator.engine;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.YearDV;
-
 public class Solve2 {
 
-    public static boolean Solve (Node node, String target) {
+    public static boolean Solve(Node node, String target) {
         if (!node.value.equals("=")) return false;
 
         Parser.MarkUp(node, target);
@@ -29,31 +27,120 @@ public class Solve2 {
             return true;
         }
 
-        if (Adds(x, y)) return true;
-        if (Fracs(x, y)) return true;
-
+        if (Divs(x, y, node, toLeft)) return true;
+        if (Pows(x, y, node, toLeft)) return true;
+        if (Multis(x, y, node, toLeft)) return true;
+        if (Adds(x, y, node, toLeft)) return true;
+        if (Factor(x, y, node, toLeft, target)) return true;
 
         if ("a".equals("b")) return false;
 
         return false;
     }
 
-    public static boolean Pows (Node x, Node y) {
+    public static boolean Factor(Node x, Node y, Node eq, boolean toLeft, String target) {
+        if (Bools.isNum(y.value) && Float.parseFloat(y.value) == 0) {
+            if (x.value.equals("+")) {
+
+            } else if (x.value.equals("*")) {
+                Node result = new Node(",");
+                for (int i = 0; i < x.nodes.size(); i++) {
+                    Node c = x.nodes.get(i);
+                    if (c.targets == 0) {
+                        x.nodes.remove(i);
+                        return true;
+                    }
+                    if (c.value.equals("^")) {
+                        Node b = c.nodes.get(0),
+                                e = c.nodes.get(1);
+
+                        if (b.value.equals(target)) {
+                            result.nodes.add(new Node("0"));
+                            continue;
+                        }
+
+                        if (e.targets == 0) {
+                            e.value = "1";
+                            e.nodes.clear();
+
+                            return true;
+                        }
+                    }
+                    if (c.value.equals("+")) {
+                        if (c.nodes.size() > 2) return true;
+                        
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean Multis(Node x, Node y, Node eq, boolean toLeft) {
+        if (y.targets == 0 && x.value.equals("*")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node c = x.nodes.get(i);
+                if (c.targets == 0) {
+                    c.changed = true;
+                    Node temp = new Node("/", new Node[]{
+                            y,
+                            c
+                    });
+
+                    eq.nodes.set(toLeft ? 1 : 0, temp);
+
+                    x.nodes.remove(i);
+
+                    return true;
+                }
+            }
+        } else if (y.value.equals("*")) {
+        }
+        return false;
+    }
+
+    public static boolean Pows(Node x, Node y, Node eq, boolean toLeft) {
+
+        if (x.value.equals("^") && y.value.equals("^")) {
+            if (x.nodes.get(1).equals(y.nodes.get(1))) {
+                x.value = x.nodes.get(0).value;
+                x.nodes = x.nodes.get(0).nodes;
+
+                y.value = y.nodes.get(0).value;
+                y.nodes = y.nodes.get(0).nodes;
+
+                return true;
+            }
+        }
+
         if (x.value.equals("^")
                 && y.targets == 0
                 && x.nodes.get(1).targets == 0
-                && x.nodes.get(0).targets == 1
-                && x.nodes.get(0).height == 0) {
+                && x.nodes.get(0).targets == 1) {
 
-            Node temp = new Node("^", new Node[] {
-
+            Node guts = new Node("/", new Node[]{
+                    new Node("1"),
+                    x.nodes.get(1)
             });
+            guts.changed = true;
+
+            Node temp = new Node("^", new Node[]{
+                    y,
+                    guts
+            });
+
+            eq.nodes.set(toLeft ? 1 : 0, temp);
+
+            x.value = x.nodes.get(0).value;
+            x.nodes = x.nodes.get(0).nodes;
+
+            return true;
         }
 
         return false;
     }
 
-    public static boolean Fracs (Node x, Node y) {
+    public static boolean Divs(Node x, Node y, Node eq, boolean toLeft) {
         if (x.value.equals("/") && y.value.equals("/")) {
 
             // a/x = b/x :: a = b
@@ -69,12 +156,12 @@ public class Solve2 {
 
             if (y.targets > 0) {
                 // cross multiply
-                Node temp = new Node("*", new Node[] {
+                Node temp = new Node("*", new Node[]{
                         x.nodes.get(0),
                         y.nodes.get(1)
                 });
 
-                Node temp2 = new Node("*", new Node[] {
+                Node temp2 = new Node("*", new Node[]{
                         y.nodes.get(0),
                         x.nodes.get(1)
                 });
@@ -87,10 +174,22 @@ public class Solve2 {
                 return true;
             }
         }
+
+        if (x.value.equals("/")) {
+            Node temp = new Node("*", new Node[]{
+                    y,
+                    x.nodes.get(1)
+            });
+            x.nodes.get(1).changed = true;
+            eq.nodes.set(toLeft ? 1 : 0, temp);
+            x.nodes.set(1, new Node("1"));
+
+            return true;
+        }
         return false;
     }
 
-    public static boolean Adds (Node x, Node y) {
+    public static boolean Adds(Node x, Node y, Node eq, boolean toLeft) {
 
         if (x.value.equals("+")) {
             // go through x and find any non targets to push away
@@ -106,12 +205,11 @@ public class Solve2 {
                     gut.changed = true;
 
                     Node temp = new Node("+", new Node[]{
-                            y.clone(),
+                            y,
                             gut
                     });
 
-                    y.value = temp.value;
-                    y.nodes = temp.nodes;
+                    eq.nodes.set(toLeft ? 1 : 0, temp);
 
                     x.nodes.remove(i);
 
@@ -134,18 +232,36 @@ public class Solve2 {
                     gut.changed = true;
 
                     Node temp = new Node("+", new Node[]{
-                            x.clone(),
+                            x,
                             gut
                     });
 
-                    x.value = temp.value;
-                    x.nodes = temp.nodes;
+                    eq.nodes.set(toLeft ? 0 : 1, temp);
 
                     y.nodes.remove(i);
 
                     return true;
                 }
             }
+        }
+
+        if (y.targets > 0) {
+            Node guts = new Node("*", new Node[]{
+                    new Node("-1"),
+                    y.clone()
+            });
+            guts.changed = true;
+
+            Node temp = new Node("+", new Node[]{
+                    x,
+                    guts
+            });
+
+            eq.nodes.set(toLeft ? 0 : 1, temp);
+            y.value = "0";
+            y.nodes.clear();
+
+            return true;
         }
 
         return false;

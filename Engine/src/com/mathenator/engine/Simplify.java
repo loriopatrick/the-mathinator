@@ -136,21 +136,21 @@ public class Simplify {
                 node.changed = true;
                 return true;
             } else if (b.value.equals("/")) {
-                Node temp = new Node("/", new Node[]{
-                        new Node("^", new Node[]{
-                                b.nodes.get(0),
-                                e.clone()
-                        }),
-                        new Node("^", new Node[]{
-                                b.nodes.get(1),
-                                e.clone()
-                        })
-                });
-                node.value = temp.value;
-                node.nodes = temp.nodes;
-
-                node.changed = true;
-                return true;
+//                Node temp = new Node("/", new Node[]{
+//                        new Node("^", new Node[]{
+//                                b.nodes.get(0),
+//                                e.clone()
+//                        }),
+//                        new Node("^", new Node[]{
+//                                b.nodes.get(1),
+//                                e.clone()
+//                        })
+//                });
+//                node.value = temp.value;
+//                node.nodes = temp.nodes;
+//
+//                node.changed = true;
+//                return true;
             } else if (b.value.equals("*")) {
                 for (int i = 0; i < b.nodes.size(); i++) {
                     b.nodes.set(i, new Node("^", new Node[]{
@@ -317,12 +317,18 @@ public class Simplify {
             Node n = node.nodes.get(0),
                     d = node.nodes.get(1);
 
-            if (n.value.equals("0")) {
+            if (Bools.isNum(n.value) && Float.parseFloat(n.value) == 0) {
                 node.value = "0";
                 node.nodes.clear();
 
                 node.changed = true;
                 node.message = "0/x = 0";
+                return true;
+            }
+
+            if (Bools.isNum(d.value) && Float.parseFloat(d.value) == 1) {
+                node.value = node.nodes.get(0).value;
+                node.nodes = node.nodes.get(0).nodes;
                 return true;
             }
 
@@ -386,7 +392,6 @@ public class Simplify {
             }
 
             if (d.value.equals("/")) {
-                // 1 / (1/2)
                 node.nodes.set(0, new Node("*", new Node[]{
                         n,
                         d.nodes.get(1)
@@ -500,7 +505,7 @@ public class Simplify {
                         }
                     }
                 }
-            } else if (n.value.equals("+")) {
+            } else if (n.value.equals("+") && d.targets == 0) {
                 Node targets = new Node("+");
                 Node norms = new Node("+");
 
@@ -589,6 +594,12 @@ public class Simplify {
             float sum = 0;
             for (int i = 0; i < node.nodes.size(); ++i) {
                 Node a = node.nodes.get(i);
+
+                if (Bools.isNum(a.value) && Float.parseFloat(a.value) == 0) {
+                    node.nodes.remove(i);
+                    return true;
+                }
+
                 for (int j = 0; j < node.nodes.size(); ++j) {
                     if (i == j) continue;
 

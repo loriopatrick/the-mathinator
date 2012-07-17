@@ -23,7 +23,11 @@
         })();
 
         function log (eq) {
-            _gaq.push(['_trackEvent', 'Inputs', 'Application', eq, null, true]);
+            _gaq.push(['_setCustomVar',
+                1,
+                'Log',
+                eq
+            ]);
         }
 
     </script>

@@ -69,7 +69,9 @@ public class Calc implements HttpHandler {
                 Write(Parser.ReadNodeLatex(n), outputStream);
                 for (int i = 0; i < steps; i++) {
                     Parser.MarkUp(n);
-                    Write(Parser.ReadNodeLatex(n), outputStream);
+                    try {
+                        Write(Parser.ReadNodeLatex(n), outputStream);
+                    } catch (Exception e) {}
                     if (Solve.Step(n, "x")) break;
                 }
             } else {
@@ -78,12 +80,15 @@ public class Calc implements HttpHandler {
                 Write(Parser.ReadNodeLatex(n), outputStream);
                 for (int i = 0; i < steps; i++) {
                     Parser.MarkUp(n);
-                    Write(Parser.ReadNodeLatex(n), outputStream);
+                    try {
+                        Write(Parser.ReadNodeLatex(n), outputStream);
+                    } catch (Exception e) {}
                     if (Simplify.Step(n)) break;
                 }
             }
         } catch (Exception e) {
             System.out.println(e);
+            e.printStackTrace();
         }
 
         ex.close();
