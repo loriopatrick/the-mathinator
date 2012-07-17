@@ -1,13 +1,12 @@
-import com.mathenator.engine.Node;
-import com.mathenator.engine.Parser;
-import com.mathenator.engine.Simplify;
-import com.mathenator.engine.Solve;
+import com.mathenator.engine.*;
 
 public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Simplify.Run("(5*x^2)/x");
+//        Simplify.Run("x/(x^2)");
+
+        Solve2.Run("x/2=5/x", "x");
 
         //   (1+2)/3 :: !(true && true)
         //   -10*(x-10)^(1/2) :: !(true && false)

@@ -47,178 +47,130 @@ public class Simplify {
                 node = node.parent;
             }
         }
-        if (node.value.equals("+")) {
-            float sum = 0;
-            for (int i = 0; i < node.nodes.size(); ++i) {
-                Node a = node.nodes.get(i);
-                for (int j = 0; j < node.nodes.size(); ++j) {
-                    if (i == j) continue;
 
-                    Node b = node.nodes.get(j);
+        if (Add(node)) return true;
+        if (Multiply(node)) return true;
+        if (Divide(node)) return true;
+        if (Power(node)) return true;
+        if (Function(node)) return true;
 
-                    if (Bools.isNum(a.value) && Bools.isNum(b.value)) {
-                        sum = Float.parseFloat(a.value) + Float.parseFloat(b.value);
+        return false;
+    }
 
-                        Node temp = new Node(sum + "");
-                        temp.changed = true;
-                        temp.message = "added " + a.value
-                                + " and " + b.value
-                                + " and got " + sum + '\n'
-                                + '(' + a.value + '+' + b.value + '=' + sum + ')';
+    public static boolean Function(Node node) {
+        if (Bools.isFn(node.value)) {
+            if (Bools.isNum(node.nodes.get(0).value)) {
+                double val = Double.parseDouble(node.nodes.get(0).value), res;
 
-                        if (i > j) {
-                            node.nodes.remove(i);
-                            node.nodes.set(j, temp);
-                        } else {
-                            node.nodes.remove(j);
-                            node.nodes.set(i, temp);
-                        }
+                if (node.value.equalsIgnoreCase("sin")) {
+                    res = Math.sin(val);
+                }
 
-                        return true;
+                node.value = val + "";
+                node.nodes.clear();
 
-                    } else if (a.equals(b)) {
-                        Node temp = new Node("*", new Node[]{
-                                new Node("2"),
-                                a
-                        });
+                return true;
+            }
+        }
 
-                        temp.changed = true;
-                        temp.message = "x+x = 2*x";
+        return false;
+    }
 
-                        if (i > j) {
-                            node.nodes.remove(i);
-                            node.nodes.set(j, temp);
-                        } else {
-                            node.nodes.remove(j);
-                            node.nodes.set(i, temp);
-                        }
+    public static boolean Power(Node node) {
+        if (node.value.equals("^")) {
+            Node b = node.nodes.get(0),
+                    e = node.nodes.get(1);
 
-                        return true;
-                    } else if (a.value.equals("*")) {
-                        if (b.value.equals("*")) {
-                            if (a.nodes.size() == 2 && b.nodes.size() == 2) {
-                                for (int n = 0; n <= 1; n++) {
-                                    for (int g = 0; g <= 1; g++) {
-                                        if (a.nodes.get(n).equals(b.nodes.get(g))) {
-                                            int n1 = n == 1 ? 0 : 1,
-                                                    g1 = g == 1 ? 0 : 1;
+            if (Bools.isNum(e.value)) {
+                float val = Float.parseFloat(e.value);
+                if (val == 1) {
+                    node.value = b.value;
+                    node.nodes = b.nodes;
 
-                                            a.nodes.set(n1, new Node("+", new Node[]{
-                                                    a.nodes.get(n1),
-                                                    b.nodes.get(g1)
-                                            }));
-                                            node.nodes.remove(j);
+                    node.changed = true;
+                    node.message = "x^1 = x";
+                    return true;
+                }
 
-                                            a.changed = true;
-                                            a.message = "x*y+z*y = y*(x+z)";
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            if (a.nodes.size() == 2) {
-                                if (a.nodes.get(0).equals(b)) {
-                                    if (Bools.isNum(a.nodes.get(1).value)) {
-                                        a.nodes.get(1).value = (Float.parseFloat(a.nodes.get(1).value) + 1) + "";
-                                        node.nodes.remove(j);
+                if (val == 0) {
+                    node.value = "1";
+                    node.nodes.clear();
 
-                                        a.changed = true;
-                                        a.message = "3*x+x = 4*x";
-                                        return true;
-                                    }
-                                } else if (a.nodes.get(1).equals(b)) {
-                                    if (Bools.isNum(a.nodes.get(0).value)) {
-                                        a.nodes.get(0).value = (Float.parseFloat(a.nodes.get(0).value) + 1) + "";
-                                        node.nodes.remove(j);
-
-                                        a.changed = true;
-                                        a.message = "3*x+x = 4*x";
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    } else if (a.value.equals("/") && b.value.equals("/")) {
-                        if ((a.targets > 0 && b.targets > 0) || (a.targets == 0 && b.targets == 0)) {
-                            if (a.nodes.get(1).equals(b.nodes.get(1))) {
-                                node.nodes.set(i, new Node("/", new Node[]{
-                                        new Node("+", new Node[]{
-                                                a.nodes.get(0),
-                                                b.nodes.get(0)
-                                        }),
-                                        a.nodes.get(1)
-                                }));
-
-                                node.nodes.get(i).changed = true;
-                                node.nodes.get(i).message = "adding fractions with common denominator\n" +
-                                        "x/y+z/y = (x+z)/y";
-                                node.nodes.remove(j);
-                                return true;
-                            }
-
-                            node.nodes.set(i, new Node("/", new Node[]{
-                                    new Node("+", new Node[]{
-                                            new Node("*", new Node[]{
-                                                    b.nodes.get(1),
-                                                    a.nodes.get(0)
-                                            }),
-                                            new Node("*", new Node[]{
-                                                    a.nodes.get(1),
-                                                    b.nodes.get(0)
-                                            })
-                                    }),
-                                    new Node("*", new Node[]{
-                                            a.nodes.get(1),
-                                            b.nodes.get(1)
-                                    })
-                            }));
-
-
-                            node.nodes.get(i).changed = true;
-                            node.nodes.get(i).message = "adding fractions with different denominators \n" +
-                                    "x/y+z/w = (x*w+z*y)/(w*y)";
-                            node.nodes.remove(j);
-                            return true;
-                        }
-
-                    } else if (a.value.equals("/") || b.value.equals("/")) {
-                        Node div, base;
-                        if (a.value.equals("/")) {
-                            div = a;
-                            base = b;
-                        } else {
-                            div = b;
-                            base = a;
-                        }
-
-                        if (div.targets > 0 && base.targets > 0 || div.targets == 0 && base.targets == 0) {
-
-                            Node temp = new Node("*", new Node[]{
-                                    base,
-                                    div.nodes.get(1)
-                            });
-
-                            node.nodes.set(i, new Node("/", new Node[]{
-                                    new Node("+", new Node[]{
-                                            temp,
-                                            div.nodes.get(0)
-                                    }),
-                                    div.nodes.get(1)
-                            }));
-
-
-                            temp.changed = true;
-                            temp.message = "adding fraction to non-fraction\n" +
-                                    "x/y+z = (x+z*y)/y";
-
-                            node.nodes.remove(j);
-                            return true;
-                        }
-                    }
+                    node.changed = true;
+                    node.message = "x^0 = 1";
+                    return true;
                 }
             }
-        } else if (node.value.equals("*")) {
+
+            if (b.value.charAt(0) == '-') {
+                // handle issue or do imaginary #s
+            }
+
+            if (Bools.isNum(b.value) && Bools.isNum(e.value)) {
+                double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
+                node.value = val + "";
+                node.nodes.clear();
+
+                node.changed = true;
+                return true;
+            } else if (Bools.isNum(b.value) && e.equals(new Node("/", new Node[]{
+                    new Node("1"),
+                    new Node("2")
+            }))) {
+                double val = Math.sqrt(Float.parseFloat(b.value));
+                if (val == Math.floor(val)) {
+                    node.value = val + "";
+                    node.nodes.clear();
+
+                    node.changed = true;
+                    return true;
+                }
+            } else if (b.value.equals("^")) {
+                b.nodes.set(1, new Node("*", new Node[]{
+                        b.nodes.get(1),
+                        e
+                }));
+                node.value = b.value;
+                node.nodes = b.nodes;
+
+                node.changed = true;
+                return true;
+            } else if (b.value.equals("/")) {
+                Node temp = new Node("/", new Node[]{
+                        new Node("^", new Node[]{
+                                b.nodes.get(0),
+                                e.clone()
+                        }),
+                        new Node("^", new Node[]{
+                                b.nodes.get(1),
+                                e.clone()
+                        })
+                });
+                node.value = temp.value;
+                node.nodes = temp.nodes;
+
+                node.changed = true;
+                return true;
+            } else if (b.value.equals("*")) {
+                for (int i = 0; i < b.nodes.size(); i++) {
+                    b.nodes.set(i, new Node("^", new Node[]{
+                            b.nodes.get(i),
+                            e.clone()
+                    }));
+                }
+                node.value = "*";
+                node.nodes = b.nodes;
+
+                node.changed = true;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean Multiply(Node node) {
+        if (node.value.equals("*")) {
             for (int i = 0; i < node.nodes.size(); ++i) {
                 Node a = node.nodes.get(i);
                 for (int j = 0; j < node.nodes.size(); ++j) {
@@ -354,7 +306,13 @@ public class Simplify {
                     }
                 }
             }
-        } else if (node.value.equals("/")) {
+        }
+
+        return false;
+    }
+
+    public static boolean Divide(Node node) {
+        if (node.value.equals("/")) {
 
             Node n = node.nodes.get(0),
                     d = node.nodes.get(1);
@@ -570,107 +528,233 @@ public class Simplify {
                     node.changed = true;
                     return true;
                 }
-            }
+            } else if (n.value.equals("^") && d.value.equals("^")) {
+                if (n.nodes.get(0).equals(d.nodes.get(0))) {
+                    Node temp = new Node("+", new Node[]{
+                            n.nodes.get(1).clone(),
+                            new Node("*", new Node[]{
+                                    new Node("-1"),
+                                    d.nodes.get(1)
+                            })
+                    });
 
-        } else if (node.value.equals("^")) {
-            Node b = node.nodes.get(0),
-                    e = node.nodes.get(1);
+                    temp.changed = true;
+                    n.nodes.set(1, temp);
+                    node.nodes.remove(1);
 
-            if (Bools.isNum(e.value)) {
-                float val = Float.parseFloat(e.value);
-                if (val == 1) {
-                    node.value = b.value;
-                    node.nodes = b.nodes;
-
-                    node.changed = true;
-                    node.message = "x^1 = x";
                     return true;
                 }
+            } else if (n.value.equals("^")) {
+                if (n.nodes.get(0).equals(d)) {
+                    Node temp = new Node("+", new Node[]{
+                            n.nodes.get(1).clone(),
+                            new Node("-1")
+                    });
+                    temp.changed = true;
+                    n.nodes.set(1, temp);
+                    node.nodes.remove(1);
 
-                if (val == 0) {
-                    node.value = "1";
-                    node.nodes.clear();
+                    return true;
+                }
+            } else if (d.value.equals("^")) {
+                if (d.nodes.get(0).equals(n)) {
+                    Node guts = new Node("+", new Node[]{
+                            new Node("1"),
+                            new Node("*", new Node[]{
+                                    new Node("-1"),
+                                    d.nodes.get(1).clone()
+                            })
+                    });
 
-                    node.changed = true;
-                    node.message = "x^0 = 1";
+                    Node temp = new Node("^", new Node[]{
+                            n.clone(),
+                            guts
+                    });
+
+                    guts.changed = true;
+                    n.value = temp.value;
+                    n.nodes = temp.nodes;
+                    node.nodes.remove(1);
+
                     return true;
                 }
             }
+        }
 
-            if (b.value.charAt(0) == '-') {
-                // handle issue or do imaginary #s
-            }
+        return false;
+    }
 
-            if (Bools.isNum(b.value) && Bools.isNum(e.value)) {
-                double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
-                node.value = val + "";
-                node.nodes.clear();
+    public static boolean Add(Node node) {
+        if (node.value.equals("+")) {
+            float sum = 0;
+            for (int i = 0; i < node.nodes.size(); ++i) {
+                Node a = node.nodes.get(i);
+                for (int j = 0; j < node.nodes.size(); ++j) {
+                    if (i == j) continue;
 
-                node.changed = true;
-                return true;
-            } else if (Bools.isNum(b.value) && e.equals(new Node("/", new Node[]{
-                    new Node("1"),
-                    new Node("2")
-            }))) {
-                double val = Math.sqrt(Float.parseFloat(b.value));
-                if (val == Math.floor(val)) {
-                    node.value = val + "";
-                    node.nodes.clear();
+                    Node b = node.nodes.get(j);
 
-                    node.changed = true;
-                    return true;
+                    if (Bools.isNum(a.value) && Bools.isNum(b.value)) {
+                        sum = Float.parseFloat(a.value) + Float.parseFloat(b.value);
+
+                        Node temp = new Node(sum + "");
+                        temp.changed = true;
+                        temp.message = "added " + a.value
+                                + " and " + b.value
+                                + " and got " + sum + '\n'
+                                + '(' + a.value + '+' + b.value + '=' + sum + ')';
+
+                        if (i > j) {
+                            node.nodes.remove(i);
+                            node.nodes.set(j, temp);
+                        } else {
+                            node.nodes.remove(j);
+                            node.nodes.set(i, temp);
+                        }
+
+                        return true;
+
+                    } else if (a.equals(b)) {
+                        Node temp = new Node("*", new Node[]{
+                                new Node("2"),
+                                a
+                        });
+
+                        temp.changed = true;
+                        temp.message = "x+x = 2*x";
+
+                        if (i > j) {
+                            node.nodes.remove(i);
+                            node.nodes.set(j, temp);
+                        } else {
+                            node.nodes.remove(j);
+                            node.nodes.set(i, temp);
+                        }
+
+                        return true;
+                    } else if (a.value.equals("*")) {
+                        if (b.value.equals("*")) {
+                            if (a.nodes.size() == 2 && b.nodes.size() == 2) {
+                                for (int n = 0; n <= 1; n++) {
+                                    for (int g = 0; g <= 1; g++) {
+                                        if (a.nodes.get(n).equals(b.nodes.get(g))) {
+                                            int n1 = n == 1 ? 0 : 1,
+                                                    g1 = g == 1 ? 0 : 1;
+
+                                            a.nodes.set(n1, new Node("+", new Node[]{
+                                                    a.nodes.get(n1),
+                                                    b.nodes.get(g1)
+                                            }));
+                                            node.nodes.remove(j);
+
+                                            a.changed = true;
+                                            a.message = "x*y+z*y = y*(x+z)";
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (a.nodes.size() == 2) {
+                                if (a.nodes.get(0).equals(b)) {
+                                    if (Bools.isNum(a.nodes.get(1).value)) {
+                                        a.nodes.get(1).value = (Float.parseFloat(a.nodes.get(1).value) + 1) + "";
+                                        node.nodes.remove(j);
+
+                                        a.changed = true;
+                                        a.message = "3*x+x = 4*x";
+                                        return true;
+                                    }
+                                } else if (a.nodes.get(1).equals(b)) {
+                                    if (Bools.isNum(a.nodes.get(0).value)) {
+                                        a.nodes.get(0).value = (Float.parseFloat(a.nodes.get(0).value) + 1) + "";
+                                        node.nodes.remove(j);
+
+                                        a.changed = true;
+                                        a.message = "3*x+x = 4*x";
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    } else if (a.value.equals("/") && b.value.equals("/")) {
+                        if ((a.targets > 0 && b.targets > 0) || (a.targets == 0 && b.targets == 0)) {
+                            if (a.nodes.get(1).equals(b.nodes.get(1))) {
+                                node.nodes.set(i, new Node("/", new Node[]{
+                                        new Node("+", new Node[]{
+                                                a.nodes.get(0),
+                                                b.nodes.get(0)
+                                        }),
+                                        a.nodes.get(1)
+                                }));
+
+                                node.nodes.get(i).changed = true;
+                                node.nodes.get(i).message = "adding fractions with common denominator\n" +
+                                        "x/y+z/y = (x+z)/y";
+                                node.nodes.remove(j);
+                                return true;
+                            }
+
+                            node.nodes.set(i, new Node("/", new Node[]{
+                                    new Node("+", new Node[]{
+                                            new Node("*", new Node[]{
+                                                    b.nodes.get(1),
+                                                    a.nodes.get(0)
+                                            }),
+                                            new Node("*", new Node[]{
+                                                    a.nodes.get(1),
+                                                    b.nodes.get(0)
+                                            })
+                                    }),
+                                    new Node("*", new Node[]{
+                                            a.nodes.get(1),
+                                            b.nodes.get(1)
+                                    })
+                            }));
+
+
+                            node.nodes.get(i).changed = true;
+                            node.nodes.get(i).message = "adding fractions with different denominators \n" +
+                                    "x/y+z/w = (x*w+z*y)/(w*y)";
+                            node.nodes.remove(j);
+                            return true;
+                        }
+
+                    } else if (a.value.equals("/") || b.value.equals("/")) {
+                        Node div, base;
+                        if (a.value.equals("/")) {
+                            div = a;
+                            base = b;
+                        } else {
+                            div = b;
+                            base = a;
+                        }
+
+                        if (div.targets > 0 && base.targets > 0 || div.targets == 0 && base.targets == 0) {
+
+                            Node temp = new Node("*", new Node[]{
+                                    base,
+                                    div.nodes.get(1)
+                            });
+
+                            node.nodes.set(i, new Node("/", new Node[]{
+                                    new Node("+", new Node[]{
+                                            temp,
+                                            div.nodes.get(0)
+                                    }),
+                                    div.nodes.get(1)
+                            }));
+
+
+                            temp.changed = true;
+                            temp.message = "adding fraction to non-fraction\n" +
+                                    "x/y+z = (x+z*y)/y";
+
+                            node.nodes.remove(j);
+                            return true;
+                        }
+                    }
                 }
-            } else if (b.value.equals("^")) {
-                b.nodes.set(1, new Node("*", new Node[]{
-                        b.nodes.get(1),
-                        e
-                }));
-                node.value = b.value;
-                node.nodes = b.nodes;
-
-                node.changed = true;
-                return true;
-            } else if (b.value.equals("/")) {
-                Node temp = new Node("/", new Node[]{
-                        new Node("^", new Node[]{
-                                b.nodes.get(0),
-                                e.clone()
-                        }),
-                        new Node("^", new Node[]{
-                                b.nodes.get(1),
-                                e.clone()
-                        })
-                });
-                node.value = temp.value;
-                node.nodes = temp.nodes;
-
-                node.changed = true;
-                return true;
-            } else if (b.value.equals("*")) {
-                for (int i = 0; i < b.nodes.size(); i++) {
-                    b.nodes.set(i, new Node("^", new Node[]{
-                            b.nodes.get(i),
-                            e.clone()
-                    }));
-                }
-                node.value = "*";
-                node.nodes = b.nodes;
-
-                node.changed = true;
-                return true;
-            }
-        } else if (Bools.isFn(node.value)) {
-            if (Bools.isNum(node.nodes.get(0).value)) {
-                double val = Double.parseDouble(node.nodes.get(0).value), res;
-
-                if (node.value.equalsIgnoreCase("sin")) {
-                    res = Math.sin(val);
-                }
-
-                node.value = val + "";
-                node.nodes.clear();
-
-                return true;
             }
         }
 

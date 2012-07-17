@@ -176,6 +176,18 @@ public class Tests {
                 new Node("x"),
                 new Node("5")
         }))) assert false;
+
+        if (!Simplify("(x^2)/x", new Node("x"))) assert false;
+
+        if (!Simplify("(x^4)/(x^2)", new Node("^", new Node[] {
+                new Node("x"),
+                new Node("2")
+        }))) assert false;
+
+        if (!Simplify("x/(x^2)", new Node("^", new Node[] {
+                new Node("x"),
+                new Node("-1")
+        }))) assert false;
     }
 
     public boolean Solve(String eq, Node ans, String target) {
