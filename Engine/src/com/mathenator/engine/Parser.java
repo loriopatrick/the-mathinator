@@ -193,6 +193,7 @@ public class Parser {
             Node c = n.nodes.get(i);
             c.parent = n;
             c.targets = 0;
+            c.height = 0;
             MarkUp(c, target);
         }
     }

@@ -17,6 +17,7 @@ public class Node {
     }
 
     public boolean equals(Node compare) {
+        if (compare.value.equals("ANY")) return true;
         if (Bools.isNum(this.value) && Bools.isNum(compare.value)) {
             if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
         } else if (!this.value.equals(compare.value)) return false;
@@ -60,6 +61,19 @@ public class Node {
             if (n.contains(node)) return true;
         }
         return false;
+    }
+
+    public int find (Node node, int layer) {
+        if (this.equals(node)) return ++layer;
+        for (Node n : this.nodes) {
+            int l;
+            if ((l = n.find(node, layer)) > -1) return l;
+        }
+        return -1;
+    }
+
+    public int find (Node node) {
+        return this.find(node, -1);
     }
 
     public String toString () {

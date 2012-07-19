@@ -1,5 +1,7 @@
 package com.mathenator.engine;
 
+import java.util.ArrayList;
+
 public class Solve2 {
 
     public static boolean Solve(Node node, String target) {
@@ -27,10 +29,13 @@ public class Solve2 {
             return true;
         }
 
-        if (Divs(x, y, node, toLeft)) return true;
-        if (Pows(x, y, node, toLeft)) return true;
-        if (Multis(x, y, node, toLeft)) return true;
-        if (Adds(x, y, node, toLeft)) return true;
+        if (node.temp != -10) {
+            if (Adds(x, y, node, toLeft)) return true;
+            if (Divs(x, y, node, toLeft)) return true;
+            if (Multis(x, y, node, toLeft)) return true;
+            if (Pows(x, y, node, toLeft)) return true;
+        }
+
         if (Factor(x, y, node, toLeft, target)) return true;
 
         if ("a".equals("b")) return false;
@@ -39,36 +44,57 @@ public class Solve2 {
     }
 
     public static boolean Factor(Node x, Node y, Node eq, boolean toLeft, String target) {
-        if (Bools.isNum(y.value) && Float.parseFloat(y.value) == 0) {
+
+        if (!Bools.isNum(y.value) || Float.parseFloat(y.value) != 0) {
+            eq.temp = -10;
+
             if (x.value.equals("+")) {
+                Node temp = new Node("*", new Node[] {
+                        new Node("-1"),
+                        y.clone()
+                });
+                temp.changed = true;
 
-            } else if (x.value.equals("*")) {
-                Node result = new Node(",");
-                for (int i = 0; i < x.nodes.size(); i++) {
-                    Node c = x.nodes.get(i);
-                    if (c.targets == 0) {
-                        x.nodes.remove(i);
-                        return true;
+                x.nodes.add(temp);
+                y.value = "0";
+                y.nodes.clear();
+
+                return true;
+            }
+
+            Node guts = new Node("*", new Node[] {
+                    new Node("-1"),
+                    y
+            });
+            guts.changed = true;
+
+            Node temp = new Node("+", new Node[] {
+                    x,
+                    guts
+            });
+
+            eq.nodes.set(toLeft? 0 : 1, temp);
+            y.value = "0";
+            y.nodes.clear();
+
+            return true;
+        }
+
+        ArrayList<Node> powers = new ArrayList<Node>();
+
+        if (x.value.equals("+")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node c = x.nodes.get(i);
+                if (c.value.equals("^")) {
+                    if (c.nodes.get(0).value.equals(target)) {
+                        powers.add(c.nodes.get(1));
                     }
-                    if (c.value.equals("^")) {
-                        Node b = c.nodes.get(0),
-                                e = c.nodes.get(1);
-
-                        if (b.value.equals(target)) {
-                            result.nodes.add(new Node("0"));
-                            continue;
-                        }
-
-                        if (e.targets == 0) {
-                            e.value = "1";
-                            e.nodes.clear();
-
-                            return true;
-                        }
-                    }
+                } else if (c.value.equals(target)) {
+                    
                 }
             }
         }
+
         return false;
     }
 
@@ -109,27 +135,72 @@ public class Solve2 {
             }
         }
 
-        if (x.value.equals("^")
-                && y.targets == 0
-                && x.nodes.get(1).targets == 0
-                && x.nodes.get(0).targets == 1) {
+        if (x.value.equals("^") && x.nodes.get(1).targets == 0) {
 
-            Node guts = new Node("/", new Node[]{
-                    new Node("1"),
-                    x.nodes.get(1)
-            });
-            guts.changed = true;
+            Node temp;
 
-            Node temp = new Node("^", new Node[]{
-                    y,
-                    guts
-            });
+            if (x.nodes.get(1).value.equals("/")) {
+                Node d = x.nodes.get(1).nodes.get(1);
+                d.changed = true;
+
+                temp = new Node("^", new Node[]{
+                        y,
+                        d.clone()
+                });
+
+                d.value = "1";
+                d.nodes.clear();
+            } else {
+                Node guts = new Node("/", new Node[]{
+                        new Node("1"),
+                        x.nodes.get(1)
+                });
+                guts.changed = true;
+
+                temp = new Node("^", new Node[]{
+                        y,
+                        guts
+                });
+
+                x.nodes.set(1, new Node("1"));
+            }
 
             eq.nodes.set(toLeft ? 1 : 0, temp);
+            return true;
+        }
 
-            x.value = x.nodes.get(0).value;
-            x.nodes = x.nodes.get(0).nodes;
 
+        if (y.value.equals("^") && y.targets > 0 && y.nodes.get(1).targets == 0) {
+
+            Node temp;
+
+            if (y.nodes.get(1).value.equals("/")) {
+                Node d = y.nodes.get(1).nodes.get(1);
+                d.changed = true;
+
+                temp = new Node("^", new Node[]{
+                        x,
+                        d.clone()
+                });
+
+                d.value = "1";
+                d.nodes.clear();
+            } else {
+                Node guts = new Node("/", new Node[]{
+                        new Node("1"),
+                        y.nodes.get(1)
+                });
+                guts.changed = true;
+
+                temp = new Node("^", new Node[]{
+                        x,
+                        guts
+                });
+
+                y.nodes.set(1, new Node("1"));
+            }
+
+            eq.nodes.set(toLeft ? 0 : 1, temp);
             return true;
         }
 
@@ -241,7 +312,7 @@ public class Solve2 {
             }
         }
 
-        if (y.targets > 0) {
+        if (y.targets > 0 && y.height < 2) {
             Node guts = new Node("*", new Node[]{
                     new Node("-1"),
                     y.clone()
