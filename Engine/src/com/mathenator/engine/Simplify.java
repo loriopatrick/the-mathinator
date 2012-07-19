@@ -368,7 +368,7 @@ public class Simplify {
                         return true;
                     }
 
-                    if (a.value.equals("+")) {
+                    if (a.value.equals("+") && node.temp != -20) {
 //                        if (Bools.isNum(b.value)) {
                         for (int n = 0; n < a.nodes.size(); n++) {
                             a.nodes.set(n, new Node("*", new Node[]{
@@ -933,7 +933,8 @@ public class Simplify {
     public static boolean Step(Node node) {
         Node last = node.clone();
         Simplify(node);
-        return node.equals(last);
+        boolean same = node.equals(last);
+        return same;
     }
 
     public static void Run(String eq) throws Exception {

@@ -22,12 +22,15 @@ public class Node {
             if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
         } else if (!this.value.equals(compare.value)) return false;
 
-        if (this.value.equals("+") || this.value.equals("*")) {
+        if (this.value.equals("+") || this.value.equals("*") || this.value.equals("=")) {
             if (this.nodes.size() != compare.nodes.size()) return false;
+            ArrayList<Integer> used = new ArrayList<Integer>();
             for (Node child : this.nodes) {
                 boolean in = false;
-                for (Node child2 : compare.nodes) {
-                    if (child.equals(child2)) {
+                for (int i = 0; i < compare.nodes.size(); ++i) {
+                    if (used.contains(i)) continue;
+                    if (child.equals(compare.nodes.get(i))) {
+                        used.add(i);
                         in = true;
                         break;
                     }
@@ -37,12 +40,13 @@ public class Node {
         } else if (this.value.equals("/") || this.value.equals("^")) {
             if (!this.nodes.get(0).equals(compare.nodes.get(0))) return false;
             if (!this.nodes.get(1).equals(compare.nodes.get(1))) return false;
-        } else if (this.value.equals("=")) {
-            if ((!this.nodes.get(0).equals(compare.nodes.get(0))
-                    || !this.nodes.get(1).equals(compare.nodes.get(1)))
-                    && (!this.nodes.get(0).equals(compare.nodes.get(1))
-                    || !this.nodes.get(1).equals(compare.nodes.get(0)))) return false;
         }
+//        else if (this.value.equals("=")) {
+//            if ((!this.nodes.get(0).equals(compare.nodes.get(0))
+//                    || !this.nodes.get(1).equals(compare.nodes.get(1)))
+//                    && (!this.nodes.get(0).equals(compare.nodes.get(1))
+//                    || !this.nodes.get(1).equals(compare.nodes.get(0)))) return false;
+//        }
 
         return true;
     }

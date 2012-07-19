@@ -1,7 +1,5 @@
 package com.mathenator.engine;
 
-import java.util.ArrayList;
-
 public class Solve2 {
 
     public static boolean Solve(Node node, String target) {
@@ -44,12 +42,12 @@ public class Solve2 {
     }
 
     public static boolean Factor(Node x, Node y, Node eq, boolean toLeft, String target) {
-
+        if (x.value.equals(target)) return false;
         if (!Bools.isNum(y.value) || Float.parseFloat(y.value) != 0) {
             eq.temp = -10;
 
             if (x.value.equals("+")) {
-                Node temp = new Node("*", new Node[] {
+                Node temp = new Node("*", new Node[]{
                         new Node("-1"),
                         y.clone()
                 });
@@ -62,36 +60,166 @@ public class Solve2 {
                 return true;
             }
 
-            Node guts = new Node("*", new Node[] {
+            Node guts = new Node("*", new Node[]{
                     new Node("-1"),
                     y
             });
             guts.changed = true;
 
-            Node temp = new Node("+", new Node[] {
+            Node temp = new Node("+", new Node[]{
                     x,
                     guts
             });
 
-            eq.nodes.set(toLeft? 0 : 1, temp);
+            eq.nodes.set(toLeft ? 0 : 1, temp);
             y.value = "0";
             y.nodes.clear();
 
             return true;
         }
 
-        ArrayList<Node> powers = new ArrayList<Node>();
 
-        if (x.value.equals("+")) {
-            for (int i = 0; i < x.nodes.size(); i++) {
-                Node c = x.nodes.get(i);
-                if (c.value.equals("^")) {
-                    if (c.nodes.get(0).value.equals(target)) {
-                        powers.add(c.nodes.get(1));
-                    }
-                } else if (c.value.equals(target)) {
-                    
+        if (!x.value.equals("+")) return false;
+
+        Node[] powers = new Node[5];
+
+        for (int i = 0; i < x.nodes.size(); i++) {
+            Node c = x.nodes.get(i);
+            if (c.targets == 0) {
+                if (powers[0] != null) return false;
+                powers[0] = c;
+            } else if (c.value.equals("^")) {
+                if (c.nodes.get(0).value.equals(target)) {
+                    if (!Bools.isNum(c.nodes.get(1).value)) return false;
+                    float val = Float.parseFloat(c.nodes.get(1).value);
+                    if (val != Math.floor(val)) return false;
+                    if (val >= 5) return false;
+                    if (powers[(int) val] != null) return false;
+                    powers[(int) val] = new Node("1");
                 }
+            } else if (c.value.equals("*")) {
+                boolean have = false;
+                for (int j = 0; j < c.nodes.size(); j++) {
+                    Node n = c.nodes.get(j);
+                    if (n.targets == 0) continue;
+                    if (n.value.equals("^")) {
+                        if (n.nodes.get(0).value.equals(target)) {
+                            if (have) return false;
+                            if (!Bools.isNum(c.nodes.get(1).value)) return false;
+                            float val = Float.parseFloat(c.nodes.get(1).value);
+                            if (val != Math.floor(val)) return false;
+                            if (val >= 5) return false;
+                            if (powers[(int) val] != null) return false;
+                            Node v = c.clone();
+                            v.nodes.remove(j);
+                            if (v.nodes.size() == 1) {
+                                v.value = v.nodes.get(0).value;
+                                v.nodes = v.nodes.get(0).nodes;
+                            }
+                            powers[(int) val] = v;
+                            have = true;
+                        }
+                    } else if (n.value.equals(target)) {
+                        if (have) return false;
+                        if (powers[1] != null) return false;
+                        Node v = c.clone();
+                        v.nodes.remove(j);
+                        if (v.nodes.size() == 1) {
+                            v.value = v.nodes.get(0).value;
+                            v.nodes = v.nodes.get(0).nodes;
+                        }
+                        powers[1] = v;
+                        have = true;
+                    }
+                }
+            } else if (c.value.equals(target)) {
+                if (powers[1] != null) return false;
+                powers[1] = new Node("1");
+            }
+        }
+
+        for (int i = powers.length - 1; i > 0; --i) {
+            if (powers[i] == null) continue;
+            if (i == 2) {
+                Node n = new Node("*", new Node[]{
+                        new Node("+", new Node[]{
+                                new Node("x"),
+                                new Node("*", new Node[]{
+                                        new Node("-1"),
+                                        new Node("/", new Node[]{
+                                                new Node("+", new Node[]{
+                                                        new Node("*", new Node[]{
+                                                                new Node("-1"),
+                                                                powers[1].clone()
+                                                        }),
+                                                        new Node("^", new Node[]{
+                                                                new Node("+", new Node[]{
+                                                                        new Node("^", new Node[]{
+                                                                                powers[1].clone(),
+                                                                                new Node("2")
+                                                                        }),
+                                                                        new Node("*", new Node[]{
+                                                                                new Node("-4"),
+                                                                                powers[2].clone(),
+                                                                                powers[0].clone()
+                                                                        })
+                                                                }),
+                                                                new Node("/", new Node[] {
+                                                                        new Node("1"),
+                                                                        new Node("2")
+                                                                })
+                                                        })
+                                                }),
+                                                new Node("*", new Node[]{
+                                                        new Node("2"),
+                                                        powers[2].clone()
+                                                })
+                                        })
+                                })
+                        }),
+                        new Node("+", new Node[]{
+                                new Node("x"),
+                                new Node("*", new Node[]{
+                                        new Node("-1"),
+                                        new Node("/", new Node[]{
+                                                new Node("+", new Node[]{
+                                                        new Node("*", new Node[]{
+                                                                new Node("-1"),
+                                                                powers[1].clone()
+                                                        }),
+                                                        new Node("*", new Node[]{
+                                                                new Node("-1"),
+                                                                new Node("^", new Node[]{
+                                                                        new Node("+", new Node[]{
+                                                                                new Node("^", new Node[]{
+                                                                                        powers[1].clone(),
+                                                                                        new Node("2")
+                                                                                }),
+                                                                                new Node("*", new Node[]{
+                                                                                        new Node("-4"),
+                                                                                        powers[2].clone(),
+                                                                                        powers[0].clone()
+                                                                                })
+                                                                        }),
+                                                                        new Node("/", new Node[] {
+                                                                                new Node("1"),
+                                                                                new Node("2")
+                                                                        })
+                                                                })
+                                                        })
+                                                }),
+                                                new Node("*", new Node[]{
+                                                        new Node("2"),
+                                                        powers[2].clone()
+                                                })
+                                        })
+                                })
+                        })
+                });
+                n.temp = -20;
+                eq.nodes.set(0, n);
+                eq.nodes.set(1, new Node("0"));
+                break;
             }
         }
 
@@ -356,7 +484,7 @@ public class Solve2 {
         Node n = Parser.CreateNode(eq, target);
         System.out.println(Parser.ReadNode(n));
         int i;
-        for (i = 0; i < 5000; i++) {
+        for (i = 0; i < 100; i++) {
             if (Step(n, target)) break;
             Parser.MarkUp(n);
             System.out.println(Parser.ReadNode(n));

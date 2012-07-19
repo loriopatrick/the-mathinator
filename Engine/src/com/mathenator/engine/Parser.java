@@ -230,7 +230,7 @@ public class Parser {
     }
 
     public static String ReadNode(Node node) {
-        if (node.height == 0) {
+        if (node.height == 0 || node.nodes.size() == 0) {
             if (node.value.equals(Math.PI + "")) {
                 return "pi";
             }
@@ -314,7 +314,8 @@ public class Parser {
         }
 
 
-        boolean p = node.parent != null && node.value.equals("+") && node.parent.value.equals("*");
+        boolean p = node.parent != null && (node.value.equals("+") && node.parent.value.equals("*")
+                || node.parent.value.equals("^"));
 
         if (p) sb.append('(');
 

@@ -46,7 +46,7 @@ public class Calc implements HttpHandler {
         return sb.toString();
     }
 
-    public static int steps = 30;
+    public static int steps = 80;
 
     public void handle(HttpExchange ex) {
 
