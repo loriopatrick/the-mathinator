@@ -4,7 +4,7 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Solve2.Run("((2*x)+(-1*(-2*x)))=(-56.0)", "x");
+        Solve2.Run("(x+14)*(x-3)=(x+6)*(x+5)", "x");
 
 //        Solve2.Run("x=(2-x)^(1/2)", "x");
 

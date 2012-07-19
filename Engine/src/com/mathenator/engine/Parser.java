@@ -173,6 +173,7 @@ public class Parser {
     }
 
     public static void MarkUp(Node n, String target) {
+        n.targets = 0;
         if (n.nodes.size() == 0) {
             boolean t = n.value.equals(target) || n.value.equals("-" + target);
             n.targets = 0;

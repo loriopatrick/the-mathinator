@@ -150,4 +150,9 @@ $(document).ready(function () {
             }
         }
     });
+    var h = window.location.hash;
+    if (h && h != '#') {
+        $('#eq').val(h.substr(1));
+        run();
+    }
 });
