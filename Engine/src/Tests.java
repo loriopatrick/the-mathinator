@@ -140,6 +140,14 @@ public class Tests {
         }
     }
 
+    public boolean Simplify(String eq, String ans) {
+        try {
+            return Simplify(eq, Parser.CreateNode(ans));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Test
     public void Simplify() {
         if (!Simplify("10+15-7+2+8-2", new Node("26"))) assert false;
@@ -174,17 +182,10 @@ public class Tests {
                 new Node("5")
         }))) assert false;
 
-        if (!Simplify("(x^2)/x", new Node("x"))) assert false;
-
-        if (!Simplify("(x^4)/(x^2)", new Node("^", new Node[] {
-                new Node("x"),
-                new Node("2")
-        }))) assert false;
-
-        if (!Simplify("x/(x^2)", new Node("^", new Node[] {
-                new Node("x"),
-                new Node("-1")
-        }))) assert false;
+        if (!Simplify("(x^2)/x", "x")) assert false;
+        if (!Simplify("(x^4)/(x^2)", "x^2")) assert false;
+        if (!Simplify("x/(x^2)", "x^(-1)")) assert false;
+        if (!Simplify("5*x*y+3*x*y+9*x*z*y+12*x*z*y", "8*x*y+21*x*z*y")) assert false;
     }
 
     public boolean Solve(String eq, Node ans, String target) {

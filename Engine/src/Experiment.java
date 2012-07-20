@@ -4,7 +4,7 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Solve2.Run("(x+14)*(x-3)=(x+6)*(x+5)", "x");
+        Simplify.Run("5*x*y+3*x*y+9*x*z*y+12*x*z*y");
 
 //        Solve2.Run("x=(2-x)^(1/2)", "x");
 

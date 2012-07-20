@@ -2,6 +2,8 @@ package com.mathenator.engine;
 
 import sun.tools.tree.NewArrayExpression;
 
+import java.util.ArrayList;
+
 public class Simplify {
     public static boolean Simplify(Node node) {
         node.changed = false;
@@ -820,6 +822,46 @@ public class Simplify {
                                             a.message = "x*y+z*y = y*(x+z)";
                                             return true;
                                         }
+                                    }
+                                }
+                            } else {
+                                int outsA = 0, outsB = 0;
+                                Node v = new Node(""), n = new Node("");
+                                ArrayList<Integer> used = new ArrayList<Integer>();
+                                for (int k = 0; k < a.nodes.size(); k++) {
+                                    Node x = a.nodes.get(k);
+                                    boolean in = false;
+                                    for (int p = 0; p < b.nodes.size(); p++) {
+                                        if (used.contains(p)) continue;
+                                        Node y = b.nodes.get(p);
+                                        if (x.equals(y)) {
+                                            used.add(p);
+                                            in = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!in) {
+                                        ++outsA;
+                                        v = x;
+                                    }
+                                }
+
+                                if (outsA == 1) {
+                                    int pos = 0;
+                                    for (int p = 0; p < b.nodes.size(); p++) {
+                                        if (used.contains(p)) continue;
+                                        ++outsB;
+                                        pos = p;
+                                        n = b.nodes.get(p);
+                                    }
+
+                                    if (outsB == 1) {
+                                        b.nodes.set(pos, new Node("+", new Node[] {
+                                                n,
+                                                v
+                                        }));
+                                        node.nodes.remove(i);
+                                        return true;
                                     }
                                 }
                             }
