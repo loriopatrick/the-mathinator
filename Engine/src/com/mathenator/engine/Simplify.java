@@ -668,10 +668,6 @@ public class Simplify {
             } else if (n.value.equals("+")) {
                 boolean e = n.targets > 0 && d.targets > 0 && !d.value.equals("+");
                 if (d.targets == 0 || e) {
-//
-//                    Node targets = new Node("+");
-//                    Node norms = new Node("+");
-
                     Node temp = new Node("+");
 
                     for (int i = 0; i < n.nodes.size(); i++) {
@@ -687,30 +683,6 @@ public class Simplify {
                     node.changed = true;
 
                     return true;
-
-//
-//                    if (targets.nodes.size() > 0 && norms.nodes.size() > 0) {
-//                        node.value = "+";
-//                        node.nodes.clear();
-//                        node.nodes.add(new Node("/", new Node[]{
-//                                targets,
-//                                d
-//                        }));
-//                        node.nodes.add(new Node("/", new Node[]{
-//                                norms,
-//                                d
-//                        }));
-//
-//                        node.changed = true;
-//                        return true;
-//                    } else if (targets.nodes.size() > 0) {
-//                        node.value = "+";
-//                        node.nodes.clear();
-//                        node.nodes.add(new Node("/", new Node[]{
-//                                targets,
-//                                d
-//                        }));
-//                    }
                 }
             } else if (n.value.equals("^") && d.value.equals("^")) {
                 if (n.nodes.get(0).equals(d.nodes.get(0))) {

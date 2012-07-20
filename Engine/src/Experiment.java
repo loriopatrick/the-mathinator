@@ -7,7 +7,7 @@ public class Experiment {
 //        Simplify.Run("(6*y*x+7*x)/x");
 
 //        Solve2.Run("(x+10)/(x-7)=8/9", "x");
-        Solve2.Run("2*x*y+4*x=5", "x");
+        Solve2.Run("x/(x-3)=2/3", "x");
 
         //   (1+2)/3 :: !(true && true)
         //   -10*(x-10)^(1/2) :: !(true && false)
