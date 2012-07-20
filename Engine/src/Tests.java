@@ -150,38 +150,11 @@ public class Tests {
 
     @Test
     public void Simplify() {
-        if (!Simplify("10+15-7+2+8-2", new Node("26"))) assert false;
-
-        if (!Simplify("(5*2+6)/(5^2)+10-2/4*6/4", new Node("/", new Node[]{
-                new Node("989"),
-                new Node("100")
-        }))) assert false;
-
-        if (!Simplify("(x^5*y^7*z^-2)/(x^3*z^-10*y)", new Node("*", new Node[]{
-                new Node("^", new Node[]{
-                        new Node("x"),
-                        new Node("2")
-                }),
-                new Node("^", new Node[]{
-                        new Node("y"),
-                        new Node("6")
-                }),
-                new Node("^", new Node[]{
-                        new Node("z"),
-                        new Node("8")
-                })
-        }))) assert false;
-
-        if (!Simplify("(x^2)^2", new Node("^", new Node[] {
-                new Node("x"),
-                new Node("4")
-        }))) assert false;
-
-        if (!Simplify("(x^2*5)/x", new Node("*", new Node[] {
-                new Node("x"),
-                new Node("5")
-        }))) assert false;
-
+        if (!Simplify("10+15-7+2+8-2", "26")) assert false;
+        if (!Simplify("(5*2+6)/(5^2)+10-2/4*6/4", "989/100")) assert false;
+        if (!Simplify("(x^5*y^7*z^-2)/(x^3*z^-10*y)", "x^2*y^6*z^8")) assert false;
+        if (!Simplify("(x^2)^2", "x^4")) assert false;
+        if (!Simplify("(x^2*5)/x", "5*x")) assert false;
         if (!Simplify("(x^2)/x", "x")) assert false;
         if (!Simplify("(x^4)/(x^2)", "x^2")) assert false;
         if (!Simplify("x/(x^2)", "x^(-1)")) assert false;
@@ -206,34 +179,33 @@ public class Tests {
         }
     }
 
+    public boolean Solve(String eq, String res, String target) {
+        try {
+            return Solve(eq, Parser.CreateNode(res, target), target);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Test
     public void SolveSimple() {
-        if (!Solve("-10*(x-10)^(1/2)=-60", new Node("46"), "x")) assert false;
-        if (!Solve("(2*x-88)^(1/2)=(x/6)^(1/2)", new Node("48"), "x")) assert false;
-        if (!Solve("(2*x+40)^(1/2)=(-16-2*x)^(1/2)", new Node("-14"), "x")) assert false;
-        if (!Solve("(x/10)^(1/2)=(3*x-58)^(1/2)", new Node("20"), "x")) assert false;
-        if (!Solve("(x+8)^(1/2)=(3*x+8)^(1/2)", new Node("0"), "x")) assert false;
-        if (!Solve("x=x*2", new Node("0"), "x")) assert false;
-        if (!Solve("-5*(1-5*x)+5*(-8*x-2)=-4*x-8*x", new Node("-5"), "x")) assert false;
-        if (!Solve("2*(4*x-3)-8=4+2*x", new Node("3"), "x")) assert false;
-        if (!Solve("8*x-2=-9+7*x", new Node("-7"), "x")) assert false;
-        if (!Solve("4/(x-8)=8/2", new Node("9"), "x")) assert false;
-        if (!Solve("x/(x-3)=2/3", new Node("-6"), "x")) assert false;
-        if (!Solve("(x+10)/(x-7)=8/9", new Node("-146"), "x")) assert false;
-        if (!Solve("9/6=x/10", new Node("15"), "x")) assert false;
-        if (!Solve("6=(x-2)^(1/2)", new Node("38"), "x")) assert false;
-        if (!Solve("-10*(x-10)^(1/2)=-60", new Node("46"), "x")) assert false;
-        if (!Solve("4*(9*x+18*x/5)=32*x+6", new Node("/", new Node[] {
-                new Node("15"),
-                new Node("46")
-        }), "x")) assert false;
-        if (!Solve("x^2+32=5*x^2", new Node("^", new Node[] {
-                new Node("8"),
-                new Node("/", new Node[] {
-                        new Node("1"),
-                        new Node("2")
-                })
-        }), "x")) assert false;
+        if (!Solve("-10*(x-10)^(1/2)=-60", "46", "x")) assert false;
+        if (!Solve("(2*x-88)^(1/2)=(x/6)^(1/2)", "48", "x")) assert false;
+        if (!Solve("(2*x+40)^(1/2)=(-16-2*x)^(1/2)", "-14", "x")) assert false;
+        if (!Solve("(x/10)^(1/2)=(3*x-58)^(1/2)", "20", "x")) assert false;
+        if (!Solve("(x+8)^(1/2)=(3*x+8)^(1/2)", "0", "x")) assert false;
+        if (!Solve("x=x*2", "0", "x")) assert false;
+        if (!Solve("-5*(1-5*x)+5*(-8*x-2)=-4*x-8*x", "-5", "x")) assert false;
+        if (!Solve("2*(4*x-3)-8=4+2*x", "3", "x")) assert false;
+        if (!Solve("8*x-2=-9+7*x", "-7", "x")) assert false;
+        if (!Solve("4/(x-8)=8/2", "9", "x")) assert false;
+        if (!Solve("x/(x-3)=2/3", "-6", "x")) assert false;
+        if (!Solve("(x+10)/(x-7)=8/9", "-146", "x")) assert false;
+        if (!Solve("9/6=x/10", "15", "x")) assert false;
+        if (!Solve("6=(x-2)^(1/2)", "38", "x")) assert false;
+        if (!Solve("-10*(x-10)^(1/2)=-60", "46", "x")) assert false;
+        if (!Solve("4*(9*x+18*x/5)=32*x+6", "15/46", "x")) assert false;
+        if (!Solve("x^2+32=5*x^2", "8^(1/2)", "x")) assert false;
     }
 
     @Test
