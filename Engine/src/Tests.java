@@ -159,6 +159,7 @@ public class Tests {
         if (!Simplify("(x^4)/(x^2)", "x^2")) assert false;
         if (!Simplify("x/(x^2)", "x^(-1)")) assert false;
         if (!Simplify("5*x*y+3*x*y+9*x*z*y+12*x*z*y", "8*x*y+21*x*z*y")) assert false;
+        if (!Simplify("(6*y*x+7*x)/x", "6*y+7")) assert false;
     }
 
     public boolean Solve(String eq, Node ans, String target) {
@@ -210,6 +211,6 @@ public class Tests {
 
     @Test
     public void SolveHard () {
-        if (!Solve("x=(2-x)^(1/2)", new Node("1"), "x")) assert false;
+        if (!Solve("2*x*y+4*x=5", "5/(2*y+4)", "x")) assert false;
     }
 }

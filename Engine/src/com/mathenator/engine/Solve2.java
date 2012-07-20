@@ -1,5 +1,7 @@
 package com.mathenator.engine;
 
+import com.sun.tools.internal.xjc.generator.bean.field.NoExtendedContentField;
+
 public class Solve2 {
 
     public static boolean Solve(Node node, String target) {
@@ -42,6 +44,37 @@ public class Solve2 {
     }
 
     public static boolean Factor(Node x, Node y, Node eq, boolean toLeft, String target) {
+
+        if (eq.temp != -10) {
+            if (x.value.equals("+")) {
+                boolean good = true;
+                for (int i = 0; i < x.nodes.size(); i++) {
+                    Node c = x.nodes.get(i);
+                    int pos = c.find(new Node(target));
+                    if (c.targets == 0
+                            || !(c.value.equals(target)
+                            || (c.value.equals("*")
+                            && c.find(new Node(target)) == 0)
+                            || (c.value.equals("^") && c.nodes.get(0).value.equals(target)))) {
+                        good = false;
+                        break;
+                    }
+                }
+
+                if (good) {
+                    int pos = toLeft ? 0 : 1;
+                    eq.nodes.set(pos, new Node("*", new Node[] {
+                            new Node(target),
+                            new Node("/", new Node[]{
+                                    eq.nodes.get(pos),
+                                    new Node(target)
+                            })
+                    }));
+                    return true;
+                }
+            }
+        }
+
         if (x.value.equals(target)) return false;
         if (!Bools.isNum(y.value) || Float.parseFloat(y.value) != 0) {
             eq.temp = -10;
@@ -164,7 +197,7 @@ public class Solve2 {
                                                                                 powers[0].clone()
                                                                         })
                                                                 }),
-                                                                new Node("/", new Node[] {
+                                                                new Node("/", new Node[]{
                                                                         new Node("1"),
                                                                         new Node("2")
                                                                 })
@@ -201,7 +234,7 @@ public class Solve2 {
                                                                                         powers[0].clone()
                                                                                 })
                                                                         }),
-                                                                        new Node("/", new Node[] {
+                                                                        new Node("/", new Node[]{
                                                                                 new Node("1"),
                                                                                 new Node("2")
                                                                         })
@@ -227,6 +260,58 @@ public class Solve2 {
     }
 
     public static boolean Multis(Node x, Node y, Node eq, boolean toLeft) {
+
+        if (x.value.equals("*") && y.value.equals("*")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node a = x.nodes.get(i);
+                for (int j = 0; j < y.nodes.size(); j++) {
+                    Node b = y.nodes.get(j);
+                    if (a.equals(b)) {
+                        eq.nodes.set(0, new Node("/", new Node[]{
+                                eq.nodes.get(0),
+                                a.clone()
+                        }));
+                        eq.nodes.set(1, new Node("/", new Node[]{
+                                eq.nodes.get(1),
+                                a.clone()
+                        }));
+                        return true;
+                    }
+                }
+            }
+        } else if (x.value.equals("*")) {
+            for (int i = 0; i < x.nodes.size(); i++) {
+                Node a = x.nodes.get(i);
+                if (a.equals(y)) {
+                    eq.nodes.set(0, new Node("/", new Node[]{
+                            eq.nodes.get(0),
+                            a.clone()
+                    }));
+                    eq.nodes.set(1, new Node("/", new Node[]{
+                            eq.nodes.get(1),
+                            a.clone()
+                    }));
+                    return true;
+                }
+            }
+        } else if (y.value.equals("*")) {
+            for (int i = 0; i < y.nodes.size(); i++) {
+                Node a = y.nodes.get(i);
+                if (a.equals(x)) {
+                    eq.nodes.set(0, new Node("/", new Node[]{
+                            eq.nodes.get(0),
+                            a.clone()
+                    }));
+                    eq.nodes.set(1, new Node("/", new Node[]{
+                            eq.nodes.get(1),
+                            a.clone()
+                    }));
+                    return true;
+                }
+            }
+        }
+
+
         if (y.targets == 0 && x.value.equals("*")) {
             for (int i = 0; i < x.nodes.size(); i++) {
                 Node c = x.nodes.get(i);

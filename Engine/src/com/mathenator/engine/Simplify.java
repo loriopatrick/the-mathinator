@@ -111,8 +111,8 @@ public class Simplify {
                         return true;
                     }
 
-                    res.nodes.add(new Node("D", new Node[] {
-                            new Node(",", new Node[] {
+                    res.nodes.add(new Node("D", new Node[]{
+                            new Node(",", new Node[]{
                                     c,
                                     target
                             })
@@ -130,19 +130,19 @@ public class Simplify {
                 Node f = a.nodes.get(0),
                         b = a.nodes.get(1);
 
-                Node temp = new Node("+", new Node[] {
-                        new Node("*", new Node[] {
-                                new Node("D", new Node[] {
-                                        new Node(",", new Node[] {
+                Node temp = new Node("+", new Node[]{
+                        new Node("*", new Node[]{
+                                new Node("D", new Node[]{
+                                        new Node(",", new Node[]{
                                                 f.clone()
                                         }),
                                         target
                                 }),
                                 b
                         }),
-                        new Node("*", new Node[] {
-                                new Node("D", new Node[] {
-                                        new Node(",", new Node[] {
+                        new Node("*", new Node[]{
+                                new Node("D", new Node[]{
+                                        new Node(",", new Node[]{
                                                 b.clone()
                                         }),
                                         target
@@ -169,17 +169,17 @@ public class Simplify {
                 Node b = a.nodes.get(0),
                         e = a.nodes.get(1);
 
-                Node temp = new Node("*", new Node[] {
+                Node temp = new Node("*", new Node[]{
                         e.clone(),
-                        new Node("D", new Node[] {
-                                new Node(",", new Node[] {
+                        new Node("D", new Node[]{
+                                new Node(",", new Node[]{
                                         b.clone(),
                                         target
                                 })
                         }),
-                        new Node("^", new Node[] {
+                        new Node("^", new Node[]{
                                 b,
-                                new Node("+", new Node[] {
+                                new Node("+", new Node[]{
                                         e,
                                         new Node("-1")
                                 })
@@ -197,29 +197,29 @@ public class Simplify {
                 Node n = a.nodes.get(0),
                         d = a.nodes.get(1);
 
-                Node temp = new Node("/", new Node[] {
-                        new Node("+", new Node[] {
-                                new Node("*", new Node[] {
+                Node temp = new Node("/", new Node[]{
+                        new Node("+", new Node[]{
+                                new Node("*", new Node[]{
                                         d.clone(),
-                                        new Node("D", new Node[] {
-                                                new Node(",", new Node[] {
+                                        new Node("D", new Node[]{
+                                                new Node(",", new Node[]{
                                                         n.clone(),
                                                         target
                                                 })
                                         })
                                 }),
-                                new Node("*", new Node[] {
+                                new Node("*", new Node[]{
                                         new Node("-1"),
                                         n,
-                                        new Node("D", new Node[] {
-                                                new Node(",", new Node[] {
+                                        new Node("D", new Node[]{
+                                                new Node(",", new Node[]{
                                                         d.clone(),
                                                         target
                                                 })
                                         })
                                 })
                         }),
-                        new Node("^", new Node[] {
+                        new Node("^", new Node[]{
                                 d,
                                 new Node("2")
                         })
@@ -370,7 +370,7 @@ public class Simplify {
                         return true;
                     }
 
-                    if (a.value.equals("+") && node.temp != -20) {
+                    if (a.value.equals("+") && node.temp != -20 && a.targets > 0) {
 //                        if (Bools.isNum(b.value)) {
                         for (int n = 0; n < a.nodes.size(); n++) {
                             a.nodes.set(n, new Node("*", new Node[]{
@@ -665,33 +665,52 @@ public class Simplify {
                         }
                     }
                 }
-            } else if (n.value.equals("+") && d.targets == 0) {
-                Node targets = new Node("+");
-                Node norms = new Node("+");
+            } else if (n.value.equals("+")) {
+                boolean e = n.targets > 0 && d.targets > 0 && !d.value.equals("+");
+                if (d.targets == 0 || e) {
+//
+//                    Node targets = new Node("+");
+//                    Node norms = new Node("+");
 
-                for (int i = 0; i < n.nodes.size(); i++) {
-                    Node c = n.nodes.get(i);
-                    if (c.targets > 0) {
-                        targets.nodes.add(c);
-                    } else {
-                        norms.nodes.add(c);
+                    Node temp = new Node("+");
+
+                    for (int i = 0; i < n.nodes.size(); i++) {
+                        Node c = n.nodes.get(i);
+                        temp.nodes.add(new Node("/", new Node[] {
+                                c,
+                                d.clone()
+                        }));
                     }
-                }
 
-                if (targets.nodes.size() > 0 && norms.nodes.size() > 0) {
-                    node.value = "+";
-                    node.nodes.clear();
-                    node.nodes.add(new Node("/", new Node[]{
-                            targets,
-                            d
-                    }));
-                    node.nodes.add(new Node("/", new Node[]{
-                            norms,
-                            d
-                    }));
-
+                    node.value = temp.value;
+                    node.nodes = temp.nodes;
                     node.changed = true;
+
                     return true;
+
+//
+//                    if (targets.nodes.size() > 0 && norms.nodes.size() > 0) {
+//                        node.value = "+";
+//                        node.nodes.clear();
+//                        node.nodes.add(new Node("/", new Node[]{
+//                                targets,
+//                                d
+//                        }));
+//                        node.nodes.add(new Node("/", new Node[]{
+//                                norms,
+//                                d
+//                        }));
+//
+//                        node.changed = true;
+//                        return true;
+//                    } else if (targets.nodes.size() > 0) {
+//                        node.value = "+";
+//                        node.nodes.clear();
+//                        node.nodes.add(new Node("/", new Node[]{
+//                                targets,
+//                                d
+//                        }));
+//                    }
                 }
             } else if (n.value.equals("^") && d.value.equals("^")) {
                 if (n.nodes.get(0).equals(d.nodes.get(0))) {
@@ -856,7 +875,7 @@ public class Simplify {
                                     }
 
                                     if (outsB == 1) {
-                                        b.nodes.set(pos, new Node("+", new Node[] {
+                                        b.nodes.set(pos, new Node("+", new Node[]{
                                                 n,
                                                 v
                                         }));
