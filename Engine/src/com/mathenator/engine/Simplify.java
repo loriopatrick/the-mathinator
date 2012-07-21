@@ -66,6 +66,18 @@ public class Simplify {
         if (node.value.equals("=")) {
             Node x = node.nodes.get(0), y = node.nodes.get(1);
 
+            boolean useTarget = true;
+            Node target = null;
+
+            if (x.targets == 1 && x.nodes.size() == 0) {
+                useTarget = false;
+                target = x;
+            }
+            else if (y.targets == 1 && y.nodes.size() == 0) {
+                useTarget = false;
+                target = y;
+            }
+
             ArrayList<Node> commons = nMath.Commons(x);
             ArrayList<Node> yCommons = nMath.Commons(y);
 
@@ -74,8 +86,13 @@ public class Simplify {
             if (commons.size() > 0) {
                 Node div = new Node("*");
                 for (Node n : commons) {
+                    if (!useTarget && n.equals(target)) {
+                        continue;
+                    }
                     div.nodes.add(n);
                 }
+
+                if (div.nodes.size() == 0) return false;
 
                 node.nodes.set(0, new Node("/", new Node[] {
                         node.nodes.get(0),
@@ -527,180 +544,7 @@ public class Simplify {
                 return true;
             }
 
-            if (n.equals(d)) {
-                node.value = "1";
-                node.nodes.clear();
-
-                node.changed = true;
-                node.message = "x/1 = x";
-                return true;
-            }
-
-            if (Bools.isNum(n.value) && Bools.isNum(d.value)) {
-                float a = Float.parseFloat(n.value),
-                        b = Float.parseFloat(d.value);
-
-                float res = a / b;
-
-                if (Math.floor(res) == res) {
-                    node.value = res + "";
-                    node.nodes.clear();
-
-                    node.changed = true;
-
-                    return true;
-                }
-
-                int[] Simple = nMath.SimplifyFraction(a, b);
-                if (Simple != null && Simple[0] != a) {
-                    node.nodes.set(0, new Node(Simple[0] + ""));
-                    node.nodes.set(1, new Node(Simple[1] + ""));
-
-                    node.changed = true;
-                    return true;
-                }
-            }
-
-            if (n.value.equals("/") && d.value.equals("/")) {
-                node.nodes.set(0, new Node("*", new Node[]{
-                        n.nodes.get(0),
-                        d.nodes.get(1)
-                }));
-                node.nodes.set(1, new Node("*", new Node[]{
-                        n.nodes.get(1),
-                        d.nodes.get(0)
-                }));
-
-                node.changed = true;
-                return true;
-            }
-
-            if (n.value.equals("/")) {
-                node.nodes.set(0, n.nodes.get(0));
-                node.nodes.set(1, new Node("*", new Node[]{
-                        n.nodes.get(1),
-                        d
-                }));
-
-                node.changed = true;
-                return true;
-            }
-
-            if (d.value.equals("/")) {
-                node.nodes.set(0, new Node("*", new Node[]{
-                        n,
-                        d.nodes.get(1)
-                }));
-                node.nodes.set(1, d.nodes.get(0));
-
-                node.changed = true;
-                return true;
-            }
-
-            if (n.value.equals("*") && d.value.equals("*")) {
-                for (int i = 0; i < n.nodes.size(); i++) {
-                    Node a = n.nodes.get(i);
-                    for (int j = 0; j < d.nodes.size(); j++) {
-                        Node b = d.nodes.get(j);
-
-                        if (a.equals(b)) {
-                            n.nodes.remove(i);
-                            d.nodes.remove(j);
-
-                            node.changed = true;
-                            node.message = "x/x = 1, x*y/x = y";
-                            return true;
-                        }
-
-                        if (a.value.equals("^") && b.value.equals("^")) {
-                            if (a.nodes.get(0).equals(b.nodes.get(0))) {
-                                a.nodes.set(1, new Node("+", new Node[]{
-                                        a.nodes.get(1),
-                                        new Node("*", new Node[]{
-                                                new Node("-1"),
-                                                b.nodes.get(1)
-                                        })
-                                }));
-
-                                a.nodes.get(1).changed = true;
-                                d.nodes.remove(j);
-                                return true;
-                            }
-                        } else if (a.value.equals("^")) {
-                            if (a.nodes.get(0).equals(b)) {
-                                a.nodes.set(1, new Node("+", new Node[]{
-                                        a.nodes.get(1),
-                                        new Node("-1")
-                                }));
-
-                                a.nodes.get(1).changed = true;
-                                d.nodes.remove(j);
-                                return true;
-                            }
-                        } else if (b.value.equals("^")) {
-                            if (b.nodes.get(0).equals(a)) {
-                                b.nodes.set(1, new Node("+", new Node[]{
-                                        b.nodes.get(1),
-                                        new Node("-1")
-                                }));
-
-                                b.nodes.get(1).changed = true;
-                                n.nodes.remove(i);
-                                return true;
-                            }
-                        }
-                    }
-                }
-            } else if (n.value.equals("*")) {
-                for (int i = 0; i < n.nodes.size(); i++) {
-                    Node a = n.nodes.get(i);
-                    if (a.equals(d)) {
-                        n.nodes.remove(i);
-                        node.nodes.remove(1);
-
-                        node.changed = true;
-                        return true;
-                    }
-
-                    if (a.value.equals("^") && d.value.equals("^")) {
-                        if (a.nodes.get(0).equals(d.nodes.get(0))) {
-                            a.nodes.set(1, new Node("+", new Node[]{
-                                    a.nodes.get(1),
-                                    new Node("*", new Node[]{
-                                            new Node("-1"),
-                                            d.nodes.get(1)
-                                    })
-                            }));
-
-                            a.nodes.get(1).changed = true;
-                            node.nodes.remove(1);
-                            return true;
-                        }
-                    } else if (a.value.equals("^")) {
-                        if (a.nodes.get(0).equals(d)) {
-                            a.nodes.set(1, new Node("+", new Node[]{
-                                    a.nodes.get(1),
-                                    new Node("-1")
-                            }));
-
-                            a.nodes.get(1).changed = true;
-                            node.nodes.remove(1);
-                            return true;
-                        }
-                    } else if (d.value.equals("^")) {
-                        if (d.nodes.get(0).equals(a)) {
-                            d.nodes.set(1, new Node("+", new Node[]{
-                                    d.nodes.get(1),
-                                    new Node("-1")
-                            }));
-
-                            d.nodes.get(1).changed = true;
-                            n.nodes.remove(i);
-                            return true;
-                        }
-                    }
-                }
-            } else if (n.value.equals("+")) {
+            if (n.value.equals("+")) {
                 boolean e = n.targets > 0 && d.targets > 0 && !d.value.equals("+");
                 if (d.targets == 0 || e) {
                     Node temp = new Node("+");
@@ -719,6 +563,95 @@ public class Simplify {
 
                     return true;
                 }
+            }
+
+            return Divide(n, d);
+        }
+
+        return false;
+    }
+
+    public static boolean Divide (Node n, Node d) {
+
+            if (n.equals(d)) {
+                n.clone(new Node("1", true));
+                d.clone(new Node("1", true));
+
+                return true;
+            }
+
+            if (Bools.isNum(n.value) && Bools.isNum(d.value)) {
+                float a = Float.parseFloat(n.value),
+                        b = Float.parseFloat(d.value);
+
+                float res = a / b;
+
+                if (Math.floor(res) == res) {
+                    n.clone(new Node(res + "", true));
+                    d.clone(new Node("1", true));
+
+                    return true;
+                }
+
+                int[] Simple = nMath.SimplifyFraction(a, b);
+                if (Simple != null && Simple[0] != a) {
+                    n.clone(new Node(Simple[0] + "", true));
+                    d.clone(new Node(Simple[1] + "", true));
+
+                    return true;
+                }
+            }
+
+            if (n.value.equals("/") && d.value.equals("/")) {
+                Node nn = new Node("*", new Node[]{
+                        n.nodes.get(0),
+                        d.nodes.get(1)
+                }, true);
+                Node dn = new Node("*", new Node[]{
+                        n.nodes.get(1),
+                        d.nodes.get(0)
+                }, true);
+
+                n.clone(nn);
+                d.clone(dn);
+                return true;
+            }
+
+            if (n.value.equals("/")) {
+                d.clone(new Node("*", new Node[]{
+                        n.nodes.get(1),
+                        d.clone()
+                }, true));
+                n.clone(n.nodes.get(0));
+
+                n.changed = true;
+                return true;
+            }
+
+            if (d.value.equals("/")) {
+                n.clone(new Node("*", new Node[]{
+                        n.clone(),
+                        d.nodes.get(1)
+                }, true));
+                d.clone(d.nodes.get(0));
+
+                d.changed = true;
+                return true;
+            }
+
+            if (n.value.equals("*") && d.value.equals("*")) {
+                for (int i = 0; i < n.nodes.size(); i++) {
+                    Node a = n.nodes.get(i);
+                    for (int j = 0; j < d.nodes.size(); j++) {
+                        Node b = d.nodes.get(j);
+                        if (Divide(a, b)) return true;
+                    }
+                }
+            } else if (n.value.equals("*")) {
+                for (int i = 0; i < n.nodes.size(); i++) {
+                    Node a = n.nodes.get(i);
+                    if (Divide(a, d)) return true;
+                }
             } else if (n.value.equals("^") && d.value.equals("^")) {
                 if (n.nodes.get(0).equals(d.nodes.get(0))) {
                     Node temp = new Node("+", new Node[]{
@@ -731,7 +664,7 @@ public class Simplify {
 
                     temp.changed = true;
                     n.nodes.set(1, temp);
-                    node.nodes.remove(1);
+                    d.clone(new Node("1", true));
 
                     return true;
                 }
@@ -743,7 +676,7 @@ public class Simplify {
                     });
                     temp.changed = true;
                     n.nodes.set(1, temp);
-                    node.nodes.remove(1);
+                    d.clone(new Node("1", true));
 
                     return true;
                 }
@@ -765,12 +698,11 @@ public class Simplify {
                     guts.changed = true;
                     n.value = temp.value;
                     n.nodes = temp.nodes;
-                    node.nodes.remove(1);
+                    d.clone(new Node("1", true));
 
                     return true;
                 }
             }
-        }
 
         return false;
     }

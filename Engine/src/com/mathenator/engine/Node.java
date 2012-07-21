@@ -10,8 +10,21 @@ public class Node {
         nodes = new ArrayList<Node>();
     }
 
+    public Node(String value, boolean changed) {
+        this.value = value;
+        this.changed = changed;
+        nodes = new ArrayList<Node>();
+    }
+
     public Node(String value, Node[] nodes) {
         this.value = value;
+        this.nodes = new ArrayList<Node>(nodes.length);
+        Collections.addAll(this.nodes, nodes);
+    }
+
+    public Node(String value, Node[] nodes, boolean changed) {
+        this.value = value;
+        this.changed = changed;
         this.nodes = new ArrayList<Node>(nodes.length);
         Collections.addAll(this.nodes, nodes);
     }
@@ -57,6 +70,12 @@ public class Node {
             res.nodes.add(this.nodes.get(i).clone());
         }
         return res;
+    }
+
+    public void clone (Node node) {
+        this.value = node.value;
+        this.nodes = node.nodes;
+        this.changed = node.changed;
     }
 
     public boolean contains (Node node) {

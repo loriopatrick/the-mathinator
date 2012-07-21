@@ -4,9 +4,9 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Simplify.Run("(6*x*y)/(3)");
+//        Simplify.Run("(6*x*y)/(3)");
 
-//        Solve2.Run("2*x+6*x*y=8", "x");
+        Solve2.Run("2*x*y+4*x*y=2*(2*x+y)", "x");
 //        Solve2.Run("2*x*y+4*x=5", "x");
 
         //   (1+2)/3 :: !(true && true)

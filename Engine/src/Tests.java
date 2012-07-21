@@ -212,6 +212,6 @@ public class Tests {
     @Test
     public void SolveHard () {
         if (!Solve("2*x*y+4*x=5", "5/(2*y+4)", "x")) assert false;
-        if (!Solve("2*x*y+4*x*y=2*(2*x+y)", "(2*y)/(6*y-4)", "x")) assert false;
+        if (!Solve("2*x*y+4*x*y=2*(2*x+y)", "y/(3*y-2)", "x")) assert false;
     }
 }
