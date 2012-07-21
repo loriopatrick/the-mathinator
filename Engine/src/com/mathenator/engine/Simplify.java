@@ -72,8 +72,7 @@ public class Simplify {
             if (x.targets == 1 && x.nodes.size() == 0) {
                 useTarget = false;
                 target = x;
-            }
-            else if (y.targets == 1 && y.nodes.size() == 0) {
+            } else if (y.targets == 1 && y.nodes.size() == 0) {
                 useTarget = false;
                 target = y;
             }
@@ -94,12 +93,12 @@ public class Simplify {
 
                 if (div.nodes.size() == 0) return false;
 
-                node.nodes.set(0, new Node("/", new Node[] {
+                node.nodes.set(0, new Node("/", new Node[]{
                         node.nodes.get(0),
                         div
                 }));
 
-                node.nodes.set(1, new Node("/", new Node[] {
+                node.nodes.set(1, new Node("/", new Node[]{
                         node.nodes.get(1),
                         div.clone()
                 }));
@@ -571,138 +570,138 @@ public class Simplify {
         return false;
     }
 
-    public static boolean Divide (Node n, Node d) {
+    public static boolean Divide(Node n, Node d) {
 
-            if (n.equals(d)) {
-                n.clone(new Node("1", true));
+        if (n.equals(d)) {
+            n.clone(new Node("1", true));
+            d.clone(new Node("1", true));
+
+            return true;
+        }
+
+        if (Bools.isNum(n.value) && Bools.isNum(d.value)) {
+            float a = Float.parseFloat(n.value),
+                    b = Float.parseFloat(d.value);
+
+            float res = a / b;
+
+            if (Math.floor(res) == res) {
+                n.clone(new Node(res + "", true));
                 d.clone(new Node("1", true));
 
                 return true;
             }
 
-            if (Bools.isNum(n.value) && Bools.isNum(d.value)) {
-                float a = Float.parseFloat(n.value),
-                        b = Float.parseFloat(d.value);
+            int[] Simple = nMath.SimplifyFraction(a, b);
+            if (Simple != null && Simple[0] != a) {
+                n.clone(new Node(Simple[0] + "", true));
+                d.clone(new Node(Simple[1] + "", true));
 
-                float res = a / b;
-
-                if (Math.floor(res) == res) {
-                    n.clone(new Node(res + "", true));
-                    d.clone(new Node("1", true));
-
-                    return true;
-                }
-
-                int[] Simple = nMath.SimplifyFraction(a, b);
-                if (Simple != null && Simple[0] != a) {
-                    n.clone(new Node(Simple[0] + "", true));
-                    d.clone(new Node(Simple[1] + "", true));
-
-                    return true;
-                }
-            }
-
-            if (n.value.equals("/") && d.value.equals("/")) {
-                Node nn = new Node("*", new Node[]{
-                        n.nodes.get(0),
-                        d.nodes.get(1)
-                }, true);
-                Node dn = new Node("*", new Node[]{
-                        n.nodes.get(1),
-                        d.nodes.get(0)
-                }, true);
-
-                n.clone(nn);
-                d.clone(dn);
                 return true;
             }
+        }
 
-            if (n.value.equals("/")) {
-                d.clone(new Node("*", new Node[]{
-                        n.nodes.get(1),
-                        d.clone()
-                }, true));
-                n.clone(n.nodes.get(0));
+        if (n.value.equals("/") && d.value.equals("/")) {
+            Node nn = new Node("*", new Node[]{
+                    n.nodes.get(0),
+                    d.nodes.get(1)
+            }, true);
+            Node dn = new Node("*", new Node[]{
+                    n.nodes.get(1),
+                    d.nodes.get(0)
+            }, true);
 
-                n.changed = true;
+            n.clone(nn);
+            d.clone(dn);
+            return true;
+        }
+
+        if (n.value.equals("/")) {
+            d.clone(new Node("*", new Node[]{
+                    n.nodes.get(1),
+                    d.clone()
+            }, true));
+            n.clone(n.nodes.get(0));
+
+            n.changed = true;
+            return true;
+        }
+
+        if (d.value.equals("/")) {
+            n.clone(new Node("*", new Node[]{
+                    n.clone(),
+                    d.nodes.get(1)
+            }, true));
+            d.clone(d.nodes.get(0));
+
+            d.changed = true;
+            return true;
+        }
+
+        if (n.value.equals("*") && d.value.equals("*")) {
+            for (int i = 0; i < n.nodes.size(); i++) {
+                Node a = n.nodes.get(i);
+                for (int j = 0; j < d.nodes.size(); j++) {
+                    Node b = d.nodes.get(j);
+                    if (Divide(a, b)) return true;
+                }
+            }
+        } else if (n.value.equals("*")) {
+            for (int i = 0; i < n.nodes.size(); i++) {
+                Node a = n.nodes.get(i);
+                if (Divide(a, d)) return true;
+            }
+        } else if (n.value.equals("^") && d.value.equals("^")) {
+            if (n.nodes.get(0).equals(d.nodes.get(0))) {
+                Node temp = new Node("+", new Node[]{
+                        n.nodes.get(1).clone(),
+                        new Node("*", new Node[]{
+                                new Node("-1"),
+                                d.nodes.get(1)
+                        })
+                });
+
+                temp.changed = true;
+                n.nodes.set(1, temp);
+                d.clone(new Node("1", true));
+
                 return true;
             }
+        } else if (n.value.equals("^")) {
+            if (n.nodes.get(0).equals(d)) {
+                Node temp = new Node("+", new Node[]{
+                        n.nodes.get(1).clone(),
+                        new Node("-1")
+                });
+                temp.changed = true;
+                n.nodes.set(1, temp);
+                d.clone(new Node("1", true));
 
-            if (d.value.equals("/")) {
-                n.clone(new Node("*", new Node[]{
+                return true;
+            }
+        } else if (d.value.equals("^")) {
+            if (d.nodes.get(0).equals(n)) {
+                Node guts = new Node("+", new Node[]{
+                        new Node("1"),
+                        new Node("*", new Node[]{
+                                new Node("-1"),
+                                d.nodes.get(1).clone()
+                        })
+                });
+
+                Node temp = new Node("^", new Node[]{
                         n.clone(),
-                        d.nodes.get(1)
-                }, true));
-                d.clone(d.nodes.get(0));
+                        guts
+                });
 
-                d.changed = true;
+                guts.changed = true;
+                n.value = temp.value;
+                n.nodes = temp.nodes;
+                d.clone(new Node("1", true));
+
                 return true;
             }
-
-            if (n.value.equals("*") && d.value.equals("*")) {
-                for (int i = 0; i < n.nodes.size(); i++) {
-                    Node a = n.nodes.get(i);
-                    for (int j = 0; j < d.nodes.size(); j++) {
-                        Node b = d.nodes.get(j);
-                        if (Divide(a, b)) return true;
-                    }
-                }
-            } else if (n.value.equals("*")) {
-                for (int i = 0; i < n.nodes.size(); i++) {
-                    Node a = n.nodes.get(i);
-                    if (Divide(a, d)) return true;
-                }
-            } else if (n.value.equals("^") && d.value.equals("^")) {
-                if (n.nodes.get(0).equals(d.nodes.get(0))) {
-                    Node temp = new Node("+", new Node[]{
-                            n.nodes.get(1).clone(),
-                            new Node("*", new Node[]{
-                                    new Node("-1"),
-                                    d.nodes.get(1)
-                            })
-                    });
-
-                    temp.changed = true;
-                    n.nodes.set(1, temp);
-                    d.clone(new Node("1", true));
-
-                    return true;
-                }
-            } else if (n.value.equals("^")) {
-                if (n.nodes.get(0).equals(d)) {
-                    Node temp = new Node("+", new Node[]{
-                            n.nodes.get(1).clone(),
-                            new Node("-1")
-                    });
-                    temp.changed = true;
-                    n.nodes.set(1, temp);
-                    d.clone(new Node("1", true));
-
-                    return true;
-                }
-            } else if (d.value.equals("^")) {
-                if (d.nodes.get(0).equals(n)) {
-                    Node guts = new Node("+", new Node[]{
-                            new Node("1"),
-                            new Node("*", new Node[]{
-                                    new Node("-1"),
-                                    d.nodes.get(1).clone()
-                            })
-                    });
-
-                    Node temp = new Node("^", new Node[]{
-                            n.clone(),
-                            guts
-                    });
-
-                    guts.changed = true;
-                    n.value = temp.value;
-                    n.nodes = temp.nodes;
-                    d.clone(new Node("1", true));
-
-                    return true;
-                }
-            }
+        }
 
         return false;
     }
@@ -876,8 +875,8 @@ public class Simplify {
                                             })
                                     }),
                                     new Node("*", new Node[]{
-                                            a.nodes.get(1),
-                                            b.nodes.get(1)
+                                            a.nodes.get(1).clone(),
+                                            b.nodes.get(1).clone()
                                     })
                             }));
 
