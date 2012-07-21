@@ -54,12 +54,6 @@ public class Node {
             if (!this.nodes.get(0).equals(compare.nodes.get(0))) return false;
             if (!this.nodes.get(1).equals(compare.nodes.get(1))) return false;
         }
-//        else if (this.value.equals("=")) {
-//            if ((!this.nodes.get(0).equals(compare.nodes.get(0))
-//                    || !this.nodes.get(1).equals(compare.nodes.get(1)))
-//                    && (!this.nodes.get(0).equals(compare.nodes.get(1))
-//                    || !this.nodes.get(1).equals(compare.nodes.get(0)))) return false;
-//        }
 
         return true;
     }

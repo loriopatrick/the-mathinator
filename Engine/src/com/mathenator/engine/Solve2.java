@@ -55,7 +55,8 @@ public class Solve2 {
                             || !(c.value.equals(target)
                             || (c.value.equals("*")
                             && c.find(new Node(target)) == 0)
-                            || (c.value.equals("^") && c.nodes.get(0).value.equals(target)))) {
+//                            || (c.value.equals("^") && c.nodes.get(0).value.equals(target))
+                    )) {
                         good = false;
                         break;
                     }
