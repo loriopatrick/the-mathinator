@@ -46,7 +46,7 @@ function query(eq, callback) {
         callback(data.split('\n'));
     }, 'text');
 }
-function type (s) {
+function type(s) {
     if (s[0] == '-') return type(s[1]);
     var c = s[0];
     if (c == '0'
@@ -65,12 +65,14 @@ function type (s) {
 function check(eq) {
     eq = eq.split(' ').join('');
     eq = eq.split('-x').join('-1*x');
+    eq = eq.split('[').join('(');
+    eq = eq.split(']').join(')');
 
     function isNum(input) {
         return (input - 0) == input && input.length > 0;
     }
 
-    function isOp (c) {
+    function isOp(c) {
         return '+-()*^/'.indexOf(c) > -1;
     }
 
@@ -99,10 +101,20 @@ function check(eq) {
 
     return res.join('');
 }
+function shareButton(eq) {
+    var html = [
+        '<div class="fb-send" data-href="http://themathinator.com/#',
+        encodeURI(eq),
+        '"></div>'
+    ];
+    $('#fb_share').html(html.join(''));
+    FB.XFBML.parse($('#fb_share')[0]);
+}
 var last = '';
 function run() {
     var eq = $('#eq').val();
     $('#raw').html(eq);
+    shareButton(eq);
 
     log(eq);
 
@@ -151,9 +163,13 @@ $(document).ready(function () {
             }
         }
     });
+
     var h = window.location.hash;
     if (h && h != '#') {
-        $('#eq').val(h.substr(1));
-        run();
+        $('#eq').val(decodeURI(h.substr(1)));
+        setTimeout(function () {
+            run();
+        }, 700);
     }
+
 });

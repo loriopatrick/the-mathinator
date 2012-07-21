@@ -23,21 +23,33 @@
         })();
 
         function log (eq) {
-            _gaq.push(['_setCustomVar',
-                1,
-                'Log',
-                eq
-            ]);
+            _gaq.push(['_trackEvent', 'Inputs', 'Application', eq, null, true]);
         }
 
     </script>
 </head>
 <body>
-<div id="head">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     <div class="nav">
         <a href="about.html">About</a>
         <a href="how.html">How to use</a>
     </div>
+    <div class="like">
+        <div class="fb-like"
+             data-href="http://themathinator.com"
+             data-send="true"
+             data-layout="button_count"
+             data-width="150"
+             data-show-faces="true"></div>
+    </div>
+<div id="head">
     <div class="center">
         <div class="title"><a href="#" onclick="big()">THE MATHINATOR <span style="font-size: 18px;">ALPHA</span></a>
         </div>
@@ -52,6 +64,7 @@
         <div class="result">
             <span class="message">You Gave Us: <span class="eq" id="raw"></span></span>
             <br/>
+            <div class="message">Share Result: <div id="fb_share"></div></div>
             <span class="message">We Read: <span class="eqSty" id="preview"></span></span>
             <br/>
 

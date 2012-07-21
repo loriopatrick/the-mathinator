@@ -34,8 +34,10 @@ public class nMath {
         ArrayList<Integer> dM = Multiples(d);
 
         for (int i = 0; i < nM.size(); ) {
+            if (nM.size() == 0) break;
             boolean in = false;
             for (int j = 0; j < dM.size(); ) {
+                if (dM.size() == 0 || nM.size() == 0) break;
                 if (nM.get(i).equals(dM.get(j))) {
                     in = true;
                     nM.remove(i);
