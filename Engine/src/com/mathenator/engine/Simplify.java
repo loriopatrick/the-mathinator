@@ -544,9 +544,11 @@ public class Simplify {
                 return true;
             }
 
+            if (Divide(n, d)) return true;
+
             if (n.value.equals("+")) {
-                boolean e = n.targets > 0 && d.targets > 0 && !d.value.equals("+");
-                if (d.targets == 0 || e) {
+                if (n.targets > 0 &&
+                        (d.targets == 0 || (d.targets > 0 && !d.value.equals("+")))) {
                     Node temp = new Node("+");
 
                     for (int i = 0; i < n.nodes.size(); i++) {
@@ -564,8 +566,6 @@ public class Simplify {
                     return true;
                 }
             }
-
-            return Divide(n, d);
         }
 
         return false;

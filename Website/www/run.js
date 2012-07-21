@@ -64,6 +64,7 @@ function type (s) {
 }
 function check(eq) {
     eq = eq.split(' ').join('');
+    eq = eq.split('-x').join('-1*x');
 
     function isNum(input) {
         return (input - 0) == input && input.length > 0;

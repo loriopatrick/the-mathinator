@@ -54,8 +54,11 @@ public class Solve2 {
                     if (c.targets == 0
                             || !(c.value.equals(target)
                             || (c.value.equals("*")
-                            && c.find(new Node(target)) == 0)
-//                            || (c.value.equals("^") && c.nodes.get(0).value.equals(target))
+                            && c.find(new Node(target)) == 0
+                            && c.find(new Node("^", new Node[] {
+                            new Node(target),
+                            new Node("ANY")
+                    })) == -1)
                     )) {
                         good = false;
                         break;
@@ -138,8 +141,8 @@ public class Solve2 {
                     if (n.value.equals("^")) {
                         if (n.nodes.get(0).value.equals(target)) {
                             if (have) return false;
-                            if (!Bools.isNum(c.nodes.get(1).value)) return false;
-                            float val = Float.parseFloat(c.nodes.get(1).value);
+                            if (!Bools.isNum(n.nodes.get(1).value)) return false;
+                            float val = Float.parseFloat(n.nodes.get(1).value);
                             if (val != Math.floor(val)) return false;
                             if (val >= 5) return false;
                             if (powers[(int) val] != null) return false;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class nMath {
 
-    public static ArrayList<Integer> Multiples (float v) {
+    public static ArrayList<Integer> Multiples(float v) {
         if (Math.floor(v) != v) return null;
         ArrayList<Integer> res = new ArrayList<Integer>();
         for (int i = 2; i < v; i++) {
@@ -17,25 +17,25 @@ public class nMath {
         }
         if (res.size() == 0) {
             res.add(1);
-            res.add((int)v);
+            res.add((int) v);
         }
         return res;
     }
 
-    public static ArrayList<Integer> Multiples (String v) {
+    public static ArrayList<Integer> Multiples(String v) {
         return Multiples(Float.parseFloat(v));
     }
 
-    public static int[] SimplifyFraction (float n, float d) {
+    public static int[] SimplifyFraction(float n, float d) {
         if (Math.floor(n) != n) return null;
         if (Math.floor(d) != d) return null;
 
         ArrayList<Integer> nM = Multiples(n);
         ArrayList<Integer> dM = Multiples(d);
 
-        for (int i = 0; i < nM.size();) {
+        for (int i = 0; i < nM.size(); ) {
             boolean in = false;
-            for (int j = 0; j < dM.size();) {
+            for (int j = 0; j < dM.size(); ) {
                 if (nM.get(i).equals(dM.get(j))) {
                     in = true;
                     nM.remove(i);
@@ -57,10 +57,10 @@ public class nMath {
             D *= i;
         }
 
-        return new int[] {N, D};
+        return new int[]{N, D};
     }
 
-    public static ArrayList<Node> Commons (Node node) {
+    public static ArrayList<Node> Commons(Node node) {
         ArrayList<Node> result = new ArrayList<Node>();
         if (node.value.equals("/")) node = node.nodes.get(0);
         if (node.value.equals("*")) {
@@ -79,7 +79,13 @@ public class nMath {
                     }
                 }
 
-                if (!added) result.add(node.nodes.get(i));
+                if (!added) {
+                    if (n.value.equals("^")) {
+                        result.add(n.nodes.get(0));
+                    } else {
+                        result.add(n);
+                    }
+                }
             }
         } else if (node.value.equals("+")) {
             result = Commons(node.nodes.get(0));
@@ -109,8 +115,8 @@ public class nMath {
         return result;
     }
 
-    public static void EliminateNon (ArrayList<Node> base, ArrayList<Node> compare) {
-        for (int j = 0; j < base.size();) {
+    public static void EliminateNon(ArrayList<Node> base, ArrayList<Node> compare) {
+        for (int j = 0; j < base.size(); ) {
             int pos = -1;
             for (int k = 0; k < compare.size(); ++k) {
                 if (compare.get(k).equals(base.get(j))) {
