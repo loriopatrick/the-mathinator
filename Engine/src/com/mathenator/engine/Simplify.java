@@ -1,5 +1,6 @@
 package com.mathenator.engine;
 
+import com.sun.tools.internal.xjc.generator.bean.field.NoExtendedContentField;
 import sun.tools.tree.NewArrayExpression;
 
 import java.util.ArrayList;
@@ -50,12 +51,45 @@ public class Simplify {
             }
         }
 
+        if (Factor(node)) return true;
         if (Add(node)) return true;
         if (Multiply(node)) return true;
         if (Divide(node)) return true;
         if (Power(node)) return true;
         if (Function(node)) return true;
         if (Derive(node)) return true;
+
+        return false;
+    }
+
+    public static boolean Factor(Node node) {
+        if (node.value.equals("=")) {
+            Node x = node.nodes.get(0), y = node.nodes.get(1);
+
+            ArrayList<Node> commons = nMath.Commons(x);
+            ArrayList<Node> yCommons = nMath.Commons(y);
+
+            nMath.EliminateNon(commons, yCommons);
+
+            if (commons.size() > 0) {
+                Node div = new Node("*");
+                for (Node n : commons) {
+                    div.nodes.add(n);
+                }
+
+                node.nodes.set(0, new Node("/", new Node[] {
+                        node.nodes.get(0),
+                        div
+                }));
+
+                node.nodes.set(1, new Node("/", new Node[] {
+                        node.nodes.get(1),
+                        div.clone()
+                }));
+
+                return true;
+            }
+        }
 
         return false;
     }
@@ -296,6 +330,7 @@ public class Simplify {
                 node.changed = true;
                 return true;
             } else if (b.value.equals("/")) {
+                //TODO: if base == + then do
 //                Node temp = new Node("/", new Node[]{
 //                        new Node("^", new Node[]{
 //                                b.nodes.get(0),
@@ -672,7 +707,7 @@ public class Simplify {
 
                     for (int i = 0; i < n.nodes.size(); i++) {
                         Node c = n.nodes.get(i);
-                        temp.nodes.add(new Node("/", new Node[] {
+                        temp.nodes.add(new Node("/", new Node[]{
                                 c,
                                 d.clone()
                         }));

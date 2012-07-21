@@ -87,8 +87,7 @@ public class Solve2 {
                 temp.changed = true;
 
                 x.nodes.add(temp);
-                y.value = "0";
-                y.nodes.clear();
+                eq.nodes.set(toLeft? 1 : 0, new Node("0"));
 
                 return true;
             }
