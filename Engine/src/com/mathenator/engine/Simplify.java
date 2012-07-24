@@ -10,10 +10,7 @@ public class Simplify {
         node.changed = false;
         node.message = null;
 
-        if (node.value.equalsIgnoreCase("pi")) {
-            node.value = Math.PI + "";
-            node.nodes.clear();
-        }
+        Symbol(node);
 
         for (int i = 0; i < node.nodes.size(); i++) {
             node.nodes.get(i).changed = false;
@@ -60,6 +57,16 @@ public class Simplify {
         if (Derive(node)) return true;
 
         return false;
+    }
+
+    public static void Symbol (Node node) {
+        if (node.value.equalsIgnoreCase("pi")) {
+            node.value = Math.PI + "";
+            node.nodes.clear();
+        } else if (node.value.equalsIgnoreCase("e")) {
+            node.value = 2.71828183 + "";
+            node.nodes.clear();
+        }
     }
 
     public static boolean Factor(Node node) {
