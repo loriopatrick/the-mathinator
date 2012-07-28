@@ -1,8 +1,5 @@
 package com.mathenator.engine;
 
-import com.sun.tools.internal.xjc.generator.bean.field.NoExtendedContentField;
-import sun.tools.tree.NewArrayExpression;
-
 import java.util.ArrayList;
 
 public class Simplify {
@@ -34,9 +31,7 @@ public class Simplify {
         }
         if (!Bools.isFn(node.value) && node.nodes.size() == 1) {
             Node n = node.nodes.get(0);
-            node.nodes.clear();
-            node.value = n.value;
-            node.nodes.addAll(n.nodes);
+            node.clone(n);
             return false;
         }
         if (node.parent != null && node.value.equals(node.parent.value)) {
@@ -170,13 +165,12 @@ public class Simplify {
                 } else if (target.equals(new Node("x"))) run = true;
 
                 if (run) {
-                    node.value = a.value;
-                    node.nodes = a.nodes;
+                    node.clone(a);
                 }
             }
 
             if (a.value.equals("+")) {
-                Node res = new Node("+");
+                Node res = new Node("+", true);
                 for (int i = 0; i < a.nodes.size(); i++) {
                     Node c = a.nodes.get(i);
 
@@ -193,9 +187,7 @@ public class Simplify {
                     }));
                 }
 
-                node.value = res.value;
-                node.nodes = res.nodes;
-                node.changed = true;
+                node.clone(res);
 
                 return true;
             }
@@ -258,11 +250,9 @@ public class Simplify {
                                         new Node("-1")
                                 })
                         })
-                });
+                }, true);
 
-                node.value = temp.value;
-                node.nodes = temp.nodes;
-                node.changed = true;
+                node.clone(temp);
 
                 return true;
             }
@@ -297,11 +287,9 @@ public class Simplify {
                                 d,
                                 new Node("2")
                         })
-                });
+                }, true);
 
-                a.value = temp.value;
-                a.nodes = temp.nodes;
-                a.changed = true;
+                a.clone(temp);
 
                 return true;
             }
@@ -318,8 +306,7 @@ public class Simplify {
             if (Bools.isNum(e.value)) {
                 float val = Float.parseFloat(e.value);
                 if (val == 1) {
-                    node.value = b.value;
-                    node.nodes = b.nodes;
+                    node.clone(b);
 
                     node.changed = true;
                     node.message = "x^1 = x";
@@ -327,10 +314,7 @@ public class Simplify {
                 }
 
                 if (val == 0) {
-                    node.value = "1";
-                    node.nodes.clear();
-
-                    node.changed = true;
+                    node.clone(new Node("1", true));
                     node.message = "x^0 = 1";
                     return true;
                 }
@@ -342,10 +326,8 @@ public class Simplify {
 
             if (Bools.isNum(b.value) && Bools.isNum(e.value)) {
                 double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
-                node.value = val + "";
-                node.nodes.clear();
+                node.clone(new Node(val + "", true));
 
-                node.changed = true;
                 return true;
             } else if (Bools.isNum(b.value) && e.equals(new Node("/", new Node[]{
                     new Node("1"),
@@ -353,10 +335,8 @@ public class Simplify {
             }))) {
                 double val = Math.sqrt(Float.parseFloat(b.value));
                 if (val == Math.floor(val)) {
-                    node.value = val + "";
-                    node.nodes.clear();
+                    node.clone(new Node(val + "", true));
 
-                    node.changed = true;
                     return true;
                 }
             } else if (b.value.equals("^")) {
@@ -364,8 +344,7 @@ public class Simplify {
                         b.nodes.get(1),
                         e
                 }));
-                node.value = b.value;
-                node.nodes = b.nodes;
+                node.clone(b);
 
                 node.changed = true;
                 return true;
@@ -562,8 +541,7 @@ public class Simplify {
             }
 
             if (Bools.isNum(d.value) && Float.parseFloat(d.value) == 1) {
-                node.value = node.nodes.get(0).value;
-                node.nodes = node.nodes.get(0).nodes;
+                node.clone(node.nodes.get(0));
                 return true;
             }
 
@@ -572,7 +550,7 @@ public class Simplify {
             if (n.value.equals("+")) {
                 if (n.targets > 0 &&
                         (d.targets == 0 || (d.targets > 0 && !d.value.equals("+")))) {
-                    Node temp = new Node("+");
+                    Node temp = new Node("+", true);
 
                     for (int i = 0; i < n.nodes.size(); i++) {
                         Node c = n.nodes.get(i);
@@ -581,10 +559,7 @@ public class Simplify {
                                 d.clone()
                         }));
                     }
-
-                    node.value = temp.value;
-                    node.nodes = temp.nodes;
-                    node.changed = true;
+                    node.clone(temp);
 
                     return true;
                 }
@@ -719,8 +694,7 @@ public class Simplify {
                 });
 
                 guts.changed = true;
-                n.value = temp.value;
-                n.nodes = temp.nodes;
+                n.clone(temp);
                 d.clone(new Node("1", true));
 
                 return true;

@@ -338,26 +338,4 @@ public class Parser {
         if (node.changed) sb.append('}');
         return sb.toString();
     }
-
-
-    public static String ReadNodeJson(Node node) {
-        StringBuilder sb = new StringBuilder();
-        sb.append('{');
-        sb.append("val:\"").append(node.value).append('"');
-        if (node.changed) {
-            sb.append(",msg:\"").append(node.message.replaceAll("\"", "\\\""));
-        }
-        if (node.nodes.size() > 0) {
-            sb.append(",ns:[");
-            for (int i = 0; i < node.nodes.size(); ++i) {
-                sb.append(ReadNodeJson(node.nodes.get(i)));
-                if (i < node.nodes.size() - 1) {
-                    sb.append(',');
-                }
-            }
-            sb.append(']');
-        }
-        sb.append('}');
-        return sb.toString();
-    }
 }

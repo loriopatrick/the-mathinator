@@ -98,11 +98,6 @@ public class Node {
         return Parser.ReadNode(this);
     }
 
-    public void changeTo(Node n) {
-        this.value = n.value;
-        this.nodes = n.nodes;
-    }
-
     public String value;
     public ArrayList<Node> nodes;
     public Node parent;

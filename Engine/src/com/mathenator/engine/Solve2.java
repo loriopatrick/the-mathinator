@@ -1,7 +1,5 @@
 package com.mathenator.engine;
 
-import com.sun.tools.internal.xjc.generator.bean.field.NoExtendedContentField;
-
 public class Solve2 {
 
     public static boolean Solve(Node node, String target) {
@@ -149,8 +147,7 @@ public class Solve2 {
                             Node v = c.clone();
                             v.nodes.remove(j);
                             if (v.nodes.size() == 1) {
-                                v.value = v.nodes.get(0).value;
-                                v.nodes = v.nodes.get(0).nodes;
+                                v.clone(v.nodes.get(0));
                             }
                             powers[(int) val] = v;
                             have = true;
@@ -161,8 +158,7 @@ public class Solve2 {
                         Node v = c.clone();
                         v.nodes.remove(j);
                         if (v.nodes.size() == 1) {
-                            v.value = v.nodes.get(0).value;
-                            v.nodes = v.nodes.get(0).nodes;
+                            v.clone(v.nodes.get(0));
                         }
                         powers[1] = v;
                         have = true;
@@ -341,11 +337,8 @@ public class Solve2 {
 
         if (x.value.equals("^") && y.value.equals("^")) {
             if (x.nodes.get(1).equals(y.nodes.get(1))) {
-                x.value = x.nodes.get(0).value;
-                x.nodes = x.nodes.get(0).nodes;
-
-                y.value = y.nodes.get(0).value;
-                y.nodes = y.nodes.get(0).nodes;
+                x.clone(x.nodes.get(0));
+                y.clone(y.nodes.get(0));
 
                 return true;
             }
@@ -428,31 +421,23 @@ public class Solve2 {
 
             // a/x = b/x :: a = b
             if (x.nodes.get(1).equals(y.nodes.get(1))) {
-                x.value = x.nodes.get(0).value;
-                x.nodes = x.nodes.get(0).nodes;
-
-                y.value = y.nodes.get(0).value;
-                y.nodes = y.nodes.get(0).nodes;
+                x.clone(x.nodes.get(0));
+                y.clone(y.nodes.get(0));
 
                 return true;
             }
 
             if (y.targets > 0) {
                 // cross multiply
-                Node temp = new Node("*", new Node[]{
+
+                x.clone(new Node("*", new Node[]{
                         x.nodes.get(0),
                         y.nodes.get(1)
-                });
-
-                Node temp2 = new Node("*", new Node[]{
+                }, true));
+                y.clone(new Node("*", new Node[]{
                         y.nodes.get(0),
                         x.nodes.get(1)
-                });
-
-                x.value = temp.value;
-                x.nodes = temp.nodes;
-                y.value = temp2.value;
-                y.nodes = temp2.nodes;
+                }, true));
 
                 return true;
             }
