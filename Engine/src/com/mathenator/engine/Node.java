@@ -67,6 +67,13 @@ public class Node {
         return res;
     }
 
+    public boolean valEquals (String v) {
+        if (v.equals(this.value)) return true;
+        if (Bools.isNum(v) && Bools.isNum(this.value)
+                && Float.parseFloat(v) == Float.parseFloat(this.value)) return true;
+        return false;
+    }
+
     public void clone (Node node) {
         this.value = node.value;
         this.nodes = node.nodes;

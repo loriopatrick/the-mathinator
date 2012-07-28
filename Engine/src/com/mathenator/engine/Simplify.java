@@ -121,20 +121,36 @@ public class Simplify {
                 if (Bools.isNum(in.value)) {
                     res = new Node(Math.sin(Float.parseFloat(in.value)) + "");
                 } else if (in.value.equals("/")) {
-                    if (in.equals(new Node("/", new Node[] {
-                            new Node("pi"),
-                            new Node("3")
-                    }))) {
-                        res = new Node("/", new Node[] {
-                                new Node("^", new Node[] {
-                                        new Node("3"),
-                                        new Node("/", new Node[] {
-                                                new Node("1"),
-                                                new Node("2")
-                                        })
-                                }),
-                                new Node("2")
-                        });
+                    Node n = in.nodes.get(1);
+                    if (in.nodes.get(0).equals(new Node("pi")) && Bools.isNum(n.value)) {
+                        if (n.valEquals("3")) {
+                            res = new Node("/", new Node[] {
+                                    new Node("^", new Node[] {
+                                            new Node("3"),
+                                            new Node("/", new Node[] {
+                                                    new Node("1"),
+                                                    new Node("2")
+                                            })
+                                    }),
+                                    new Node("2")
+                            });
+                        } else if (n.valEquals("4")) {
+                            res = new Node("/", new Node[] {
+                                    new Node("^", new Node[] {
+                                            new Node("2"),
+                                            new Node("/", new Node[] {
+                                                    new Node("1"),
+                                                    new Node("2")
+                                            })
+                                    }),
+                                    new Node("2")
+                            });
+                        } else if (n.valEquals("6")) {
+                            res = new Node("/", new Node[] {
+                                    new Node("1"),
+                                    new Node("2")
+                            });
+                        }
                     }
                 }
             }
