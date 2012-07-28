@@ -273,7 +273,23 @@ public class Parser {
         }
 
         if (node.height == 0) {
+            if (node.valEquals("pi")) sb.append('\\');
             sb.append(node.value);
+            if (node.changed) sb.append('}');
+            return sb.toString();
+        }
+
+        if (node.valEquals("d")) {
+            Node n = node.nodes.get(0),
+                    target = new Node("x");
+
+            if (n.valEquals(",")) {
+                target = n.nodes.get(1);
+                n = n.nodes.get(0);
+            }
+
+            sb.append("\\frac{\\partial}{\\partial ").append(target.value).append('}');
+            sb.append('(').append(ReadNodeLatex(n)).append(')');
             if (node.changed) sb.append('}');
             return sb.toString();
         }

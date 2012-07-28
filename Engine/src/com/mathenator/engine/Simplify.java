@@ -235,7 +235,7 @@ public class Simplify {
 
     public static boolean Derive(Node node) {
 
-        if (node.value.equals("D")) {
+        if (node.valEquals("d")) {
             Node a = node.nodes.get(0);
             Node target = new Node("x");
             if (a.value.equals(",")) {
@@ -243,33 +243,19 @@ public class Simplify {
                 a = a.nodes.get(0);
             }
 
-            if (a.value.equals("D")) {
-                boolean run = false;
-                if (a.nodes.get(0).value.equals(",")) {
-                    if (a.nodes.get(0).nodes.get(1).equals(target)) run = true;
-                } else if (target.equals(new Node("x"))) run = true;
-
-                if (run) {
-                    node.clone(a);
-                }
-            }
-
             if (a.value.equals("+")) {
                 Node res = new Node("+", true);
                 for (int i = 0; i < a.nodes.size(); i++) {
                     Node c = a.nodes.get(i);
 
-                    if (!c.contains(target)) {
-                        a.nodes.remove(i);
-                        return true;
+                    if (c.contains(target)) {
+                        res.nodes.add(new Node("d", new Node[]{
+                                new Node(",", new Node[]{
+                                        c,
+                                        target
+                                })
+                        }));
                     }
-
-                    res.nodes.add(new Node("D", new Node[]{
-                            new Node(",", new Node[]{
-                                    c,
-                                    target
-                            })
-                    }));
                 }
 
                 node.clone(res);
@@ -278,33 +264,57 @@ public class Simplify {
             }
 
             if (a.value.equals("*")) {
-                Node f = a.nodes.get(0),
-                        b = a.nodes.get(1);
 
-                Node temp = new Node("+", new Node[]{
-                        new Node("*", new Node[]{
-                                new Node("D", new Node[]{
-                                        new Node(",", new Node[]{
-                                                f.clone()
-                                        }),
-                                        target
-                                }),
-                                b
-                        }),
-                        new Node("*", new Node[]{
-                                new Node("D", new Node[]{
-                                        new Node(",", new Node[]{
-                                                b.clone()
-                                        }),
-                                        target
-                                }),
-                                f
-                        })
-                });
+                Node f = null, b = null;
+                int e = 0, g = 1;
 
-                temp.changed = true;
-                a.nodes.set(0, temp);
-                a.nodes.remove(1);
+                for (int i = 0; i < a.nodes.size(); i++) {
+                    if (!a.nodes.get(i).contains(target)) continue;
+                    if (f == null) {
+                        f = a.nodes.get(i);
+                        e = i;
+                    } else if (b == null) {
+                        b = a.nodes.get(i);
+                        g = i;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (f != null && b != null) {
+                    Node temp = new Node("+", new Node[]{
+                            new Node("*", new Node[]{
+                                    new Node("d", new Node[]{
+                                            new Node(",", new Node[]{
+                                                    f.clone()
+                                            }),
+                                            target
+                                    }),
+                                    b
+                            }),
+                            new Node("*", new Node[]{
+                                    new Node("d", new Node[]{
+                                            new Node(",", new Node[]{
+                                                    b.clone()
+                                            }),
+                                            target
+                                    }),
+                                    f
+                            })
+                    });
+
+                    temp.changed = true;
+                    a.nodes.set(e, temp);
+                    a.nodes.remove(g);
+                } else if (f != null) {
+                    a.nodes.set(e, new Node("d", new Node[]{
+                            new Node(",", new Node[]{
+                                    a.nodes.get(e),
+                                    target
+                            })
+                    }));
+                    node.clone(a);
+                }
 
                 return true;
             }
@@ -322,7 +332,7 @@ public class Simplify {
 
                 Node temp = new Node("*", new Node[]{
                         e.clone(),
-                        new Node("D", new Node[]{
+                        new Node("d", new Node[]{
                                 new Node(",", new Node[]{
                                         b.clone(),
                                         target
@@ -346,36 +356,46 @@ public class Simplify {
                 Node n = a.nodes.get(0),
                         d = a.nodes.get(1);
 
-                Node temp = new Node("/", new Node[]{
-                        new Node("+", new Node[]{
-                                new Node("*", new Node[]{
-                                        d.clone(),
-                                        new Node("D", new Node[]{
-                                                new Node(",", new Node[]{
-                                                        n.clone(),
-                                                        target
-                                                })
-                                        })
-                                }),
-                                new Node("*", new Node[]{
-                                        new Node("-1"),
-                                        n,
-                                        new Node("D", new Node[]{
-                                                new Node(",", new Node[]{
-                                                        d.clone(),
-                                                        target
-                                                })
-                                        })
-                                })
-                        }),
-                        new Node("^", new Node[]{
-                                d,
-                                new Node("2")
-                        })
-                }, true);
+                if (!d.contains(target)) {
+                    a.nodes.set(0, new Node("d", new Node[] {
+                            new Node(",", new Node[] {
+                                    a.nodes.get(0),
+                                    target
+                            })
+                    }));
+                    node.clone(a);
+                } else {
 
-                a.clone(temp);
+                    Node temp = new Node("/", new Node[]{
+                            new Node("+", new Node[]{
+                                    new Node("*", new Node[]{
+                                            d.clone(),
+                                            new Node("d", new Node[]{
+                                                    new Node(",", new Node[]{
+                                                            n.clone(),
+                                                            target
+                                                    })
+                                            })
+                                    }),
+                                    new Node("*", new Node[]{
+                                            new Node("-1"),
+                                            n,
+                                            new Node("d", new Node[]{
+                                                    new Node(",", new Node[]{
+                                                            d.clone(),
+                                                            target
+                                                    })
+                                            })
+                                    })
+                            }),
+                            new Node("^", new Node[]{
+                                    d,
+                                    new Node("2")
+                            })
+                    }, true);
 
+                    a.clone(temp);
+                }
                 return true;
             }
         }
