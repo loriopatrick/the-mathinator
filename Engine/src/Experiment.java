@@ -4,7 +4,7 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Simplify.Run("sin(pi/3)*x+6*x");
+        Simplify.Run("sin(5*pi/3)");
 
 //        System.out.println(Parser.ReadNodeLatex(Parser.CreateNode("(x/10)^(1/2)=(3*x-58)^(1/2)")));
 

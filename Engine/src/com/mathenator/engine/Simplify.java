@@ -7,8 +7,6 @@ public class Simplify {
         node.changed = false;
         node.message = null;
 
-        Symbol(node);
-
         for (int i = 0; i < node.nodes.size(); i++) {
             node.nodes.get(i).changed = false;
             if (Simplify(node.nodes.get(i))) return true;
@@ -52,16 +50,6 @@ public class Simplify {
         if (Derive(node)) return true;
 
         return false;
-    }
-
-    public static void Symbol (Node node) {
-        if (node.value.equalsIgnoreCase("pi")) {
-            node.value = Math.PI + "";
-            node.nodes.clear();
-        } else if (node.value.equalsIgnoreCase("e")) {
-            node.value = 2.71828183 + "";
-            node.nodes.clear();
-        }
     }
 
     public static boolean Factor(Node node) {
@@ -117,50 +105,131 @@ public class Simplify {
             Node in = node.nodes.get(0);
             Node res = null;
 
-            if (node.value.equalsIgnoreCase("sin")) {
-                if (Bools.isNum(in.value)) {
-                    res = new Node(Math.sin(Float.parseFloat(in.value)) + "");
-                } else if (in.value.equals("/")) {
-                    Node n = in.nodes.get(1);
-                    if (in.nodes.get(0).equals(new Node("pi")) && Bools.isNum(n.value)) {
+            if (in.value.equals("/")) {
+                Node n = in.nodes.get(1);
+                if (in.nodes.get(0).find(new Node("pi")) <= 1 && Bools.isNum(n.value)) {
+
+                    int mode = 0;
+                    if (in.nodes.get(0).valEquals("*")) {
+                        if (in.nodes.get(0).nodes.size() != 2) {
+                            mode = -1;
+                        } else {
+                            Node a = in.nodes.get(0).nodes.get(0);
+                            if (a.valEquals("pi")) a = in.nodes.get(0).nodes.get(1);
+                            if (Bools.isNum(a.value)) {
+                                Float val = Float.parseFloat(a.value);
+                                if (Math.floor(val) == val) {
+                                    mode = (int) Math.floor(val);
+                                }
+                            }
+                        }
+                    } else if (in.nodes.get(0).valEquals("pi")) {
+                        mode = 0;
+                    }
+
+                    if (mode != -1) {
+
                         if (n.valEquals("3")) {
-                            res = new Node("/", new Node[] {
-                                    new Node("^", new Node[] {
-                                            new Node("3"),
-                                            new Node("/", new Node[] {
-                                                    new Node("1"),
-                                                    new Node("2")
-                                            })
-                                    }),
-                                    new Node("2")
-                            });
+                            if (node.valEquals("sin")) {
+                                res = new Node("/", new Node[]{
+                                        new Node("*", new Node[]{
+                                                (mode == 4 || mode == 5) ? new Node("-1") : new Node("1"),
+                                                new Node("^", new Node[]{
+                                                        new Node("3"),
+                                                        new Node("/", new Node[]{
+                                                                new Node("1"),
+                                                                new Node("2")
+                                                        })
+                                                })
+                                        }),
+                                        new Node("2")
+                                });
+                            } else if (node.valEquals("cos")) {
+                                res = new Node("/", new Node[]{
+                                        (mode == 2 || mode == 4) ? new Node("-1") : new Node("1"),
+                                        new Node("2")
+                                });
+                            }
+
                         } else if (n.valEquals("4")) {
-                            res = new Node("/", new Node[] {
-                                    new Node("^", new Node[] {
-                                            new Node("2"),
-                                            new Node("/", new Node[] {
-                                                    new Node("1"),
-                                                    new Node("2")
-                                            })
-                                    }),
-                                    new Node("2")
-                            });
+                            if (node.valEquals("sin")) {
+                                res = new Node("/", new Node[]{
+                                        new Node("*", new Node[]{
+                                                (mode == 5 || mode == 7) ? new Node("-1") : new Node("1"),
+                                                new Node("^", new Node[]{
+                                                        new Node("2"),
+                                                        new Node("/", new Node[]{
+                                                                new Node("1"),
+                                                                new Node("2")
+                                                        })
+                                                })
+                                        }),
+                                        new Node("2")
+                                });
+                            } else if (node.valEquals("cos")) {
+                                res = new Node("/", new Node[]{
+                                        new Node("*", new Node[]{
+                                                (mode == 5 || mode == 3) ? new Node("-1") : new Node("1"),
+                                                new Node("^", new Node[]{
+                                                        new Node("2"),
+                                                        new Node("/", new Node[]{
+                                                                new Node("1"),
+                                                                new Node("2")
+                                                        })
+                                                })
+                                        }),
+                                        new Node("2")
+                                });
+                            }
                         } else if (n.valEquals("6")) {
-                            res = new Node("/", new Node[] {
-                                    new Node("1"),
-                                    new Node("2")
-                            });
+                            if (node.valEquals("sin")) {
+                                res = new Node("/", new Node[]{
+                                        (mode == 11 || mode == 7) ? new Node("-1") : new Node("1"),
+                                        new Node("2")
+                                });
+                            } else if (node.valEquals("cos")) {
+                                res = new Node("/", new Node[]{
+                                        new Node("*", new Node[]{
+                                                (mode == 5 || mode == 7) ? new Node("-1") : new Node("1"),
+                                                new Node("^", new Node[]{
+                                                        new Node("3"),
+                                                        new Node("/", new Node[]{
+                                                                new Node("1"),
+                                                                new Node("2")
+                                                        })
+                                                })
+                                        }),
+                                        new Node("2")
+                                });
+                            }
+                        }
+
+
+                        if (res == null && Bools.isNum(in.nodes.get(0).value) && Bools.isNum(in.nodes.get(1).value)) {
+                            float val = Float.parseFloat(in.nodes.get(0).value) / Float.parseFloat(in.nodes.get(1).value);
+                            double resVal = Double.POSITIVE_INFINITY;
+                            if (node.valEquals("sin")) {
+                                resVal = Math.sin(val);
+                            } else if (node.valEquals("cos")) {
+                                resVal = Math.cos(val);
+                            } else if (node.valEquals("tan")) {
+                                resVal = Math.tan(val);
+                            }
+
+                            if (resVal != Double.POSITIVE_INFINITY && Math.floor(resVal) == resVal) {
+                                res = new Node(resVal + "");
+                            }
                         }
                     }
                 }
-            }
 
-            if (res != null) {
-                node.clone(res);
-                return true;
+                if (res != null) {
+                    node.clone(res);
+                    node.changed = true;
+                    return true;
+                }
             }
         }
-
         return false;
     }
 

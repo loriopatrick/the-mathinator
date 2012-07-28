@@ -31,7 +31,6 @@ public class Node {
 
     public boolean equals(Node compare) {
         if (compare.value.equals("ANY")) return true;
-        Simplify.Symbol(compare);
         if (Bools.isNum(this.value) && Bools.isNum(compare.value)) {
             if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
         } else if (!this.value.equals(compare.value)) return false;
@@ -68,7 +67,7 @@ public class Node {
     }
 
     public boolean valEquals (String v) {
-        if (v.equals(this.value)) return true;
+        if (v.equalsIgnoreCase(this.value)) return true;
         if (Bools.isNum(v) && Bools.isNum(this.value)
                 && Float.parseFloat(v) == Float.parseFloat(this.value)) return true;
         return false;
