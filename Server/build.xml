@@ -16,6 +16,7 @@
             <fileset dir="../Website">
                 <include name="www/*"/>
                 <include name="www/*/*"/>
+                <include name="www/*/*/*" />
             </fileset>
             <manifest>
                 <attribute name="Main-Class" value="Run"/>

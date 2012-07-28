@@ -31,6 +31,7 @@ public class Node {
 
     public boolean equals(Node compare) {
         if (compare.value.equals("ANY")) return true;
+        Simplify.Symbol(compare);
         if (Bools.isNum(this.value) && Bools.isNum(compare.value)) {
             if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
         } else if (!this.value.equals(compare.value)) return false;

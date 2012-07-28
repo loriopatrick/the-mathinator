@@ -168,3 +168,5 @@ input:focus {
     right: 15px;
     z-index: 9999999;
 }
+
+#jsMath_Warning {display: none}

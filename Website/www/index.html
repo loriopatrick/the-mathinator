@@ -6,9 +6,8 @@
     <link rel="STYLESHEET" href="style.css"/>
     <script type="text/javascript" src="lib/jquery.min.js"></script>
     <script type="text/javascript" src="lib/spin.min.js"></script>
-    <script type="text/javascript"
-            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
+    <script type="text/javascript" src="jsMath/plugins/noImageFonts.js"></script>
+    <script type="text/javascript" src="jsMath/jsMath.js"></script>
     <script type="text/javascript" src="run.js"></script>
     <script type="text/javascript">
 
@@ -72,12 +71,12 @@
             <span class="message">You Gave Us: <span class="eq" id="raw"></span></span>
             <br/>
             <div class="message">Share Result: <div id="fb_share"></div></div>
-            <span class="message">We Read: <span class="eqSty" id="preview"></span></span>
+            <span class="message">We Read: <span class="math" id="preview"></span></span>
             <br/>
 
             <div class="message">
                 We Calculated:
-                <div class="eqSty" id="res">
+                <div id="res">
 
                 </div>
             </div>

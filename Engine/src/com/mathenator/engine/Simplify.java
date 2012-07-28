@@ -119,16 +119,33 @@ public class Simplify {
 
     public static boolean Function(Node node) {
         if (Bools.isFn(node.value)) {
-            if (Bools.isNum(node.nodes.get(0).value)) {
-                double val = Double.parseDouble(node.nodes.get(0).value), res;
+            Node in = node.nodes.get(0);
+            Node res = null;
 
-                if (node.value.equalsIgnoreCase("sin")) {
-                    res = Math.sin(val);
+            if (node.value.equalsIgnoreCase("sin")) {
+                if (Bools.isNum(in.value)) {
+                    res = new Node(Math.sin(Float.parseFloat(in.value)) + "");
+                } else if (in.value.equals("/")) {
+                    if (in.equals(new Node("/", new Node[] {
+                            new Node("pi"),
+                            new Node("3")
+                    }))) {
+                        res = new Node("/", new Node[] {
+                                new Node("^", new Node[] {
+                                        new Node("3"),
+                                        new Node("/", new Node[] {
+                                                new Node("1"),
+                                                new Node("2")
+                                        })
+                                }),
+                                new Node("2")
+                        });
+                    }
                 }
+            }
 
-                node.value = val + "";
-                node.nodes.clear();
-
+            if (res != null) {
+                node.clone(res);
                 return true;
             }
         }

@@ -36,9 +36,9 @@ function big(callback) {
     });
 }
 function render() {
-    var elems = document.getElementsByClassName('eqSty');
+    var elems = document.getElementsByClassName('math');
     for (var i = 0; i < elems.length; i++) {
-        MathJax.Hub.Queue(["Typeset", MathJax.Hub, elems[i]]);
+        jsMath.ProcessElement(elems[i]);
     }
 }
 function query(eq, callback) {
@@ -132,17 +132,17 @@ function run() {
 
     last = eq;
 
-    var spin = new Spinner({top:20, className:'spinner'}).spin(document.body);
+    new Spinner({top:20, className:'spinner'}).spin(document.body);
 
     query(eq, function (data) {
-        $('#preview').html('\\[' + data[0] + '\\]');
+        $('#preview').html(data[0]);
 
         var res = [];
         var last = '';
         for (var i = 0; i < data.length; i++) {
             if (last == data[i]) continue;
             last = data[i];
-            res.push('\\[' + data[i] + '\\]');
+            res.push('<div class=\"math\">' + data[i] + '</div>');
         }
 
         $('#res').html(res.join('<br/>'));

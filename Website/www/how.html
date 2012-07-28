@@ -3,21 +3,32 @@
 <html>
 <head>
     <title></title>
-    <link rel="STYLESHEET" href="style.css" />
-    <script type="text/javascript"
-            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
+    <link rel="STYLESHEET" href="style.css"/>
+    <script type="text/javascript" src="jsMath/plugins/noImageFonts.js"></script>
+    <script type="text/javascript" src="jsMath/jsMath.js"></script>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-33455217-1']);
         _gaq.push(['_trackPageview']);
 
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        function mathIt () {
+            var es = document.getElementsByClassName("math");
+            for (var i = 0; i < es.length; i++) {
+                jsMath.ProcessElement(es[i]);
+            }
+        }
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
         })();
+
+        window.onload = mathIt;
 
     </script>
 </head>
@@ -36,7 +47,7 @@
 <div id="body">
     <div class="width: 802px">
         <div class="result">
-            <span class="message" style="max-width: 600px;">
+            <div class="message" style="max-width: 600px;">
                 <h4>How to use The Mathinator</h4>
 
                 This page is currently a work in progress. So to keep things simple
@@ -44,28 +55,33 @@
 
                 <br/><br/>
 
-                Solve for x: \[ {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6} \]
+                Solve for x:
+                <div class="math">{4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6}</div>
                 <a href="/#4*(9*x+18*x/5)=32*x+6">4*(9*x+18*x/5)=32*x+6</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
-                Simplify: \[ \frac{{{x}^{5}}*{{y}^{7}}*{{z}^{-2}}}{{{x}^{3}}*{{z}^{-10}}*y} \]
+                Simplify:
+                <div class="math"> \frac{{{x}^{5}}*{{y}^{7}}*{{z}^{-2}}}{{{x}^{3}}*{{z}^{-10}}*y}</div>
                 <a href="/#(x^5*y^7*z^-2)/(x^3*z^-10*y)">(x^5*y^7*z^-2)/(x^3*z^-10*y)</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
-                Solve for x: \[ {{2*x*y}+{4*x*y}}={2*{({2*x}+y)}} \]
+                Solve for x:
+                <div class="math"> {{2*x*y}+{4*x*y}}={2*{({2*x}+y)}}</div>
                 <a href="/#2*x*y+4*x*y=2*(2*x+y)">2*x*y+4*x*y=2*(2*x+y)</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
-                Solve for x: \[ {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6} \]
+                Solve for x:
+                <div class="math"> {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6}</div>
                 <a href="/#4*(9*x+18*x/5)=32*x+6">4*(9*x+18*x/5)=32*x+6</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
 
-                Solve for x: \[ {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6} \]
+                Solve for x:
+                <div class="math"> {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6}</div>
                 <a href="/#4*(9*x+18*x/5)=32*x+6">4*(9*x+18*x/5)=32*x+6</a>
 
                 <br/><br/><br/><br/><br/><br/>
@@ -75,7 +91,7 @@
                 us at <a href="mailto:themathinator.com@gmail.com">themathinator.com@gmail.com</a>.
                 <br/><br/>
                 Hope you enjoy using TheMathinator.
-            </span>
+            </div>
         </div>
         <div class="sponsors">
             <div id="guts">
