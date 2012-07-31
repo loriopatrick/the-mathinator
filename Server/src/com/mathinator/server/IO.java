@@ -1,4 +1,4 @@
-package com.mathenator.server;
+package com.mathinator.server;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedInputStream;

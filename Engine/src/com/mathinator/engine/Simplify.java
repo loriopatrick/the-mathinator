@@ -1,6 +1,11 @@
-package com.mathenator.engine;
+package com.mathinator.engine;
 
 import java.util.ArrayList;
+
+import com.mathinator.engine.Bools;
+import com.mathinator.engine.Node;
+import com.mathinator.engine.Parser;
+import com.mathinator.engine.nMath;
 
 public class Simplify {
     public static boolean Simplify(Node node) {

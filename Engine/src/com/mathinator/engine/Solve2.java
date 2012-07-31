@@ -1,4 +1,9 @@
-package com.mathenator.engine;
+package com.mathinator.engine;
+
+import com.mathinator.engine.Bools;
+import com.mathinator.engine.Node;
+import com.mathinator.engine.Parser;
+import com.mathinator.engine.Simplify;
 
 public class Solve2 {
 

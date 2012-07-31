@@ -1,7 +1,11 @@
-package com.mathenator.engine;
+package com.mathinator.engine;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import com.mathinator.engine.Bools;
+import com.mathinator.engine.Node;
+import com.mathinator.engine.Parser;
 
 public class Node {
 

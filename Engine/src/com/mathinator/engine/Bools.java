@@ -1,4 +1,4 @@
-package com.mathenator.engine;
+package com.mathinator.engine;
 
 public class Bools {
     public static boolean isNum(String c) {

@@ -1,5 +1,7 @@
-package com.mathenator.server;
+package com.mathinator.server;
 
+import com.mathenator.server.Calc;
+import com.mathenator.server.Get;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;

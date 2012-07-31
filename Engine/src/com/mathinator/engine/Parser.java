@@ -1,6 +1,9 @@
-package com.mathenator.engine;
+package com.mathinator.engine;
 
 import java.util.ArrayList;
+
+import com.mathinator.engine.Bools;
+import com.mathinator.engine.Node;
 
 public class Parser {
 

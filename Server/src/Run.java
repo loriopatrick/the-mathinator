@@ -1,4 +1,4 @@
-import com.mathenator.server.Server;
+import com.mathinator.server.Server;
 
 public class Run {
     public static void main (String[] args) throws Exception {

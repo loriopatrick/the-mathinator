@@ -1,4 +1,5 @@
-import com.mathenator.engine.*;
+import com.mathenator.engine.Simplify;
+import com.mathinator.engine.*;
 
 public class Experiment {
     public static void main(String[] args) throws Exception {
