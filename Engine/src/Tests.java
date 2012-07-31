@@ -1,7 +1,3 @@
-import com.mathenator.engine.Node;
-import com.mathenator.engine.Parser;
-import com.mathenator.engine.Simplify;
-import com.mathenator.engine.Solve2;
 import com.mathinator.engine.*;
 
 import org.junit.*;

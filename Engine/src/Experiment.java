@@ -1,4 +1,4 @@
-import com.mathenator.engine.Simplify;
+import com.mathinator.engine.Simplify;
 import com.mathinator.engine.*;
 
 public class Experiment {

@@ -90,7 +90,7 @@ function check(eq) {
             res.push('*');
         }
 
-        if ((lastN && !num && !op) || !lastN && !lastO && !op) {
+        if ((lastN && !num && !op) || (!lastN && !lastO && !op && num)) {
             res.push('*');
         }
 

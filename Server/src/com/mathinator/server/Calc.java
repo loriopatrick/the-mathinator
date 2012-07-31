@@ -4,11 +4,6 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import com.mathenator.engine.Node;
-import com.mathenator.engine.Parser;
-import com.mathenator.engine.Simplify;
-import com.mathenator.engine.Solve2;
-import com.mathenator.server.IO;
 import com.mathinator.engine.*;
 
 import java.io.File;
