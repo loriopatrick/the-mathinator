@@ -1,6 +1,5 @@
 package com.mathenator.server;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -14,9 +13,8 @@ public class Get implements HttpHandler {
 
     public void handle(HttpExchange ex) {
         String path = ex.getRequestURI().toString();
-
-
-        if (path.equals("/")) path = "/index.html";
+        
+        if (path.endsWith("/")) path += "index.html";
 
         try {
             ex.sendResponseHeaders(200, 0);

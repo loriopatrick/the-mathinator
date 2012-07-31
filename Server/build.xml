@@ -15,7 +15,7 @@
             <zipgroupfileset dir="../Engine/build/jar" includes="*.jar" />
             <fileset dir="../Website">
                 <include name="www/*"/>
-                <include name="www/*/*"/>
+               	<include name="www/*/*"/>
                 <include name="www/*/*/*" />
             </fileset>
             <manifest>
