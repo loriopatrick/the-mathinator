@@ -429,15 +429,17 @@ public class Solve2 {
 
             if (y.targets > 0) {
                 // cross multiply
-
-                x.clone(new Node("*", new Node[]{
+                Node temp = new Node("*", new Node[]{
                         x.nodes.get(0),
                         y.nodes.get(1)
-                }, true));
+                }, true);
+
                 y.clone(new Node("*", new Node[]{
                         y.nodes.get(0),
                         x.nodes.get(1)
                 }, true));
+
+                x.clone(temp);
 
                 return true;
             }
@@ -557,6 +559,14 @@ public class Solve2 {
         Node n = Parser.CreateNode(eq, target);
         System.out.println(Parser.ReadNode(n));
         int i;
+
+        Simplify.Step(n, false);
+        Parser.MarkUp(n);
+        System.out.println(Parser.ReadNode(n));
+        Solve(n, target);
+        Parser.MarkUp(n);
+        System.out.println(Parser.ReadNode(n));
+
         for (i = 0; i < 100; i++) {
             if (Step(n, target)) break;
             Parser.MarkUp(n);

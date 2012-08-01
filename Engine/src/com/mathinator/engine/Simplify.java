@@ -1053,11 +1053,15 @@ public class Simplify {
         return false;
     }
 
-    public static boolean Step(Node node) {
+    public static boolean Step(Node node, boolean expand) {
         Node last = node.clone();
-        Simplify(node, true);
+        Simplify(node, expand);
         boolean same = node.equals(last);
         return same;
+    }
+
+    public static boolean Step(Node node) {
+        return Step(node, true);
     }
 
     public static void Run(String eq) throws Exception {
