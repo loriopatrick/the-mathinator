@@ -441,7 +441,7 @@ public class Simplify {
                 // handle issue or do imaginary #s
             }
 
-            if (Bools.isNum(b.value) && Bools.isNum(e.value)) {
+            if (Bools.isNum(b.value) && Bools.isNum(e.value) && e.value.charAt(0) != '-') {
                 double val = Math.pow(Float.parseFloat(b.value), Float.parseFloat(e.value));
                 node.clone(new Node(val + "", true));
 
@@ -799,6 +799,36 @@ public class Simplify {
 
                 return true;
             }
+
+            if (n.nodes.get(1).value.charAt(0) == '-') {
+                if (d.nodes.get(1).value.charAt(0) == '-') {
+                    Node temp = n.clone();
+                    n.clone(d);
+                    d.clone(temp);
+
+                    n.nodes.get(1).value = n.nodes.get(1).value.substring(1);
+                    n.changed = true;
+                    d.nodes.get(1).value = d.nodes.get(1).value.substring(1);
+                    d.changed = true;
+                    return true;
+                }
+
+                n.nodes.get(1).value = n.nodes.get(1).value.substring(1);
+                n.changed = true;
+                d.clone(new Node("*", new Node[] {
+                        d.clone(),
+                        n.clone()
+                }));
+                n.clone(new Node("1"));
+            } else if (d.nodes.get(1).value.charAt(0) == '-') {
+                d.nodes.get(1).value = d.nodes.get(1).value.substring(1);
+                d.nodes.get(1).changed = true;
+                n.clone(new Node("*", new Node[] {
+                        n.clone(),
+                        d.clone()
+                }));
+                d.clone(new Node("1"));
+            }
         } else if (n.value.equals("^")) {
             if (n.nodes.get(0).equals(d)) {
                 Node temp = new Node("+", new Node[]{
@@ -810,6 +840,16 @@ public class Simplify {
                 d.clone(new Node("1", true));
 
                 return true;
+            }
+
+            if (n.nodes.get(1).value.charAt(0) == '-') {
+                n.nodes.get(1).value = n.nodes.get(1).value.substring(1);
+                n.changed = true;
+                d.clone(new Node("*", new Node[] {
+                        d.clone(),
+                        n.clone()
+                }));
+                n.clone(new Node("1"));
             }
         } else if (d.value.equals("^")) {
             if (d.nodes.get(0).equals(n)) {
@@ -831,6 +871,16 @@ public class Simplify {
                 d.clone(new Node("1", true));
 
                 return true;
+            }
+
+            if (d.nodes.get(1).value.charAt(0) == '-') {
+                d.nodes.get(1).value = d.nodes.get(1).value.substring(1);
+                d.changed = true;
+                n.clone(new Node("*", new Node[] {
+                        n.clone(),
+                        d.clone()
+                }));
+                d.clone(new Node("1"));
             }
         }
 

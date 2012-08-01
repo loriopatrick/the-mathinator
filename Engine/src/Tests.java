@@ -212,6 +212,7 @@ public class Tests {
         if (!Solve("-10*(x-10)^(1/2)=-60", "46", "x")) assert false;
         if (!Solve("4*(9*x+18*x/5)=32*x+6", "15/46", "x")) assert false;
         if (!Solve("x^2+32=5*x^2", "8^(1/2)", "x")) assert false;
+        if (!Solve("3*(6-1*(8*x-7))+6*x=0", "13/6", "x")) assert false;
     }
 
     @Test
