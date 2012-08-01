@@ -1,10 +1,5 @@
 package com.mathinator.engine;
 
-import com.mathinator.engine.Bools;
-import com.mathinator.engine.Node;
-import com.mathinator.engine.Parser;
-import com.mathinator.engine.Simplify;
-
 public class Solve2 {
 
     public static boolean Solve(Node node, String target) {

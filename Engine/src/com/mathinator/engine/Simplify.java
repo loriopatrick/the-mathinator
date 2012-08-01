@@ -3,14 +3,19 @@ package com.mathinator.engine;
 import java.util.ArrayList;
 
 public class Simplify {
-    public static boolean Simplify(Node node) {
+    public static boolean Simplify(Node node, boolean expand) {
         node.changed = false;
         node.message = null;
 
+        boolean done = false;
         for (int i = 0; i < node.nodes.size(); i++) {
             node.nodes.get(i).changed = false;
-            if (Simplify(node.nodes.get(i))) return true;
+            if (!done) {
+                if (Simplify(node.nodes.get(i), expand)) done = true;
+            }
         }
+
+        if (done) return true;
 
 
         if (node.nodes.size() == 0) {
@@ -42,8 +47,8 @@ public class Simplify {
         }
 
         if (Factor(node)) return true;
-        if (Add(node)) return true;
-        if (Multiply(node)) return true;
+        if (Add(node, expand)) return true;
+        if (Multiply(node, expand)) return true;
         if (Divide(node)) return true;
         if (Power(node)) return true;
         if (Function(node)) return true;
@@ -55,6 +60,8 @@ public class Simplify {
     public static boolean Factor(Node node) {
         if (node.value.equals("=")) {
             Node x = node.nodes.get(0), y = node.nodes.get(1);
+
+            if (x.valEquals("1") || x.valEquals("0") || y.valEquals("1") || y.valEquals("0")) return false;
 
             boolean useTarget = true;
             Node target = null;
@@ -488,7 +495,7 @@ public class Simplify {
         return false;
     }
 
-    public static boolean Multiply(Node node) {
+    public static boolean Multiply(Node node, boolean expand) {
         if (node.value.equals("*")) {
             for (int i = 0; i < node.nodes.size(); ++i) {
                 Node a = node.nodes.get(i);
@@ -536,7 +543,7 @@ public class Simplify {
                         return true;
                     }
 
-                    if (a.value.equals("+") && node.temp != -20 && a.targets > 0) {
+                    if (a.value.equals("+") && expand && a.targets > 0) {
 //                        if (Bools.isNum(b.value)) {
                         for (int n = 0; n < a.nodes.size(); n++) {
                             a.nodes.set(n, new Node("*", new Node[]{
@@ -816,7 +823,7 @@ public class Simplify {
         return false;
     }
 
-    public static boolean Add(Node node) {
+    public static boolean Add(Node node, boolean collapse) {
         if (node.value.equals("+")) {
             float sum = 0;
             for (int i = 0; i < node.nodes.size(); ++i) {
@@ -876,7 +883,7 @@ public class Simplify {
                                 for (int n = 0; n <= 1; n++) {
                                     for (int g = 0; g <= 1; g++) {
                                         if (a.nodes.get(n).equals(b.nodes.get(g))) {
-                                            if (!Bools.isNum(a.nodes.get(n).value)) {
+                                            if (!Bools.isNum(a.nodes.get(n).value) && collapse) {
                                                 int n1 = n == 1 ? 0 : 1,
                                                         g1 = g == 1 ? 0 : 1;
                                                 a.nodes.set(n1, new Node("+", new Node[]{
@@ -958,7 +965,7 @@ public class Simplify {
                         }
                     } else if (a.value.equals("/") && b.value.equals("/")) {
                         if ((a.targets > 0 && b.targets > 0) || (a.targets == 0 && b.targets == 0)) {
-                            if (a.nodes.get(1).equals(b.nodes.get(1))) {
+                            if (a.nodes.get(1).equals(b.nodes.get(1)) && collapse) {
                                 node.nodes.set(i, new Node("/", new Node[]{
                                         new Node("+", new Node[]{
                                                 a.nodes.get(0),
@@ -1042,7 +1049,7 @@ public class Simplify {
 
     public static boolean Step(Node node) {
         Node last = node.clone();
-        Simplify(node);
+        Simplify(node, true);
         boolean same = node.equals(last);
         return same;
     }

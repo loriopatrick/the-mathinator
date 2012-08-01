@@ -132,7 +132,7 @@ public class Tests {
         try {
             Node n = Parser.CreateNode(eq);
             for (int i = 0; i < 20; i++) {
-                Simplify.Simplify(n);
+                Simplify.Simplify(n, true);
                 Parser.MarkUp(n);
             }
             return n.equals(ans);
