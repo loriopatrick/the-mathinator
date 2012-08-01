@@ -702,6 +702,14 @@ public class Simplify {
             return true;
         }
 
+        if (n.nodes.size() == 0 && d.nodes.size() == 0) {
+            if (n.value.charAt(0) == '-' && d.value.charAt(0) == '-') {
+                n.value = n.value.substring(1);
+                d.value = d.value.substring(1);
+                return true;
+            }
+        }
+
         if (Bools.isNum(n.value) && Bools.isNum(d.value)) {
             float a = Float.parseFloat(n.value),
                     b = Float.parseFloat(d.value);

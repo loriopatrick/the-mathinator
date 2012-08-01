@@ -5,11 +5,9 @@ import java.util.ArrayList;
 public class nMath {
 
     public static ArrayList<Integer> Multiples(float v) {
-        boolean neg = false;
-        if (v < 0) {
-            neg = true;
-            v *= -1;
-        }
+        boolean neg = v < 0;
+        if (neg) v *= -1;
+
         if (Math.floor(v) != v) return null;
         ArrayList<Integer> res = new ArrayList<Integer>();
         for (int i = 2; i < v; i++) {
@@ -44,9 +42,9 @@ public class nMath {
         Integer one = new Integer(1);
 
         ArrayList<Integer> nM = Multiples(n);
-        while(nM.contains(one)) nM.remove(one);
+        while (nM.contains(one)) nM.remove(one);
         ArrayList<Integer> dM = Multiples(d);
-        while(dM.contains(one)) dM.remove(one);
+        while (dM.contains(one)) dM.remove(one);
 
         for (int i = 0; i < nM.size(); ) {
             if (nM.size() == 0) break;
@@ -149,5 +147,28 @@ public class nMath {
                 ++j;
             }
         }
+    }
+
+    public static int Negatives(Node n) {
+        int sum = 0;
+        if (n.nodes.size() == 0) {
+            return n.value.charAt(0) == '-' ? 1 : 0;
+        }
+
+        if (n.valEquals("+")) return -1;
+
+        for (int i = 0; i < n.nodes.size(); ++i) {
+            int v = Negatives(n.nodes.get(i));
+            if (v == -1) return -1;
+            sum += v;
+        }
+
+        return sum;
+    }
+
+    public static boolean isNegative(Node n) {
+        int res = Negatives(n);
+        if (res == -1) return false;
+        return res % 2 == 1;
     }
 }
