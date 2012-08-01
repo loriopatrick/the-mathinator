@@ -5,7 +5,7 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Simplify.Run("d((x^2)/6+x^5,x)");
+        Solve2.Run("(x-5)/7=(x+4)/3", "x");
 
 //        System.out.println(Parser.ReadNodeLatex(Parser.CreateNode("d((x^2)/6*x+x^5,x)")));
 //

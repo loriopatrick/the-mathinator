@@ -10,3 +10,6 @@ by Patrick Lorio
 * Would like to
 	* start calculus stuff
 		* intergrals
+
+
+Need to find a way to determine when I should expand or compact

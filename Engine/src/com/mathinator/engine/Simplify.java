@@ -357,8 +357,8 @@ public class Simplify {
                         d = a.nodes.get(1);
 
                 if (!d.contains(target)) {
-                    a.nodes.set(0, new Node("d", new Node[] {
-                            new Node(",", new Node[] {
+                    a.nodes.set(0, new Node("d", new Node[]{
+                            new Node(",", new Node[]{
                                     a.nodes.get(0),
                                     target
                             })
@@ -492,6 +492,13 @@ public class Simplify {
         if (node.value.equals("*")) {
             for (int i = 0; i < node.nodes.size(); ++i) {
                 Node a = node.nodes.get(i);
+                if (a.nodes.size() == 0) {
+                    if (a.value.charAt(0) == '-' && !Bools.isNum(a.value)) {
+                        a.value = a.value.substring(1);
+                        node.nodes.add(new Node("-1"));
+                        return false;
+                    }
+                }
                 for (int j = 0; j < node.nodes.size(); ++j) {
                     if (i == j) continue;
                     Node b = node.nodes.get(j);
@@ -869,18 +876,19 @@ public class Simplify {
                                 for (int n = 0; n <= 1; n++) {
                                     for (int g = 0; g <= 1; g++) {
                                         if (a.nodes.get(n).equals(b.nodes.get(g))) {
-                                            int n1 = n == 1 ? 0 : 1,
-                                                    g1 = g == 1 ? 0 : 1;
+                                            if (!Bools.isNum(a.nodes.get(n).value)) {
+                                                int n1 = n == 1 ? 0 : 1,
+                                                        g1 = g == 1 ? 0 : 1;
+                                                a.nodes.set(n1, new Node("+", new Node[]{
+                                                        a.nodes.get(n1),
+                                                        b.nodes.get(g1)
+                                                }));
+                                                node.nodes.remove(j);
 
-                                            a.nodes.set(n1, new Node("+", new Node[]{
-                                                    a.nodes.get(n1),
-                                                    b.nodes.get(g1)
-                                            }));
-                                            node.nodes.remove(j);
-
-                                            a.changed = true;
-                                            a.message = "x*y+z*y = y*(x+z)";
-                                            return true;
+                                                a.changed = true;
+                                                a.message = "x*y+z*y = y*(x+z)";
+                                                return true;
+                                            }
                                         }
                                     }
                                 }
