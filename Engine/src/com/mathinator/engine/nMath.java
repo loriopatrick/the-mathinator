@@ -2,13 +2,14 @@ package com.mathinator.engine;
 
 import java.util.ArrayList;
 
-import com.mathinator.engine.Bools;
-import com.mathinator.engine.Node;
-import com.mathinator.engine.nMath;
-
 public class nMath {
 
     public static ArrayList<Integer> Multiples(float v) {
+        boolean neg = false;
+        if (v < 0) {
+            neg = true;
+            v *= -1;
+        }
         if (Math.floor(v) != v) return null;
         ArrayList<Integer> res = new ArrayList<Integer>();
         for (int i = 2; i < v; i++) {
@@ -16,12 +17,18 @@ public class nMath {
                 res.add(i);
                 float n = (v / i);
                 res.addAll(Multiples(n));
+                if (neg && res.size() > 0) {
+                    res.set(0, res.get(0) * -1);
+                }
                 return res;
             }
         }
         if (res.size() == 0) {
             res.add(1);
             res.add((int) v);
+        }
+        if (neg && res.size() > 0) {
+            res.set(0, res.get(0) * -1);
         }
         return res;
     }
@@ -34,15 +41,19 @@ public class nMath {
         if (Math.floor(n) != n) return null;
         if (Math.floor(d) != d) return null;
 
+        Integer one = new Integer(1);
+
         ArrayList<Integer> nM = Multiples(n);
+        while(nM.contains(one)) nM.remove(one);
         ArrayList<Integer> dM = Multiples(d);
+        while(dM.contains(one)) dM.remove(one);
 
         for (int i = 0; i < nM.size(); ) {
             if (nM.size() == 0) break;
             boolean in = false;
             for (int j = 0; j < dM.size(); ) {
                 if (dM.size() == 0 || nM.size() == 0) break;
-                if (nM.get(i).equals(dM.get(j))) {
+                if (i < nM.size() && nM.get(i).equals(dM.get(j))) {
                     in = true;
                     nM.remove(i);
                     dM.remove(j);

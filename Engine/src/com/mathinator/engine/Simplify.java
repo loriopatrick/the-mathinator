@@ -8,6 +8,12 @@ public class Simplify {
         node.message = null;
 
         boolean done = false;
+
+        if (node.valEquals("/") && node.nodes.get(0).valEquals("+")) {
+            if (Divide(node, false))
+                return true;
+        }
+
         for (int i = 0; i < node.nodes.size(); i++) {
             node.nodes.get(i).changed = false;
             if (!done) {
@@ -41,7 +47,6 @@ public class Simplify {
             if (!(node.value.equals("^") || node.value.equals("/"))) {
                 node.parent.nodes.remove(node);
                 node.parent.nodes.addAll(node.nodes);
-                node.parent.simple = false;
                 node = node.parent;
             }
         }
@@ -49,7 +54,7 @@ public class Simplify {
         if (Factor(node)) return true;
         if (Add(node, expand)) return true;
         if (Multiply(node, expand)) return true;
-        if (Divide(node)) return true;
+        if (Divide(node, expand)) return true;
         if (Power(node)) return true;
         if (Function(node)) return true;
         if (Derive(node)) return true;
@@ -644,7 +649,7 @@ public class Simplify {
         return false;
     }
 
-    public static boolean Divide(Node node) {
+    public static boolean Divide(Node node, boolean expand) {
         if (node.value.equals("/")) {
 
             Node n = node.nodes.get(0),
@@ -668,7 +673,7 @@ public class Simplify {
 
             if (n.value.equals("+")) {
                 if (n.targets > 0 &&
-                        (d.targets == 0 || (d.targets > 0 && !d.value.equals("+")))) {
+                        (d.targets == 0 || (d.targets > 0 && !d.value.equals("+"))) && expand) {
                     Node temp = new Node("+", true);
 
                     for (int i = 0; i < n.nodes.size(); i++) {
@@ -712,6 +717,7 @@ public class Simplify {
 
             int[] Simple = nMath.SimplifyFraction(a, b);
             if (Simple != null && Simple[0] != a) {
+                // todo: ??
                 n.clone(new Node(Simple[0] + "", true));
                 d.clone(new Node(Simple[1] + "", true));
 

@@ -2,6 +2,8 @@ import com.mathinator.engine.*;
 
 import org.junit.*;
 
+import java.util.ArrayList;
+
 public class Tests {
 
     public boolean Parse(String eq, Node res) {
@@ -72,7 +74,7 @@ public class Tests {
                 }),
                 new Node("*", new Node[]{
                         new Node("+", new Node[]{
-                                new Node("*", new Node[] {
+                                new Node("*", new Node[]{
                                         new Node("x"),
                                         new Node("4")
                                 }),
@@ -82,8 +84,8 @@ public class Tests {
                 })
         }))) assert false;
 
-        if (!Parse("sin(pi/2)", new Node("sin", new Node[] {
-                new Node("/", new Node[] {
+        if (!Parse("sin(pi/2)", new Node("sin", new Node[]{
+                new Node("/", new Node[]{
                         new Node("pi"),
                         new Node("2")
                 })
@@ -212,8 +214,20 @@ public class Tests {
     }
 
     @Test
-    public void SolveHard () {
+    public void SolveHard() {
         if (!Solve("2*x*y+4*x=5", "5/(2*y+4)", "x")) assert false;
         if (!Solve("2*x*y+4*x*y=2*(2*x+y)", "y/(3*y-2)", "x")) assert false;
+    }
+
+    @Test
+    public void nMath() {
+        try {
+            ArrayList<Integer> a = nMath.Multiples("-4");
+            if (a.size() < 2) assert false;
+            if (!a.contains(-2)) assert false;
+            if (!a.contains(2)) assert false;
+        } catch (Exception e) {
+            assert false;
+        }
     }
 }
