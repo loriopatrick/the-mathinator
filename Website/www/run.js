@@ -1,165 +1,156 @@
-var isBig = true;
-function small(callback) {
-    isBig = false;
-    $('#head').animate({
-        paddingTop:10
-    }, 300, function () {
-        $('#head').height($('#head').height());
+
+var WB = {} || new Object();
+
+WB.size = {
+    isBig: true,
+    small: function (callback) {
+        this.isBig = false;
         $('#head').animate({
-            height:35
-        }, 500);
-        $('.title').animate({
-            fontSize:24,
-            width:300
-        }, 300, callback)
-    });
-}
-function big(callback) {
-    $('#eq').focus();
-    if (isBig) return;
-    isBig = true;
-    $('#head').animate({
-        paddingTop:120
-    }, 300, function () {
-        $('#head').animate({
-            height:$(window).height()
-        }, 500);
-        $('.title').animate({
-            fontSize:48,
-            width:550
+            paddingTop:10
         }, 300, function () {
-            $('#head').css({
-                bottom:0
-            });
-            if (callback) callback();
-        })
-    });
-}
-function render() {
-    var elems = document.getElementsByClassName('math');
-    for (var i = 0; i < elems.length; i++) {
-        jsMath.ProcessElement(elems[i]);
+            $('#head').height($('#head').height());
+            $('#head').animate({
+                height:35
+            }, 500);
+            $('.title').animate({
+                fontSize:24,
+                width:300
+            }, 300, callback)
+        });
+    },
+    big: function (callback) {
+        $('#eq').focus();
+        if (this.isBig) return;
+        this.isBig = true;
+        $('#head').animate({
+            paddingTop:120
+        }, 300, function () {
+            $('#head').animate({
+                height:$(window).height()
+            }, 500);
+            $('.title').animate({
+                fontSize:48,
+                width:550
+            }, 300, function () {
+                $('#head').css({
+                    bottom:0
+                });
+                if (callback) callback();
+            })
+        });
     }
-}
-function query(eq, callback) {
-    $.post('/calc/', eq, function (data) {
-        callback(data.split('\n'));
-    }, 'text');
-}
-function type(s) {
-    if (s[0] == '-') return type(s[1]);
-    var c = s[0];
-    if (c == '0'
-        || c == '1'
-        || c == '2'
-        || c == '3'
-        || c == '4'
-        || c == '5'
-        || c == '6'
-        || c == '7'
-        || c == '8'
-        || c == '9') return 1;
-    if (c == 'x') return 2;
-    return 3;
-}
-function check(eq) {
-    eq = eq.split(' ').join('');
-    eq = eq.split('-x').join('-1*x');
-    eq = eq.split('[').join('(');
-    eq = eq.split(']').join(')');
+};
 
-    function isNum(input) {
-        return (input - 0) == input && input.length > 0;
-    }
-
-    function isOp(c) {
-        return '+-()*^/'.indexOf(c) > -1;
-    }
-
-    var res = [];
-    var lastN = false;
-    var lastO = true;
-
-    for (var i = 0; i < eq.length; i++) {
-        var num = isNum(eq[i]);
-        var op = isOp(eq[i]);
-
-        if ((eq[i] == '(' && lastN)
-            || (i > 0 && eq[i - 1] == ')' && num)
-            || (eq[i - 1] == ')' && eq[i] == '(')) {
-            res.push('*');
-        }
-
-        if ((lastN && !num && !op) || (!lastN && !lastO && !op && num)) {
-            res.push('*');
-        }
-
-        res.push(eq[i]);
-        lastN = num;
-        lastO = op;
-    }
-
-    return res.join('');
-}
-function shareButton(eq) {
-    var html = [
-        '<div class="fb-send" data-href="http://themathinator.com/#',
-        encodeURI(eq),
-        '"></div>'
-    ];
-    $('#fb_share').html(html.join(''));
-    FB.XFBML.parse($('#fb_share')[0]);
-}
-var last = '';
-function run() {
-    var eq = $('#eq').val();
-    $('#raw').html(eq);
-    shareButton(eq);
-
-    log(eq);
-
-    eq = check(eq);
-
-    if (!eq) {
-        alert('no input');
-        return;
-    }
-
-    if (eq == last) {
-        small();
-        return;
-    }
-
-    last = eq;
-
-    new Spinner({top:20, className:'spinner'}).spin(document.body);
-
-    query(eq, function (data) {
-        $('#preview').html(data[0]);
-
-        var res = [];
-        var last = '';
-        for (var i = 0; i < data.length; i++) {
-            if (last == data[i]) continue;
-            last = data[i];
-            res.push('<div class=\"math\">' + data[i] + '</div>');
-        }
-
-        $('#res').html(res.join('<br/>'));
-
-        render();
-        small();
+WB.spinner = {
+    up: function () {
+        new Spinner({top:20, className:'spinner'}).spin(document.body);
+    },
+    down: function () {
         $('.spinner').remove();
-    });
-}
+    }
+};
+
+WB.engine = {
+    run: function () {
+        var eq = this.getEq();
+        WB.spinner.up();
+        
+        var _this = this;
+        this.calc(eq, function () {
+            _this.render();
+            WB.spinner.down();
+            WB.size.small();
+        });
+    },
+    getEq: function () {
+        var eq = $('#eq').val();
+            $('#raw').html(eq);
+            eq = this.parser(eq);
+            var html = [
+                '<div class="fb-send" data-href="http://themathinator.com/#',
+                encodeURI(eq),
+                '"></div>'
+            ];
+            $('#fb_share').html(html.join(''));
+            FB.XFBML.parse($('#fb_share')[0]);
+            
+            return eq;
+    },
+    calc: function (eq, callback) {
+        $.post('/calc/', eq, function (raw) {
+            var data = raw.split('\n');
+            $('#preview').html('We Read: <div class="math">' + data[0] + '</div>');
+            var res = [];
+            var last = '';
+            for (var i = 0; i < data.length; i++) {
+                if (last == data[i]) continue;
+                else last = data[i];
+                
+                res.push('<div class=\"math\">' + data[i] + '</div>');
+            }
+            $('#res').html(res.join('<br/>'));  
+            if (callback) callback();
+        }, 'text');
+    },
+    render: function () {
+        jsMath.ProcessBeforeShowing('preview');
+        jsMath.ProcessBeforeShowing('res');
+    },
+    parser: function (eq) {
+        function replace (s, o, n) {
+            return s.split(o).join(n);
+        }
+        
+        eq = replace(eq, String.fromCharCode(8722), '-');
+        eq = replace(eq, ' ', '');
+        eq = replace(eq, '[', '(');
+        eq = replace(eq, ']', ')');
+        eq = replace(eq, '-(', '-1*(');
+        eq = replace(eq, '-x', '-1*x');
+        
+        function isNum(input) {
+            return (input - 0) == input && input.length > 0;
+        }
+    
+        function isOp(c) {
+            return '+-()*^/'.indexOf(c) > -1;
+        }
+        
+        var res = [];
+        var lastN = false;
+        var lastO = true;
+    
+        for (var i = 0; i < eq.length; i++) {
+            var num = isNum(eq[i]);
+            var op = isOp(eq[i]);
+    
+            if ((eq[i] == '(' && lastN)
+                || (i > 0 && eq[i - 1] == ')' && num)
+                || (eq[i - 1] == ')' && eq[i] == '(')) {
+                res.push('*');
+            }
+    
+            if ((lastN && !num && !op) || (!lastN && !lastO && !op && num)) {
+                res.push('*');
+            }
+    
+            res.push(eq[i]);
+            lastN = num;
+            lastO = op;
+        }
+    
+        return res.join('');
+    }
+};
+
 $(document).ready(function () {
     $('#eq').focus();
     $(window).keydown(function (e) {
         if (e.keyCode == 13) {
-            if (isBig) {
-                run();
+            if (WB.size.isBig) {
+                WB.engine.run();
             } else {
-                big();
+                WB.size.big();
             }
         }
     });
@@ -168,8 +159,7 @@ $(document).ready(function () {
     if (h && h != '#') {
         $('#eq').val(decodeURI(h.substr(1)));
         setTimeout(function () {
-            run();
+            WB.engine.run();
         }, 700);
     }
-
 });
