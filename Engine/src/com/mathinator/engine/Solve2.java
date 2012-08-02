@@ -41,6 +41,48 @@ public class Solve2 {
         return false;
     }
 
+    public static boolean PreSolve (Node node, String target) {
+        if (!node.value.equals("=")) return false;
+
+        Parser.MarkUp(node, target);
+        if (node.targets == 0) return false;
+
+        Node x = node.nodes.get(0),
+                y = node.nodes.get(1);
+
+        boolean toLeft = node.nodes.get(0).targets >= node.nodes.get(1).targets;
+
+        if (!toLeft) {
+            Node temp = y;
+            y = x;
+            x = temp;
+        }
+
+        if (Break(x, y, node)) return true;
+
+        return false;
+    }
+
+    public static boolean Break(Node x, Node y, Node eq) {
+        if (y.valEquals("0") && x.valEquals("*")) {
+            Node temp = new Node(",");
+
+            for (int i = 0; i < x.nodes.size(); ++i) {
+                if (x.nodes.get(i).targets == 0) continue;
+                temp.nodes.add(new Node("=", new Node[] {
+                        x.nodes.get(i),
+                        new Node("0")
+                }));
+            }
+
+            if (temp.nodes.size() > 1) {
+                eq.clone(temp);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean Factor(Node x, Node y, Node eq, boolean toLeft, String target) {
 
         if (eq.temp != -10) {
@@ -53,7 +95,7 @@ public class Solve2 {
                             || !(c.value.equals(target)
                             || (c.value.equals("*")
                             && c.find(new Node(target)) == 0
-                            && c.find(new Node("^", new Node[] {
+                            && c.find(new Node("^", new Node[]{
                             new Node(target),
                             new Node("ANY")
                     })) == -1)
@@ -65,7 +107,7 @@ public class Solve2 {
 
                 if (good) {
                     int pos = toLeft ? 0 : 1;
-                    eq.nodes.set(pos, new Node("*", new Node[] {
+                    eq.nodes.set(pos, new Node("*", new Node[]{
                             new Node(target),
                             new Node("/", new Node[]{
                                     eq.nodes.get(pos),
@@ -89,7 +131,7 @@ public class Solve2 {
                 temp.changed = true;
 
                 x.nodes.add(temp);
-                eq.nodes.set(toLeft? 1 : 0, new Node("0"));
+                eq.nodes.set(toLeft ? 1 : 0, new Node("0"));
 
                 return true;
             }
@@ -538,16 +580,26 @@ public class Solve2 {
     }
 
     public static boolean Step(Node eq, String target, boolean e) {
+        if (eq.valEquals(",")) {
+            for (int i = 0; i < eq.nodes.size(); ++i) {
+                if (!Step(eq.nodes.get(i), target, e)) return false;
+            }
+            return true;
+        }
+
         Node last = eq.clone();
 
         Parser.MarkUp(eq, target);
+        PreSolve(eq, target);
         if (!Simplify.Step(eq)) return false;
         Solve(eq, target);
 
-        if (!e && eq.equals(last)) {
+        boolean eqs = eq.equals(last);
+
+        if (!e && eqs) {
             return Step(eq, target, true);
         }
-        return eq.equals(last);
+        return eqs;
     }
 
     public static boolean Step(Node eq, String target) {
@@ -559,13 +611,6 @@ public class Solve2 {
         Node n = Parser.CreateNode(eq, target);
         System.out.println(Parser.ReadNode(n));
         int i;
-
-        Simplify.Step(n, false);
-        Parser.MarkUp(n);
-        System.out.println(Parser.ReadNode(n));
-        Solve(n, target);
-        Parser.MarkUp(n);
-        System.out.println(Parser.ReadNode(n));
 
         for (i = 0; i < 100; i++) {
             if (Step(n, target)) break;
