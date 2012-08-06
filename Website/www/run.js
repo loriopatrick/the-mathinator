@@ -79,22 +79,24 @@ WB.engine = {
     calc: function (eq, callback) {
         $.post('/calc/', eq, function (raw) {
             var data = raw.split('\n');
-            $('#preview').html('We Read: <div class="math">' + data[0] + '</div>');
+            $('#preview').html('We Read: $$' + data[0] + '$$');
             var res = [];
             var last = '';
             for (var i = 0; i < data.length; i++) {
                 if (last == data[i]) continue;
                 else last = data[i];
-                
-                res.push('<div class=\"math\">' + data[i] + '</div>');
+
+                data[i] = data[i].split('\\sqrt').join('√');
+
+                res.push('$$' + data[i] + '$$');
             }
             $('#res').html(res.join('<br/>'));  
             if (callback) callback();
         }, 'text');
     },
     render: function () {
-        jsMath.ProcessBeforeShowing('preview');
-        jsMath.ProcessBeforeShowing('res');
+        M.parseMath($('#preview')[0]);
+        M.parseMath($('#res')[0]);
     },
     parser: function (eq) {
         function replace (s, o, n) {

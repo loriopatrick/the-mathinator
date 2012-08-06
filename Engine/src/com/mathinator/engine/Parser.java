@@ -271,7 +271,7 @@ public class Parser {
         StringBuilder sb = new StringBuilder();
 
         if (node.changed) {
-            sb.append("\\bbox[#93e7ff,5px,border:0 solid blue;border-radius:15px;]{");
+            sb.append("\\cl selected{");
             // border-radius: 10px
         }
 
@@ -291,7 +291,7 @@ public class Parser {
                 n = n.nodes.get(0);
             }
 
-            sb.append("\\frac{\\partial}{\\partial ").append(target.value).append('}');
+            sb.append("{\\partial}/{\\partial ").append(target.value).append('}');
             sb.append('(').append(ReadNodeLatex(n)).append(')');
             if (node.changed) sb.append('}');
             return sb.toString();
@@ -307,9 +307,9 @@ public class Parser {
 
 
         if (node.value.equals("/")) {
-            sb.append("\\frac{");
+            sb.append("{");
             sb.append(ReadNodeLatex(node.nodes.get(0)));
-            sb.append("}{");
+            sb.append("}/{");
             sb.append(ReadNodeLatex(node.nodes.get(1)));
             sb.append("}");
             if (node.changed) sb.append('}');
@@ -318,7 +318,7 @@ public class Parser {
 
         if (node.value.equals("^")) {
             if (node.nodes.get(1).value.equals("/") && node.nodes.get(1).nodes.get(0).value.equals("1")) {
-                sb.append("\\sqrt");
+                sb.append("√");
                 if (!node.nodes.get(1).nodes.get(1).value.equals("2"))
                     sb.append('[').append(ReadNodeLatex(node.nodes.get(1).nodes.get(1))).append(']');
                 sb.append('{').append(ReadNodeLatex(node.nodes.get(0))).append('}');

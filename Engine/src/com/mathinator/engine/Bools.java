@@ -24,6 +24,7 @@ public class Bools {
         if (s.equals("d")) return true;
         if (s.equals("i")) return true;
         if (s.equals("atan2")) return true;
+        if (s.equals("abs")) return true;
 
         return false;
     }

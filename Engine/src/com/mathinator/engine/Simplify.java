@@ -67,6 +67,7 @@ public class Simplify {
             Node x = node.nodes.get(0), y = node.nodes.get(1);
 
             if (x.valEquals("1") || x.valEquals("0") || y.valEquals("1") || y.valEquals("0")) return false;
+            if (x.valEquals("/") || y.valEquals("/")) return false;
 
             boolean useTarget = true;
             Node target = null;
@@ -85,12 +86,23 @@ public class Simplify {
             nMath.EliminateNon(commons, yCommons);
 
             if (commons.size() > 0) {
+                float sum = 1;
+
                 Node div = new Node("*");
-                for (Node n : commons) {
+                for (int i = 0; i < commons.size(); ++i) {
+                    Node n = commons.get(i);
+                    if (Bools.isNum(n.value)) {
+                        sum *= Float.parseFloat(n.value);
+                        continue;
+                    }
                     if (!useTarget && n.equals(target)) {
                         continue;
                     }
                     div.nodes.add(n);
+                }
+
+                if (sum != 1) {
+                    div.nodes.add(new Node(sum + ""));
                 }
 
                 if (div.nodes.size() == 0) return false;
