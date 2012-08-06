@@ -86,11 +86,9 @@ WB.engine = {
                 if (last == data[i]) continue;
                 else last = data[i];
 
-                data[i] = data[i].split('\\sqrt').join('√');
-
-                res.push('$$' + data[i] + '$$');
+                res.push('<span style=\"padding: 7px;\">$$' + data[i] + '$$</span>');
             }
-            $('#res').html(res.join('<br/>'));  
+            $('#res').html(res.join('<br/>'));
             if (callback) callback();
         }, 'text');
     },

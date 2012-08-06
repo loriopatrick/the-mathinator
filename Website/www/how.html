@@ -4,20 +4,14 @@
 <head>
     <title></title>
     <link rel="STYLESHEET" href="style.css"/>
-    <script type="text/javascript" src="jsMath/plugins/noImageFonts.js"></script>
-    <script type="text/javascript" src="jsMath/jsMath.js"></script>
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <link rel="stylesheet" href="lib/jqMath/jqmath-0.2.0.css">
+    <script type="text/javascript" src="lib/jqMath/jqmath-etc-0.2.0.min.js"></script>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-33455217-1']);
         _gaq.push(['_trackPageview']);
-
-        function mathIt () {
-            var es = document.getElementsByClassName("math");
-            for (var i = 0; i < es.length; i++) {
-                jsMath.ProcessElement(es[i]);
-            }
-        }
 
         (function () {
             var ga = document.createElement('script');
@@ -27,8 +21,6 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
         })();
-
-        window.onload = mathIt;
 
     </script>
 </head>
@@ -47,45 +39,37 @@
 <div id="body">
     <div class="width: 802px">
         <div class="result">
-            <div class="message" style="max-width: 600px;">
+            <div id='rme' class="message" style="max-width: 600px;">
                 <h4>How to use The Mathinator</h4>
 
-                This page is currently a work in progress. So to keep things simple
-                here are a few examples.
+                To keep things simple here are a few examples.
 
                 <br/><br/>
 
-                Solve for x:
-                <div class="math">{4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6}</div>
-                <a href="/#4*(9*x+18*x/5)=32*x+6">4*(9*x+18*x/5)=32*x+6</a>
-
-                <br/><br/><br/><br/><br/><br/>
-
                 Simplify:
-                <div class="math"> \frac{{{x}^{5}}*{{y}^{7}}*{{z}^{-2}}}{{{x}^{3}}*{{z}^{-10}}*y}</div>
+                $${{{x}^{5}}*{{y}^{7}}*{{z}^{-2}}}/{{{x}^{3}}*{{z}^{-10}}*y}$$
                 <a href="/#(x^5*y^7*z^-2)/(x^3*z^-10*y)">(x^5*y^7*z^-2)/(x^3*z^-10*y)</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
                 Solve for x:
-                <div class="math"> {{2*x*y}+{4*x*y}}={2*{({2*x}+y)}}</div>
+                $${{2*x*y}+{4*x*y}}={2*{({2*x}+y)}}$$
                 <a href="/#2*x*y+4*x*y=2*(2*x+y)">2*x*y+4*x*y=2*(2*x+y)</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
                 Solve for x:
-                <div class="math"> {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6}</div>
+                $${4*{({9*x}+{18*{{x}/{5}}})}}={{32*x}+6}$$
                 <a href="/#4*(9*x+18*x/5)=32*x+6">4*(9*x+18*x/5)=32*x+6</a>
 
                 <br/><br/><br/><br/><br/><br/>
 
-
-                Solve for x:
-                <div class="math"> {4*{({9*x}+{18*{\frac{x}{5}}})}}={{32*x}+6}</div>
-                <a href="/#4*(9*x+18*x/5)=32*x+6">4*(9*x+18*x/5)=32*x+6</a>
+                please note that x^2/5+8 will be recognized as:<br/>
+                $$x^{{2}/{5}}+8$$<br/><br/>
+                and (x^2)/5+8 will be recognized as:<br/>
+                $${x^{2}}/{5}+8$$
 
                 <br/><br/><br/><br/><br/><br/>
-
 
                 We are currently in alpha testing. If you find any bugs please email
                 us at <a href="mailto:themathinator.com@gmail.com">themathinator.com@gmail.com</a>.
