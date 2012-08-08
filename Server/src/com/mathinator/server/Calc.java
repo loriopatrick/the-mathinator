@@ -52,6 +52,7 @@ public class Calc implements HttpHandler {
 
         Headers responseHeaders = ex.getResponseHeaders();
         responseHeaders.set("Content-Type", "text/plain");
+        responseHeaders.set("charset", "utf-8");
 
         OutputStream outputStream = ex.getResponseBody();
 
@@ -59,7 +60,6 @@ public class Calc implements HttpHandler {
         try {
             eq = Read(ex.getRequestBody());
             System.out.println("CALC: " + eq);
-
 
             ex.sendResponseHeaders(200, 0);
 

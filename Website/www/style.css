@@ -173,3 +173,10 @@ input:focus {
     border-radius: 15px;
     padding: 5px;
 }
+
+@font-face {
+    font-family: 'UnifrakturMaguntia';
+    font-style: normal;
+    font-weight: 400;
+    src: local('UnifrakturMaguntia'), url(UnifrakturMaguntia.woff) format('woff');
+}

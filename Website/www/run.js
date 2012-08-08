@@ -78,7 +78,8 @@ WB.engine = {
     },
     calc: function (eq, callback) {
         $.post('/calc/', eq, function (raw) {
-            var data = raw.split('\n');
+            var data = raw.split('\\sqrt').join('√').split('\n');
+            console.log (data);
             $('#preview').html('We Read: $$' + data[0] + '$$');
             var res = [];
             var last = '';
@@ -90,7 +91,7 @@ WB.engine = {
             }
             $('#res').html(res.join('<br/>'));
             if (callback) callback();
-        }, 'text');
+        });
     },
     render: function () {
         M.parseMath($('#preview')[0]);

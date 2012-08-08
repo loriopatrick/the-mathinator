@@ -233,6 +233,7 @@ public class Parser {
         return CreateNode(eq, "  ");
     }
 
+    // for internal use only
     public static String ReadNode(Node node) {
         if (node.height == 0 || node.nodes.size() == 0) {
             if (node.value.equals(Math.PI + "")) {
@@ -272,7 +273,6 @@ public class Parser {
 
         if (node.changed) {
             sb.append("\\cl selected{");
-            // border-radius: 10px
         }
 
         if (node.height == 0) {
@@ -318,7 +318,7 @@ public class Parser {
 
         if (node.value.equals("^")) {
             if (node.nodes.get(1).value.equals("/") && node.nodes.get(1).nodes.get(0).value.equals("1")) {
-                sb.append("√");
+                sb.append("\\sqrt");
                 if (!node.nodes.get(1).nodes.get(1).value.equals("2"))
                     sb.append('[').append(ReadNodeLatex(node.nodes.get(1).nodes.get(1))).append(']');
                 sb.append('{').append(ReadNodeLatex(node.nodes.get(0))).append('}');
@@ -348,8 +348,23 @@ public class Parser {
                 sb.append(ReadNodeLatex(node.nodes.get(i)));
             }
             if (i < node.nodes.size() - 1) {
-                if (!(node.value.equals("+") && node.nodes.get(i + 1).value.startsWith("-")))
-                    sb.append(node.value);
+                if (!(node.value.equals("+") && node.nodes.get(i + 1).value.startsWith("-"))) {
+
+                    if (node.valEquals("*")) {
+
+                        Node n = node.nodes.get(i), nx = node.nodes.get(i+1);
+
+                        if (n.valEquals("^") && nx.valEquals("^")) {
+                        } else if (nx.valEquals("+")) {
+                        } else if (!n.valEquals("+") && !n.valEquals("^") && nx.height == 0 && !Bools.isNum(nx.value)) {
+                        } else {
+                            sb.append(node.value);
+                        }
+                    } else {
+                        sb.append(node.value);
+                    }
+
+                }
             }
         }
 
