@@ -1,6 +1,8 @@
 package com.mathinator.engine;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Simplify {
     public static boolean Simplify(Node node, boolean expand) {
@@ -462,11 +464,52 @@ public class Simplify {
                     new Node("1"),
                     new Node("2")
             }))) {
-                double val = Math.sqrt(Float.parseFloat(b.value));
+                float num = Float.parseFloat(b.value);
+                double val = Math.sqrt(num);
+
                 if (val == Math.floor(val)) {
                     node.clone(new Node(val + "", true));
-
                     return true;
+                } else if (Math.floor(num) == num) {
+                    ArrayList<Integer> ms = nMath.Multiples(num);
+                    Collections.sort(ms);
+                    int out = 1;
+
+                    int last = ms.get(0);
+                    for (int i = 1; i < ms.size();) {
+                        int c = ms.get(i);
+                        if (c == last) {
+                            out *= c;
+                            ms.remove(i - 1);
+                            ms.remove(i - 1);
+                            --i;
+
+                            last = 4;
+                        } else {
+                            ++i;
+                            last = c;
+                        }
+                    }
+
+                    if (out != 1) {
+                        float in = 1;
+                        for (Integer m : ms) {
+                            in *= m;
+                        }
+
+                        Node temp = new Node("*", new Node[] {
+                                new Node(out + "", true),
+                                new Node("^", new Node[] {
+                                        new Node(in + "", true),
+                                        new Node("/", new Node[] {
+                                                new Node("1"),
+                                                new Node("2")
+                                        })
+                                })
+                        });
+
+                        node.clone(temp);
+                    }
                 }
             } else if (b.value.equals("^")) {
                 b.nodes.set(1, new Node("*", new Node[]{

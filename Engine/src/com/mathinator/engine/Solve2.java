@@ -493,7 +493,7 @@ public class Solve2 {
             });
             x.nodes.get(1).changed = true;
             eq.nodes.set(toLeft ? 1 : 0, temp);
-            x.nodes.set(1, new Node("1"));
+            x.nodes.set(1, new Node("1", true));
 
             return true;
         }

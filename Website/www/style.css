@@ -169,6 +169,7 @@ input:focus {
     z-index: 9999999;
 }
 .selected {
-    background-color: #8dc3ff;
+    background-color: rgba(141, 195, 255, 0.59);
     border-radius: 15px;
+    padding: 5px;
 }
