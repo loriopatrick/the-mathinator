@@ -5,8 +5,8 @@ by Patrick Lorio
 
 #### Progress
 * Need to
-	* work in "+/-" & "-/+" operators
-	* do simplify on trig - website parsing
+	* factor
+	    * third degree
 * Would like to
 	* start calculus stuff
 		* intergrals

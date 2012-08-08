@@ -506,6 +506,23 @@ public class Simplify {
 
                 node.changed = true;
                 return true;
+            } else if (b.valEquals("+")) {
+
+                if (Bools.isNum(e.value)) {
+                    float p = Float.parseFloat(e.value);
+                    if (p == Math.floor(p)) {
+                        Node res = new Node("*", true);
+
+                        for (int i = 0; i < (int)p; ++i) {
+                            res.nodes.add(b.clone());
+                        }
+
+                        node.clone(res);
+                        return true;
+                    }
+
+                }
+
             }
         }
 
@@ -827,7 +844,7 @@ public class Simplify {
 
                 n.nodes.get(1).value = n.nodes.get(1).value.substring(1);
                 n.changed = true;
-                d.clone(new Node("*", new Node[] {
+                d.clone(new Node("*", new Node[]{
                         d.clone(),
                         n.clone()
                 }));
@@ -835,7 +852,7 @@ public class Simplify {
             } else if (d.nodes.get(1).value.charAt(0) == '-') {
                 d.nodes.get(1).value = d.nodes.get(1).value.substring(1);
                 d.nodes.get(1).changed = true;
-                n.clone(new Node("*", new Node[] {
+                n.clone(new Node("*", new Node[]{
                         n.clone(),
                         d.clone()
                 }));
@@ -857,7 +874,7 @@ public class Simplify {
             if (n.nodes.get(1).value.charAt(0) == '-') {
                 n.nodes.get(1).value = n.nodes.get(1).value.substring(1);
                 n.changed = true;
-                d.clone(new Node("*", new Node[] {
+                d.clone(new Node("*", new Node[]{
                         d.clone(),
                         n.clone()
                 }));
@@ -888,7 +905,7 @@ public class Simplify {
             if (d.nodes.get(1).value.charAt(0) == '-') {
                 d.nodes.get(1).value = d.nodes.get(1).value.substring(1);
                 d.changed = true;
-                n.clone(new Node("*", new Node[] {
+                n.clone(new Node("*", new Node[]{
                         n.clone(),
                         d.clone()
                 }));

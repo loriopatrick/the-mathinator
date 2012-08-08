@@ -28,8 +28,8 @@ public class Solve2 {
         }
 
         if (node.temp != -10) {
-            if (Adds(x, y, node, toLeft)) return true;
             if (Divs(x, y, node, toLeft)) return true;
+            if (Adds(x, y, node, toLeft)) return true;
             if (Multis(x, y, node, toLeft)) return true;
             if (Pows(x, y, node, toLeft)) return true;
         }
@@ -153,7 +153,6 @@ public class Solve2 {
 
             return true;
         }
-
 
         if (!x.value.equals("+")) return false;
 
