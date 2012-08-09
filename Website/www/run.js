@@ -78,7 +78,10 @@ WB.engine = {
     },
     calc: function (eq, callback) {
         $.post('/calc/', eq, function (raw) {
-            var data = raw.split('\\sqrt').join('√').split('\n');
+            var data = raw
+                .split('\\sqrt').join('√')
+                .split('\\pi').join('π')
+                .split('\n');
             console.log (data);
             $('#preview').html('We Read: $$' + data[0] + '$$');
             var res = [];

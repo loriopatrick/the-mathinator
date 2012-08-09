@@ -276,8 +276,14 @@ public class Parser {
         }
 
         if (node.height == 0) {
-            if (node.valEquals("pi")) sb.append('\\');
-            sb.append(node.value);
+            if (node.valEquals("pi")){
+                sb.append("\\pi");
+            } else if (Bools.isNum(node.value)
+                    && node.value.indexOf(".0") == node.value.length() - 2) {
+                sb.append(node.value.replace(".0", ""));
+            } else {
+                sb.append(node.value);
+            }
             if (node.changed) sb.append('}');
             return sb.toString();
         }
@@ -317,10 +323,12 @@ public class Parser {
         }
 
         if (node.value.equals("^")) {
-            if (node.nodes.get(1).value.equals("/") && node.nodes.get(1).nodes.get(0).value.equals("1")) {
+            if (node.nodes.get(1).value.equals("/") && node.nodes.get(1).nodes.get(0).value.equals("1")
+                    && node.nodes.get(1).nodes.get(1).height == 0) {
+                if (!node.nodes.get(1).nodes.get(1).value.equals("2")) {
+                    sb.append("\\cl pow {").append(ReadNodeLatex(node.nodes.get(1).nodes.get(1))).append('}');
+                }
                 sb.append("\\sqrt");
-                if (!node.nodes.get(1).nodes.get(1).value.equals("2"))
-                    sb.append('[').append(ReadNodeLatex(node.nodes.get(1).nodes.get(1))).append(']');
                 sb.append('{').append(ReadNodeLatex(node.nodes.get(0))).append('}');
             } else {
                 sb.append("{");
@@ -352,9 +360,11 @@ public class Parser {
 
                     if (node.valEquals("*")) {
 
-                        Node n = node.nodes.get(i), nx = node.nodes.get(i+1);
+                        Node n = node.nodes.get(i), nx = node.nodes.get(i + 1);
 
                         if (n.valEquals("^") && nx.valEquals("^")) {
+                        } else if (nx.valEquals("^") && nx.nodes.get(1).valEquals("/")
+                                && nx.nodes.get(1).nodes.get(0).valEquals("1")) {
                         } else if (nx.valEquals("+")) {
                         } else if (!n.valEquals("+") && !n.valEquals("^") && nx.height == 0 && !Bools.isNum(nx.value)) {
                         } else {
