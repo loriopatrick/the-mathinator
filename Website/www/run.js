@@ -81,6 +81,7 @@ WB.engine = {
             var data = raw
                 .split('\\sqrt').join('√')
                 .split('\\pi').join('π')
+                .split('\\partial').join('∂')
                 .split('\n');
             console.log (data);
             $('#preview').html('We Read: $$' + data[0] + '$$');

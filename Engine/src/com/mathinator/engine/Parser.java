@@ -276,7 +276,7 @@ public class Parser {
         }
 
         if (node.height == 0) {
-            if (node.valEquals("pi")){
+            if (node.valEquals("pi")) {
                 sb.append("\\pi");
             } else if (Bools.isNum(node.value)
                     && node.value.indexOf(".0") == node.value.length() - 2) {
