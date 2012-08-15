@@ -70,6 +70,14 @@ public class Parser {
     public static Node Parse(String[] eq, int start) throws Exception {
         Node current;
 
+        int count = 0;
+        for (String c : eq) {
+            if (c.equals("(")) ++count;
+            if (c.equals(")")) --count;
+        }
+
+        if (count != 0) return null;
+
         if (eq[start].equals("(")) {
             current = Parse(eq, start + 1);
             start = current.temp;
@@ -107,7 +115,7 @@ public class Parser {
                 current.nodes.add(temp);
                 temp.parent = current;
                 current = temp;
-            } else if (c == '+' || c == ',') {
+            } else if (c == '+' || c == ';') {
 
                 Node temp = current;
                 boolean go = false;
@@ -124,7 +132,7 @@ public class Parser {
 
                 if (!go) {
                     current = temp;
-                    temp = new Node(s);
+                    temp = new Node(s.equals(";")? "," : s);
                     temp.nodes.add(current);
                     current.parent = temp;
                     current = temp;
