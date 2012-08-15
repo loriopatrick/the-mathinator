@@ -1152,7 +1152,8 @@ public class Simplify {
                             base = a;
                         }
 
-                        if (div.targets > 0 && base.targets > 0 || div.targets == 0 && base.targets == 0) {
+                        if ((div.targets > 0 && base.targets > 0 || div.targets == 0 && base.targets == 0)
+                                && !(div.nodes.get(1).targets > 0 && base.targets > 0)) {
 
                             Node temp = new Node("*", new Node[]{
                                     base,

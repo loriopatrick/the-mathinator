@@ -32,6 +32,7 @@ public class Solve2 {
             if (Adds(x, y, node, toLeft)) return true;
             if (Multis(x, y, node, toLeft)) return true;
             if (Pows(x, y, node, toLeft)) return true;
+            if (xNom(x, y, target)) return true;
         }
 
         if (Factor(x, y, node, toLeft, target)) return true;
@@ -41,7 +42,37 @@ public class Solve2 {
         return false;
     }
 
-    public static boolean PreSolve (Node node, String target) {
+    public static boolean xNom (Node x, Node y, String target) {
+        if (y.valEquals("0") && x.valEquals("+")) {
+            boolean good = false;
+            for (Node c : x.nodes) {
+                if (!c.valEquals("/")) continue;
+                if (c.nodes.get(1).targets <= 0) continue;
+                good = true;
+                break;
+            }
+
+            if (good) {
+                Node temp = new Node(target);
+                temp.changed = true;
+                for (Node c : x.nodes) {
+                    if (c.valEquals("*")) {
+                        c.nodes.add(temp.clone());
+                    } else {
+                        c.clone(new Node("*", new Node[] {
+                                temp.clone(),
+                                c.clone()
+                        }));
+                    }
+                }
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean PreSolve(Node node, String target) {
         if (!node.value.equals("=")) return false;
 
         Parser.MarkUp(node, target);
@@ -69,7 +100,7 @@ public class Solve2 {
 
             for (int i = 0; i < x.nodes.size(); ++i) {
                 if (x.nodes.get(i).targets == 0) continue;
-                temp.nodes.add(new Node("=", new Node[] {
+                temp.nodes.add(new Node("=", new Node[]{
                         x.nodes.get(i),
                         new Node("0")
                 }));
