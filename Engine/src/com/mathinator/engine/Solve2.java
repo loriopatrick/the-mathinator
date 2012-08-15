@@ -201,6 +201,19 @@ public class Solve2 {
                     float val = Float.parseFloat(c.nodes.get(1).value);
                     if (val != Math.floor(val)) return false;
                     if (val >= 5) return false;
+                    if (val < 0) {
+                        for (Node k : x.nodes) {
+                            if (k.valEquals("*")) {
+                                k.nodes.add(new Node(target, true));
+                            } else {
+                                k.clone(new Node("*", new Node[] {
+                                        new Node(target, true),
+                                        k.clone()
+                                }));
+                            }
+                        }
+                        return true;
+                    }
                     if (powers[(int) val] != null) return false;
                     powers[(int) val] = new Node("1");
                 }
@@ -216,6 +229,19 @@ public class Solve2 {
                             float val = Float.parseFloat(n.nodes.get(1).value);
                             if (val != Math.floor(val)) return false;
                             if (val >= 5) return false;
+                            if (val < 0) {
+                                for (Node k : x.nodes) {
+                                    if (k.valEquals("*")) {
+                                        k.nodes.add(new Node(target, true));
+                                    } else {
+                                        k.clone(new Node("*", new Node[] {
+                                                new Node(target, true),
+                                                k.clone()
+                                        }));
+                                    }
+                                }
+                                return true;
+                            }
                             if (powers[(int) val] != null) return false;
                             Node v = c.clone();
                             v.nodes.remove(j);

@@ -8,7 +8,7 @@ public class Experiment {
         System.out.println("Welcome... to the Mathenator!");
 
 //        Solve2.Run("8/x-3*x=4*x+6/x", "x");
-        Solve2.Run("x^2+32=5*x^2", "x");
+        Solve2.Run("4/x^2+5/x+5=0/x", "x");
 //        Node test = Parser.CreateNode("2^(3/2),-2^(3/2)");
 //        System.out.println(test);
 
