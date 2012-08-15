@@ -476,7 +476,7 @@ public class Simplify {
                     int out = 1;
 
                     int last = ms.get(0);
-                    for (int i = 1; i < ms.size();) {
+                    for (int i = 1; i < ms.size(); ) {
                         int c = ms.get(i);
                         if (c == last) {
                             out *= c;
@@ -497,11 +497,11 @@ public class Simplify {
                             in *= m;
                         }
 
-                        Node temp = new Node("*", new Node[] {
+                        Node temp = new Node("*", new Node[]{
                                 new Node(out + "", true),
-                                new Node("^", new Node[] {
+                                new Node("^", new Node[]{
                                         new Node(in + "", true),
-                                        new Node("/", new Node[] {
+                                        new Node("/", new Node[]{
                                                 new Node("1"),
                                                 new Node("2")
                                         })
@@ -556,7 +556,7 @@ public class Simplify {
                     if (p == Math.floor(p)) {
                         Node res = new Node("*", true);
 
-                        for (int i = 0; i < (int)p; ++i) {
+                        for (int i = 0; i < (int) p; ++i) {
                             res.nodes.add(b.clone());
                         }
 
@@ -665,16 +665,31 @@ public class Simplify {
                                 return true;
                             }
                         } else {
+                            boolean isNeg = nMath.isNegative(b);
+                            boolean isInNeg = nMath.isNegative(a.nodes.get(0));
+
+                            if (isNeg == isInNeg) isNeg = false;
+
+                            if (isNeg) {
+                                b.value = b.value.substring(1);
+                            }
+
                             if (a.nodes.get(0).equals(b)) {
                                 a.nodes.set(1, new Node("+", new Node[]{
                                         a.nodes.get(1),
                                         new Node("1")
                                 }));
-                                node.nodes.remove(j);
+                                if (isNeg) {
+                                    node.nodes.set(j, new Node("-1", true));
+                                } else {
+                                    node.nodes.remove(j);
+                                }
 
                                 a.changed = true;
                                 a.message = "x^n*x = x^(n+1)";
                                 return true;
+                            } else if (isNeg) {
+                                b.value = '-' + b.value;
                             }
                         }
                     }

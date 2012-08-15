@@ -176,6 +176,17 @@ public class Tests {
             }
             Parser.MarkUp(n);
 
+            if (ans.valEquals(",")) {
+                for (Node c : ans.nodes) {
+                    c.clone(new Node("=", new Node[] {
+                            new Node(target),
+                            c.clone()
+                    }));
+                }
+
+                return n.equals(ans);
+            }
+
             return n.equals(new Node("=", new Node[]{
                     new Node(target),
                     ans
@@ -211,7 +222,7 @@ public class Tests {
         if (!Solve("6=(x-2)^(1/2)", "38", "x")) assert false;
         if (!Solve("-10*(x-10)^(1/2)=-60", "46", "x")) assert false;
         if (!Solve("4*(9*x+18*x/5)=32*x+6", "15/46", "x")) assert false;
-        if (!Solve("x^2+32=5*x^2", "2^(3/2)", "x")) assert false;
+        if (!Solve("x^2+32=5*x^2", "2^(3/2),-1*2^(3/2)", "x")) assert false;
         if (!Solve("3*(6-1*(8*x-7))+6*x=0", "13/6", "x")) assert false;
 
         //1+2/x=9*x+9
@@ -221,6 +232,7 @@ public class Tests {
     public void SolveHard() {
         if (!Solve("2*x*y+4*x=5", "5/(2*y+4)", "x")) assert false;
         if (!Solve("2*x*y+4*x*y=2*(2*x+y)", "y/(3*y-2)", "x")) assert false;
+        if (!Solve("x^2+2*x+1=0", "-1,-1", "x")) assert false;
     }
 
     @Test

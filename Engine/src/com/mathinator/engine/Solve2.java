@@ -1,5 +1,7 @@
 package com.mathinator.engine;
 
+import java.rmi.MarshalledObject;
+
 public class Solve2 {
 
     public static boolean Solve(Node node, String target) {
@@ -42,7 +44,7 @@ public class Solve2 {
         return false;
     }
 
-    public static boolean xNom (Node x, Node y, String target) {
+    public static boolean xNom(Node x, Node y, String target) {
         if (y.valEquals("0") && x.valEquals("+")) {
             boolean good = false;
             for (Node c : x.nodes) {
@@ -58,7 +60,7 @@ public class Solve2 {
                     if (c.valEquals("*")) {
                         c.nodes.add(temp.clone(true));
                     } else {
-                        c.clone(new Node("*", new Node[] {
+                        c.clone(new Node("*", new Node[]{
                                 temp.clone(true),
                                 c.clone()
                         }));
@@ -418,6 +420,7 @@ public class Solve2 {
         if (x.value.equals("^") && x.nodes.get(1).targets == 0) {
 
             Node temp;
+            boolean set = false;
 
             if (x.nodes.get(1).value.equals("/")) {
                 Node d = x.nodes.get(1).nodes.get(1);
@@ -431,9 +434,10 @@ public class Solve2 {
                 d.value = "1";
                 d.nodes.clear();
             } else {
+                Node ex = x.nodes.get(1);
                 Node guts = new Node("/", new Node[]{
                         new Node("1"),
-                        x.nodes.get(1)
+                        ex
                 });
                 guts.changed = true;
 
@@ -442,10 +446,35 @@ public class Solve2 {
                         guts
                 });
 
+
+                if (Bools.isNum(ex.value)) {
+                    float val = Float.parseFloat(ex.value);
+                    if (val % 2 == 0) {
+                        set = true;
+                    }
+                }
+
                 x.nodes.set(1, new Node("1"));
             }
 
             eq.nodes.set(toLeft ? 1 : 0, temp);
+
+            if (set) {
+                eq.clone(new Node(",", new Node[]{
+                        new Node("=", new Node[]{
+                                eq.nodes.get(toLeft ? 0 : 1),
+                                eq.nodes.get(toLeft ? 1 : 0)
+                        }),
+                        new Node("=", new Node[]{
+                                eq.nodes.get(toLeft ? 0 : 1).clone(),
+                                new Node("*", new Node[]{
+                                        new Node("-1"),
+                                        eq.nodes.get(toLeft ? 1 : 0).clone()
+                                })
+                        })
+                }));
+            }
+
             return true;
         }
 

@@ -207,6 +207,16 @@ public class Parser {
     }
 
     public static Node CreateNode(String eq, String target) throws Exception {
+        String[] masterParts = eq.split(",");
+        if (masterParts.length > 1) {
+            Node res = new Node(",");
+            for (String part : masterParts) {
+                res.nodes.add(CreateNode(part, target));
+            }
+
+            return res;
+        }
+
         String[] parts = eq.split("=");
         if (parts.length == 1) {
             String[] block = Block(eq);

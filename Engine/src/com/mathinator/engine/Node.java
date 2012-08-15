@@ -39,7 +39,7 @@ public class Node {
             if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
         } else if (!this.value.equals(compare.value)) return false;
 
-        if (this.value.equals("+") || this.value.equals("*") || this.value.equals("=")) {
+        if (this.value.equals("+") || this.value.equals("*") || this.value.equals("=") || this.value.equals(",")) {
             if (this.nodes.size() != compare.nodes.size()) return false;
             ArrayList<Integer> used = new ArrayList<Integer>();
             for (Node child : this.nodes) {
