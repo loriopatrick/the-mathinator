@@ -54,13 +54,12 @@ public class Solve2 {
 
             if (good) {
                 Node temp = new Node(target);
-                temp.changed = true;
                 for (Node c : x.nodes) {
                     if (c.valEquals("*")) {
-                        c.nodes.add(temp.clone());
+                        c.nodes.add(temp.clone(true));
                     } else {
                         c.clone(new Node("*", new Node[] {
-                                temp.clone(),
+                                temp.clone(true),
                                 c.clone()
                         }));
                     }

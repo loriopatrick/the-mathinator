@@ -62,12 +62,17 @@ public class Node {
         return true;
     }
 
-    public Node clone() {
+    public Node clone(boolean changed) {
         Node res = new Node(this.value);
+        res.changed = changed;
         for (int i = 0; i < this.nodes.size(); i++) {
-            res.nodes.add(this.nodes.get(i).clone());
+            res.nodes.add(this.nodes.get(i).clone(changed));
         }
         return res;
+    }
+
+    public Node clone() {
+        return clone(false);
     }
 
     public boolean valEquals (String v) {
