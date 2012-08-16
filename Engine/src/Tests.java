@@ -240,8 +240,9 @@ public class Tests {
         try {
             ArrayList<Integer> a = nMath.Multiples("-4");
             if (a.size() < 2) assert false;
-            if (!a.contains(-2)) assert false;
             if (!a.contains(2)) assert false;
+            if (!a.contains(2)) assert false;
+            if (!a.contains(-1)) assert false;
         } catch (Exception e) {
             assert false;
         }

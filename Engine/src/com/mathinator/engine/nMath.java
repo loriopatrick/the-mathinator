@@ -1,6 +1,7 @@
 package com.mathinator.engine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class nMath {
 
@@ -15,6 +16,7 @@ public class nMath {
                 res.add(i);
                 float n = (v / i);
                 res.addAll(Multiples(n));
+                Collections.sort(res);
                 if (neg && res.size() > 0) {
                     res.set(0, res.get(0) * -1);
                 }
@@ -25,6 +27,7 @@ public class nMath {
             res.add(1);
             res.add((int) v);
         }
+        Collections.sort(res);
         if (neg && res.size() > 0) {
             res.set(0, res.get(0) * -1);
         }

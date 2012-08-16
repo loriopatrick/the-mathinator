@@ -34,8 +34,9 @@ public class Solve2 {
             if (Adds(x, y, node, toLeft)) return true;
             if (Multis(x, y, node, toLeft)) return true;
             if (Pows(x, y, node, toLeft)) return true;
-            if (xNom(x, y, target)) return true;
         }
+
+        if (xNom(x, y, target)) return true;
 
         if (Factor(x, y, node, toLeft, target)) return true;
 
