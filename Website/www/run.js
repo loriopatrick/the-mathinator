@@ -117,7 +117,7 @@ WB.engine = {
         }
 
         function isOp(c) {
-            return '+-()*^/='.indexOf(c) > -1;
+            return '+-()*^/=.'.indexOf(c) > -1;
         }
 
         var res = [];

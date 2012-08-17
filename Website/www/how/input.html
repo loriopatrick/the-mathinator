@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="STYLESHEET" href="../style.css"/>
+    <script type="text/javascript" src="../lib/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=UnifrakturMaguntia">
+    <link rel="stylesheet" href="../lib/jqMath/jqmath-0.2.0.css">
+    <script type="text/javascript" src="../lib/jqMath/jqmath-etc-0.2.0.min.js"></script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-33455217-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    <style type="text/css">
+        .in {
+            padding: 5px;
+            border: solid 1px #c9c9c9;
+            color: #505050;
+        }
+    </style>
+</head>
+<body>
+<div id="head" style="padding-top: 10px; height: 35px;">
+    <div class="nav">
+        <a href="../about/index.html">About</a>
+        <a href="index.html">How to use</a>
+    </div>
+    <div class="center">
+        <div class="title" style="font-size: 24px; width: 300px;"><a href="../index.html">THE MATHINATOR <span
+                style="font-size: 18px;">ALPHA</span></a>
+        </div>
+    </div>
+</div>
+<div id="body">
+    <div class="width: 802px">
+        <div class="result">
+            <div id='rme' class="message" style="max-width: 600px;">
+                <h4>How to input problems in The Mathinator</h4>
+
+                <a href="../index.html" target="_blank">On the main page</a>
+                there is a text field. This is where you can input the expression
+                you want simplified or the equation you want solved. <br/><br/>
+
+                Once you have inputted the problem press the "Solve / Simplify"
+                button or press down the return key. After the problem is solved
+                the orange page will scrunch up showing the solution beneath.
+                To enter another problem either click "THE MATHINATOR" at the
+                top of the page or press the return key.<br/> <br/><br/>
+
+                <strong>The Mathinator supports the following</strong><br/><br>
+
+                Operators:
+                <table cellpadding="8" border="1">
+                    <tr>
+                        <td>name</td>
+                        <td>op</td>
+                        <td>example (x op y)</td>
+                    </tr>
+                    <tr>
+                        <td>plus</td>
+                        <td>+</td>
+                        <td>$$x+y$$</td>
+                    </tr>
+                    <tr>
+                        <td>subtract</td>
+                        <td>-</td>
+                        <td>$$x-y$$</td>
+                    </tr>
+                    <tr>
+                        <td>multiply</td>
+                        <td>*</td>
+                        <td>$$x*y$$</td>
+                    </tr>
+                    <tr>
+                        <td>divide</td>
+                        <td>/</td>
+                        <td>$$x/y$$</td>
+                    </tr>
+                    <tr>
+                        <td>power</td>
+                        <td>^</td>
+                        <td>$$x^y$$</td>
+                    </tr>
+                    <tr>
+                        <td>equals</td>
+                        <td>=</td>
+                        <td>$$x=y$$</td>
+                    </tr>
+                </table>
+                <br/><br/>
+
+                Functions:
+                <table cellpadding="8" border="1">
+                    <tr>
+                        <td>function</td>
+                        <td>preview</td>
+                    </tr>
+                    <tr>
+                        <td>sin(x)</td>
+                        <td>$$sin(x)$$</td>
+                    </tr>
+                    <tr>
+                        <td>cos(x)</td>
+                        <td>$$cos(x)$$</td>
+                    </tr>
+                    <tr>
+                        <td>tan(x)</td>
+                        <td>$$tan(x)$$</td>
+                    </tr>
+                    <tr>
+                        <td>asin(x)</td>
+                        <td>$$asin(x)$$</td>
+                    </tr>
+                    <tr>
+                        <td>acos(x)</td>
+                        <td>$$acos(x)$$</td>
+                    </tr>
+                    <tr>
+                        <td>atan(x)</td>
+                        <td>$$atan(x)$$</td>
+                    </tr>
+                    <tr>
+                        <td>d(x;y)</td>
+                        <td>$${∂}/{∂ y}(x)$$</td>
+                    </tr>
+                </table>
+
+                <br/><br/>
+
+                Constants
+                <table cellpadding="8" border="1">
+                    <tr>
+                        <td>input</td>
+                        <td>value</td>
+                        <td>preview</td>
+                    </tr>
+                    <tr>
+                        <td>pi</td>
+                        <td>3.14159265359...</td>
+                        <td>$$π$$</td>
+                    </tr>
+                    <tr>
+                        <td>e</td>
+                        <td>2.71828182846...</td>
+                        <td>$$e$$</td>
+                    </tr>
+                </table>
+
+                <br/><br/>
+
+                <strong>Inputs and Preview</strong>
+
+                <table cellpadding="8" border="1">
+                    <tr>
+                        <td>input</td>
+                        <td>preview</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#(1+2)/(3+4)">(1+2)/(3+4)</a></td>
+                        <td>$${1+2}/{3+4}$$</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#1+2/(3+4)">1+2/(3+4)</a></td>
+                        <td>$$1+{2}/{3+4}$$</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#(1+2)^3">(1+2)^3</a></td>
+                        <td>$${(1+2)}^{3}$$</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#1+2^3">1+2^3</a></td>
+                        <td>$$1+{2}^{3}$$</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#2^3/4+5">2^3/4+5</a></td>
+                        <td>$$2^{3/4}+5$$</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#(2^3)/4+5">(2^3)/4+5</a></td>
+                        <td>$${2^3}/{4}+5$$</td>
+                    </tr>
+                    <tr>
+                        <td><a href="../index.html#2^3*4+5">2^3*4+5</a></td>
+                        <td>$$2^3*4+5$$</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="sponsors">
+            <div id="guts">
+                <span class="message">-- Sponsors --</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
