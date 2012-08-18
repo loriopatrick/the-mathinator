@@ -1132,6 +1132,65 @@ public class Simplify {
                                 return true;
                             }
 
+
+                            if (Bools.isNum(a.nodes.get(1).value) && Bools.isNum(b.nodes.get(1).value)) {
+                                ArrayList<Integer> as = nMath.Multiples(a.nodes.get(1).value),
+                                        bs = nMath.Multiples(b.nodes.get(1).value);
+
+                                if (as != null && bs != null) {
+                                    // remove commons
+                                    for (int e = 0; e < as.size(); ) {
+                                        if (as.size() == 0) break;
+                                        boolean rm = false;
+                                        for (int f = 0; f < bs.size(); ) {
+                                            if (bs.size() == 0 || as.size() == 0) break;
+                                            if (as.get(e).equals(bs.get(f))) {
+                                                as.remove(e);
+                                                bs.remove(f);
+                                                rm = true;
+                                            } else {
+                                                ++f;
+                                            }
+                                        }
+                                        if (!rm) {
+                                            ++e;
+                                        }
+                                    }
+
+                                    float an = 1, bn = 1;
+
+                                    for (Integer a1 : as) {
+                                        an *= a1;
+                                    }
+                                    for (Integer b1 : bs) {
+                                        bn *= b1;
+                                    }
+
+                                    node.nodes.set(i, new Node("/", new Node[]{
+                                            new Node("+", new Node[]{
+                                                    new Node("*", new Node[]{
+                                                            b.nodes.get(0),
+                                                            new Node(an + "")
+                                                    }),
+                                                    new Node("*", new Node[]{
+                                                            a.nodes.get(0),
+                                                            new Node(bn + "")
+                                                    })
+                                            }),
+                                            new Node("*", new Node[]{
+                                                    new Node(Float.parseFloat(a.nodes.get(1).value) + ""),
+                                                    new Node(bn + "")
+                                            })
+                                    }, true));
+
+                                    node.nodes.get(i).changed = true;
+                                    node.nodes.get(i).message = "adding fractions with different denominators \n" +
+                                            "x/y+z/w = (x*w+z*y)/(w*y)";
+                                    node.nodes.remove(j);
+                                    return true;
+                                }
+                            }
+
                             node.nodes.set(i, new Node("/", new Node[]{
                                     new Node("+", new Node[]{
                                             new Node("*", new Node[]{

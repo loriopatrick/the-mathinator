@@ -13,7 +13,7 @@ public class Experiment {
 //        System.out.println(test);
 
 //        System.out.println(nMath.Multiples("-10"));
-        Simplify.Run("2/-10");
+        Simplify.Run("2/3+7/18");
 //        System.out.println(Parser.ReadNodeLatex(Parser.CreateNode("d((x^2)/6*x+x^5,x)")));
 //
 //        Solve2.Run("2*x*y+4*x*y=2*(2*x+y)", "x");
