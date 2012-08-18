@@ -5,10 +5,16 @@ by Patrick Lorio
 
 #### Progress
 * Need to
+	* solve
+		* sin(x)=3, asin(3)=x
 	* factor
 	    * third degree
+	* website
+		* remove empty steps
+		* use css3 for transitions / jquert ui
 * Would like to
 	* start calculus stuff
+		* derivatives /w functions
 		* intergrals
 
 
