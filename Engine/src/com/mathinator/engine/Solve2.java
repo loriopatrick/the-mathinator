@@ -157,10 +157,20 @@ public class Solve2 {
             eq.temp = -10;
 
             if (x.value.equals("+")) {
-                Node temp = new Node("*", new Node[]{
-                        new Node("-1"),
-                        y.clone()
-                });
+                Node temp;
+                if (Bools.isNum(y.value)) {
+                    if (y.value.charAt(0) == '-') {
+                        temp = new Node(y.value.substring(1));
+                    } else {
+                        temp = new Node('-' + y.value);
+                    }
+                } else {
+                    temp = new Node("*", new Node[]{
+                            new Node("-1"),
+                            y.clone()
+                    });
+                }
+
                 temp.changed = true;
 
                 x.nodes.add(temp);
@@ -207,7 +217,7 @@ public class Solve2 {
                             if (k.valEquals("*")) {
                                 k.nodes.add(new Node(target, true));
                             } else {
-                                k.clone(new Node("*", new Node[] {
+                                k.clone(new Node("*", new Node[]{
                                         new Node(target, true),
                                         k.clone()
                                 }));
@@ -235,7 +245,7 @@ public class Solve2 {
                                     if (k.valEquals("*")) {
                                         k.nodes.add(new Node(target, true));
                                     } else {
-                                        k.clone(new Node("*", new Node[] {
+                                        k.clone(new Node("*", new Node[]{
                                                 new Node(target, true),
                                                 k.clone()
                                         }));
@@ -594,12 +604,28 @@ public class Solve2 {
                 Node c = x.nodes.get(i);
 
                 if (c.targets == 0) {
+                    Node gut;
 
-                    Node gut = new Node("*", new Node[]{
-                            new Node("-1"),
-                            c
-                    });
+                    if (Bools.isNum(c.value)) {
+                        if (c.value.charAt(0) == '-') {
+                            gut = new Node(c.value.substring(1));
+                        } else {
+                            gut = new Node('-' + c.value);
+                        }
+                    } else {
+                        gut = new Node("*", new Node[]{
+                                new Node("-1"),
+                                c
+                        });
+                    }
+
                     gut.changed = true;
+
+                    if (y.valEquals("+")) {
+                        y.nodes.add(gut);
+                        x.nodes.remove(i);
+                        return true;
+                    }
 
                     Node temp = new Node("+", new Node[]{
                             y,
@@ -622,11 +648,28 @@ public class Solve2 {
 
                 if (c.targets > 0) {
 
-                    Node gut = new Node("*", new Node[]{
-                            new Node("-1"),
-                            c
-                    });
+                    Node gut;
+
+                    if (Bools.isNum(c.value)) {
+                        if (c.value.charAt(0) == '-') {
+                            gut = new Node(c.value.substring(1));
+                        } else {
+                            gut = new Node('-' + c.value);
+                        }
+                    } else {
+                        gut = new Node("*", new Node[]{
+                                new Node("-1"),
+                                c
+                        });
+                    }
+
                     gut.changed = true;
+
+                    if (x.valEquals("+")) {
+                        x.nodes.add(gut);
+                        y.nodes.remove(i);
+                        return true;
+                    }
 
                     Node temp = new Node("+", new Node[]{
                             x,
