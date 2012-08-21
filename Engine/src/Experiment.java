@@ -8,7 +8,7 @@ public class Experiment {
         System.out.println("Welcome... to the Mathenator!");
 
 //        Solve2.Run("2*(4*x-3)-8=4+2*x", "x");
-        Solve2.Run("(2*x+40)^(1/2)=(-16-2*x)^(1/2)", "x");
+        Solve2.Run("4*x=8*x", "x");
 //        Node test = Parser.CreateNode("2^(3/2),-2^(3/2)");
 //        System.out.println(test);
 
