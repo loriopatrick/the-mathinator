@@ -72,15 +72,6 @@ public class Simplify {
             if (x.valEquals("/") || y.valEquals("/")) return false;
 
             boolean useTarget = false;
-            Node target = new Node("x");
-
-            if (x.targets == 1 && x.nodes.size() == 0) {
-                useTarget = false;
-                target = x;
-            } else if (y.targets == 1 && y.nodes.size() == 0) {
-                useTarget = false;
-                target = y;
-            }
 
             ArrayList<Node> commons = nMath.Commons(x);
             ArrayList<Node> yCommons = nMath.Commons(y);
@@ -93,7 +84,7 @@ public class Simplify {
                 Node div = new Node("*");
                 for (int i = 0; i < commons.size(); ++i) {
                     Node n = commons.get(i);
-                    if (!useTarget && n.equals(target)) {
+                    if (!useTarget && n.height == 0 && n.targets > 0) {
                         continue;
                     }
                     if (Bools.isNum(n.value)) {
