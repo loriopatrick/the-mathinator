@@ -65,26 +65,79 @@
                                 </ul>
                             </li>
                             <!--<li>-->
-                                <!--Solving-->
-                                <!--<ul>-->
-                                    <!--<li>One-Step Equations</li>-->
-                                    <!--<li>Two-Step Equations</li>-->
-                                    <!--<li>Multi-step Equations</li>-->
-                                <!--</ul>-->
+                            <!--Solving-->
+                            <!--<ul>-->
+                            <!--<li>One-Step Equations</li>-->
+                            <!--<li>Two-Step Equations</li>-->
+                            <!--<li>Multi-step Equations</li>-->
+                            <!--</ul>-->
                             <!--</li>-->
                             <!--<li>-->
-                                <!--Factoring-->
+                            <!--Factoring-->
                             <!--</li>-->
                         </ul>
                     </li>
                     <!--<li>-->
-                        <!--Reporting Issue-->
+                    <!--Reporting Issue-->
                     <!--</li>-->
                 </ul>
 
                 If you find any problems please
                 inform us at <a href="mailto:themathinator.com@gmail.com">themathinator.com@gmail.com</a>.
-                Thank you.
+                Thank you. <br/><br/>
+                <br/>
+
+                <strong>Examples: </strong>
+
+                <ul id="examples">
+                </ul>
+
+                <script type="text/javascript">
+                    window.onload = function () {
+                        var examples = [
+                            "10+15-7+2+8-2",
+                            "(5*2+6)/(5^2)+10-2/4*6/4",
+                            "(x^5*y^7*z^-2)/(x^3*z^-10*y)",
+                            "(x^2)^2",
+                            "(x^2*5)/x",
+                            "(x^2)/x",
+                            "(x^4)/(x^2)",
+                            "x/(x^2)",
+                            "5*x*y+3*x*y+9*x*z*y+12*x*z*y",
+                            "(6*y*x+7*x)/x",
+                            "(2*(x-3))+(4*b)+(-2*(x-b-3))+5",
+                            "-5/-13",
+                            "-10*(x-10)^(1/2)=-60",
+                            "(2*x-88)^(1/2)=(x/6)^(1/2)",
+                            "(2*x+40)^(1/2)=(-16-2*x)^(1/2)",
+                            "(x/10)^(1/2)=(3*x-58)^(1/2)",
+                            "(x+8)^(1/2)=(3*x+8)^(1/2)",
+                            "x=x*2",
+                            "-5*(1-5*x)+5*(-8*x-2)=-4*x-8*x",
+                            "2*(4*x-3)-8=4+2*x",
+                            "8*x-2=-9+7*x",
+                            "4/(x-8)=8/2",
+                            "x/(x-3)=2/3",
+                            "(x+10)/(x-7)=8/9",
+                            "9/6=x/10",
+                            "6=(x-2)^(1/2)",
+                            "-10*(x-10)^(1/2)=-60",
+                            "4*(9*x+18*x/5)=32*x+6",
+                            "x^2+32=5*x^2",
+                            "3*(6-1*(8*x-7))+6*x=0",
+                            "5*x=9*x",
+                            "2*x*y+4*x=5",
+                            "2*x*y+4*x*y=2*(2*x+y)"
+                        ];
+                        var html = [];
+                        for (var i = 0; i < examples.length; ++i) {
+                            html.push('<li><a href="../index.html#' + examples[i] + '">' + examples[i] + '</a></li>');
+                        }
+
+                        $('#examples').html(html.join(''));
+                    };
+                </script>
+
             </div>
         </div>
         <div class="sponsors">

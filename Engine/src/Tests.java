@@ -178,7 +178,7 @@ public class Tests {
 
             if (ans.valEquals(",")) {
                 for (Node c : ans.nodes) {
-                    c.clone(new Node("=", new Node[] {
+                    c.clone(new Node("=", new Node[]{
                             new Node(target),
                             c.clone()
                     }));
