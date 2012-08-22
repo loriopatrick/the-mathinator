@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Practice - The Mathinator</title>
+    <style>
+        body {
+            background: #497AB2;
+            color: black;
+            font-weight: bold;
+            font-family: arial;
+            font-size: 24px;
+        }
+    </style>
+    <script src="../lib/jquery.min.js"></script>
+    <script>
+
+        var count = 0;
+        var log = [];
+
+        function rand(from, to) {
+            return Math.floor(Math.random() * (to - from) + from);
+        }
+
+        function multi() {
+            var r;
+            if (count <= 10) {
+                r = rand(2, 50);
+            } else {
+                r = rand(1, 2) * 2;
+            }
+            count *= r;
+            display('* ' + r);
+        }
+
+        function add() {
+            var r = rand(-20, 70);
+            count += r;
+            if (r < 0) {
+                display(r);
+                return;
+            }
+            display('+' + r);
+        }
+
+        function divide() {
+            var r = rand(2, 10);
+            while (count % r != 0) {
+                ++r;
+                if (r > 10) {
+                    return false;
+                }
+            }
+            count /= r;
+            display('÷ ' + r);
+
+            return true;
+        }
+
+        function display(msg) {
+            $('#current').html(msg);
+        }
+
+        function time(fn, hard) {
+            var t = 1000;
+            if (log.length != 0) {
+                t = (Math.floor(Math.max(1000 / ( (log.length) / 500 + 1), 500))
+                        + (hard? 500 : 0)) * (1 + Math.abs (log[log.length - 1] - count) / ((log[log.length - 1] + count) / 2));
+            }
+
+            console.log(t + " : " + count);
+            setTimeout(function () {
+                display('');
+                setTimeout(fn, 200);
+            }, t);
+        }
+
+        function step() {
+
+            log.push(count);
+            var r = Math.random() * 12;
+
+            if (r <= 4) {
+                multi();
+            } else if (r <= 8) {
+                add();
+            } else if (r <= 12) {
+                if (!divide()) {
+                    step();
+                    return;
+                }
+            }
+
+            time(step, true);
+        }
+
+        function start() {
+            var s = 4;
+
+            function countDown() {
+                --s;
+                if (s <= 0) {
+                    display('Go!');
+                    setTimeout(function () {
+                        count = Math.floor(Math.random() * 100);
+                        display(count);
+                        time(step);
+                    }, 1000);
+                } else {
+                    display('Starting in ... ' + s + 's');
+                    setTimeout(countDown, 1000);
+                }
+            }
+
+            countDown();
+        }
+
+        function init() {
+            var c = $('#center')[0];
+            c.style.top = Math.max($(window).height() / 2 - $('#center').height() / 2 - 100, 0) + 'px';
+            c.style.left = ($(window).width() / 2 - $('#center').width() / 2) + 'px';
+            start();
+        }
+
+        window.onload = init;
+
+    </script>
+</head>
+<body>
+<div id="center" style="position: absolute;">
+    <div id="current">
+    </div>
+</div>
+</body>
+</html>
