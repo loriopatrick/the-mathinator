@@ -79,12 +79,14 @@ public class Calc implements HttpHandler {
                 Node n = Parser.CreateNode(eq);
                 Parser.MarkUp(n);
                 Write(Parser.ReadNodeLatex(n), outputStream);
+                int count = 0;
                 for (int i = 0; i < steps; i++) {
                     Parser.MarkUp(n);
                     try {
                         Write(Parser.ReadNodeLatex(n), outputStream);
                     } catch (Exception e) {}
-                    if (Simplify.Step(n)) break;
+                    if (Simplify.Step(n)) ++count;
+                    if (count > 10) break;
                 }
             }
         } catch (Exception e) {

@@ -53,13 +53,13 @@ public class Simplify {
             }
         }
 
+        if (Derive(node)) return true;
         if (Factor(node)) return true;
         if (Add(node, expand)) return true;
         if (Multiply(node, expand)) return true;
         if (Divide(node, expand)) return true;
         if (Power(node)) return true;
         if (Function(node)) return true;
-        if (Derive(node)) return true;
 
         return false;
     }
@@ -1251,6 +1251,7 @@ public class Simplify {
 
     public static boolean Step(Node node, boolean expand) {
         Node last = node.clone();
+        if (node.valEquals("d")) expand = false;
         Simplify(node, expand);
         boolean same = node.equals(last);
         return same;
@@ -1270,7 +1271,7 @@ public class Simplify {
             System.out.println(Parser.ReadNode(n));
             if (Step(n)) ++t;
             else t = 0;
-            if (t >= 5) break;
+            if (t >= 10) break;
         }
         Parser.MarkUp(n);
         System.out.println(Parser.ReadNode(n));
