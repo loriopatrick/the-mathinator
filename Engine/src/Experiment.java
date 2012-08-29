@@ -12,7 +12,7 @@ public class Experiment {
 
 //        System.out.println(a - b);
 
-        Solve2.Run("0.16-0.01*(x+1)=-0.03*(3-1*x)", "x");
+        Solve2.Run("0.16-0.01*(m+1)=-0.03*(3-1*m)", "m");
 //        Solve2.Run("d(2x+5x)", "x");
 //        Node test = Parser.CreateNode("2^(3/2),-2^(3/2)");
 //        System.out.println(test);
