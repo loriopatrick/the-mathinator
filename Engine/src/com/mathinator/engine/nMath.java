@@ -178,4 +178,11 @@ public class nMath {
         if (res == -1) return false;
         return res % 2 == 1;
     }
+
+    public static float Round(float Rval, int Rpl) {
+        float p = (float)Math.pow(10,Rpl);
+        Rval = Rval * p;
+        float tmp = Math.round(Rval);
+        return (float)tmp/p;
+    }
 }

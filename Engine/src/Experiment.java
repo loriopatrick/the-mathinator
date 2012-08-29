@@ -10,15 +10,15 @@ public class Experiment {
         double a = 0.16;
         double b = 0.01;
 
-        System.out.println(a - b);
+//        System.out.println(a - b);
 
-//        Solve2.Run("2*x*y+4*x=5", "x");
+        Solve2.Run("0.16-0.01*(x+1)=-0.03*(3-1*x)", "x");
 //        Solve2.Run("d(2x+5x)", "x");
 //        Node test = Parser.CreateNode("2^(3/2),-2^(3/2)");
 //        System.out.println(test);
 
 //        System.out.println(nMath.Multiples("-10"));
-//        Simplify.Run("-1*(7*y-6*z+3)");
+//        Simplify.Run("");
 //        System.out.println(Parser.ReadNodeLatex(Parser.CreateNode("d((x^2)/6*x+x^5,x)")));
 //
 //        Solve2.Run("2*x*y+4*x*y=2*(2*x+y)", "x");

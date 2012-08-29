@@ -599,7 +599,7 @@ public class Simplify {
                     }
 
                     if (Bools.isNum(a.value) && Bools.isNum(b.value)) {
-                        float res = Float.parseFloat(a.value) * Float.parseFloat(b.value);
+                        float res = nMath.Round(Float.parseFloat(a.value) * Float.parseFloat(b.value), 5);
                         node.nodes.set(i, new Node(res + ""));
 
                         node.nodes.get(i).changed = true;
@@ -792,7 +792,7 @@ public class Simplify {
             float a = Float.parseFloat(n.value),
                     b = Float.parseFloat(d.value);
 
-            float res = a / b;
+            float res = nMath.Round(a / b, 5);
 
             if (Math.floor(res) == res) {
                 n.clone(new Node(res + "", true));
@@ -982,7 +982,7 @@ public class Simplify {
                     Node b = node.nodes.get(j);
 
                     if (Bools.isNum(a.value) && Bools.isNum(b.value)) {
-                        sum = Float.parseFloat(a.value) + Float.parseFloat(b.value);
+                        sum = nMath.Round(Float.parseFloat(a.value) + Float.parseFloat(b.value), 5);
 
                         Node temp = new Node(sum + "");
                         temp.changed = true;
