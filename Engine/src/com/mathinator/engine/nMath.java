@@ -88,11 +88,13 @@ public class nMath {
                 boolean added = false;
                 if (Bools.isNum(n.value)) {
                     ArrayList<Integer> multi = nMath.Multiples(n.value);
-                    multi.remove(new Integer(1));
-                    if (multi != null && multi.size() > 0) {
-                        added = true;
-                        for (int j = 0; j < multi.size(); ++j) {
-                            result.add(new Node(multi.get(j) + ""));
+                    if (multi != null) {
+                        multi.remove(new Integer(1));
+                        if (multi.size() > 0) {
+                            added = true;
+                            for (int j = 0; j < multi.size(); ++j) {
+                                result.add(new Node(multi.get(j) + ""));
+                            }
                         }
                     }
                 }
@@ -119,11 +121,13 @@ public class nMath {
             boolean added = false;
             if (Bools.isNum(node.value)) {
                 ArrayList<Integer> multi = nMath.Multiples(node.value);
-                multi.remove(new Integer(1));
-                if (multi != null && multi.size() > 0) {
-                    added = true;
-                    for (int j = 0; j < multi.size(); ++j) {
-                        result.add(new Node(multi.get(j) + ""));
+                if (multi != null) {
+                    multi.remove(new Integer(1));
+                    if (multi != null && multi.size() > 0) {
+                        added = true;
+                        for (int j = 0; j < multi.size(); ++j) {
+                            result.add(new Node(multi.get(j) + ""));
+                        }
                     }
                 }
             }

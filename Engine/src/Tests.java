@@ -225,6 +225,7 @@ public class Tests {
         if (!Solve("x^2+32=5*x^2", "2^(3/2),-1*2^(3/2)", "x")) assert false;
         if (!Solve("3*(6-1*(8*x-7))+6*x=0", "13/6", "x")) assert false;
         if (!Solve("5*x=9*x", "0", "x")) assert false;
+        if (!Solve("0.15-0.01*(x+1)=-0.03*(2-1*x)", "5", "x"))assert false;
 
         //1+2/x=9*x+9
     }
