@@ -611,7 +611,7 @@ public class Simplify {
                         return true;
                     }
 
-                    if (a.value.equals("+") && expand && (a.targets > 0 || a.parent.parent == null)) {
+                    if (a.value.equals("+") && expand && (a.targets > 0 || (a.unknowns > 0 && a.parent.targets == 0))) {
 //                        if (Bools.isNum(b.value)) {
                         for (int n = 0; n < a.nodes.size(); n++) {
                             a.nodes.set(n, new Node("*", new Node[]{

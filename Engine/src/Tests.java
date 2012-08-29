@@ -166,6 +166,7 @@ public class Tests {
         if (!Simplify("(2*(x-3))+(4*b)+(-2*(x-b-3))+5", "6*b+5")) assert false;
         if (!Simplify("-5/-13", "5/13")) assert false;
         if (!Simplify("-1*(7*y-6*z+3)", "-7.0*y+6.0*z-3.0")) assert false;
+        if (!Simplify("2*(2*m+2)-12", "4*m-8")) assert false;
     }
 
     public boolean Solve(String eq, Node ans, String target) {
