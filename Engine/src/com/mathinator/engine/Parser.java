@@ -185,13 +185,17 @@ public class Parser {
 
     public static void MarkUp(Node n, String target) {
         n.targets = 0;
+        n.unknowns = 0;
         if (n.nodes.size() == 0) {
             boolean t = n.value.equals(target) || n.value.equals("-" + target);
+            boolean k = n.nodes.size() == 0 && !Bools.isNum(n.value) && !Bools.isFn(n.value);
             n.targets = 0;
+            n.unknowns = 0;
             Node temp = n;
             temp.height = 0;
             while (temp != null) {
                 if (t) temp.targets++;
+                if (k) temp.unknowns++;
                 if (temp.parent != null) {
                     if (temp.parent.height < temp.height + 1)
                         temp.parent.height = temp.height + 1;
@@ -205,6 +209,7 @@ public class Parser {
             Node c = n.nodes.get(i);
             c.parent = n;
             c.targets = 0;
+            c.unknowns = 0;
             c.height = 0;
             MarkUp(c, target);
         }

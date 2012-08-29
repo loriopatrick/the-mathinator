@@ -118,6 +118,7 @@ public class Node {
     public Node parent;
 
     public int targets = 0;
+    public int unknowns = 0;
     public int height = -1;
     public boolean simple = false;
     public int temp = -1;
