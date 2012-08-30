@@ -56,16 +56,16 @@ public class Calc implements HttpHandler {
 
         OutputStream outputStream = ex.getResponseBody();
 
-        String eq = null;
+        String[] eq = null;
         try {
-            eq = Read(ex.getRequestBody());
+            eq = Read(ex.getRequestBody()).split("\\n");
             System.out.println("CALC: " + eq);
 
             ex.sendResponseHeaders(200, 0);
+            Node n = Parser.CreateNode(eq[2], eq[1]);
 
-            if (eq.contains("=")) {
-                Node n = Parser.CreateNode(eq);
-                Parser.MarkUp(n);
+            if (eq[0].equals("0")) {
+                Parser.MarkUp(n, eq[1]);
                 Write(Parser.ReadNodeLatex(n), outputStream);
                 for (int i = 0; i < steps; i++) {
                     Parser.MarkUp(n);
@@ -73,11 +73,10 @@ public class Calc implements HttpHandler {
                         Write(Parser.ReadNodeLatex(n), outputStream);
                     } catch (Exception e) {}
 
-                    if (Solve2.Step(n, "x")) break;
+                    if (Solve2.Step(n, eq[1])) break;
                 }
-            } else {
-                Node n = Parser.CreateNode(eq);
-                Parser.MarkUp(n);
+            } else if (eq[0].equals("1")) {
+                Parser.MarkUp(n, eq[1]);
                 Write(Parser.ReadNodeLatex(n), outputStream);
                 int count = 0;
                 for (int i = 0; i < steps; i++) {

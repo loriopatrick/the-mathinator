@@ -1,5 +1,8 @@
 var WB = {} || new Object();
-
+WB.store = {
+    mode:0,
+    target:'x'
+};
 WB.size = {
     isBig:true,
     small:function (callback) {
@@ -51,7 +54,10 @@ WB.spinner = {
 
 WB.engine = {
     run:function () {
+        if ($('#eq').val().length == 0) $('#eq').val($('#eq').attr('placeholder'));
+        if ($('#target').val().length == 0) $('#target').val($('#target').attr('placeholder'));
         var eq = this.getEq();
+        window.location.hash = '#' + eq;
         WB.spinner.up();
 
         var _this = this;
@@ -63,6 +69,7 @@ WB.engine = {
     },
     getEq:function () {
         var eq = $('#eq').val();
+        WB.store.target = $('#target').val();
         $('#raw').html(eq);
         eq = this.parser(eq);
         var html = [
@@ -76,7 +83,10 @@ WB.engine = {
         return eq;
     },
     calc:function (eq, callback) {
-        $.post('/calc/', eq, function (raw) {
+        var msg = WB.store.mode + '\n' +
+            WB.store.target + '\n' +
+            eq;
+        $.post('/calc/', msg, function (raw) {
             var data = raw
                 .split('\\sqrt').join('√')
                 .split('\\pi').join('π')
@@ -166,4 +176,47 @@ $(document).ready(function () {
             WB.engine.run();
         }, 700);
     }
+
+    setInterval(function () {
+        if (window.location.hash.length <= 1) {
+            WB.size.big();
+        }
+    }, 100);
+
+
+    $('#menu').change(function () {
+        var i = this.selectedIndex;
+        if (WB.store.mode == i) return;
+        if (i == 0) {
+            $('#eq').attr('placeholder', '4*(9*x+18*x/5)=32*x+6');
+        } else if (i == 1) {
+            $('#eq').attr('placeholder', '2*(x-3)+4*b-2*(x-b-3)+5');
+        } else if (i == 2) {
+            $('#eq').attr('placeholder', 'x^2+2x+1');
+        }
+
+        if (WB.store.mode == 1) {
+            $('#target-holder').animate({
+                width: 100
+            });
+        } else if (i == 1) {
+            $('#target-holder').animate({
+                width: 0
+            });
+        }
+
+        WB.store.mode = i;
+    });
+
+    var last = 0;
+
+    $('#eq').keydown(function () {
+        if (WB.store.mode != 0 && $(this).val().indexOf('=') > -1) {
+            $('#menu')[0].selectedIndex = 0;
+            $('#target-holder').animate({
+                width: 100
+            });
+            WB.store.mode = 0;
+        }
+    });
 });
