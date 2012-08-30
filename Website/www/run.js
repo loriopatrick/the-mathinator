@@ -58,6 +58,18 @@ WB.engine = {
         if ($('#target').val().length == 0) $('#target').val($('#target').attr('placeholder'));
         var eq = this.getEq();
         if (eq.length == 0) return;
+
+        if (eq.indexOf(WB.store.target) == -1) {
+            var vars = 'abcdefghijklmnopqrstuvwxyz';
+            for (var i = 0; i < vars.length; ++i) {
+                if (eq.indexOf(vars[i]) > -1) {
+                    WB.store.target = vars[i];
+                    $('#target').val(vars[i]);
+                    break;
+                }
+            }
+        }
+
         window.location.hash = '#' + eq + '!' + WB.store.target;
         WB.spinner.up();
 
