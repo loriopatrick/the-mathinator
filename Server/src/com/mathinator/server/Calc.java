@@ -59,7 +59,7 @@ public class Calc implements HttpHandler {
         String[] eq = null;
         try {
             eq = Read(ex.getRequestBody()).split("\\n");
-            System.out.println("CALC: " + eq);
+            System.out.println("CALC: " + eq[2] + " >> " + eq[1]);
 
             ex.sendResponseHeaders(200, 0);
             Node n = Parser.CreateNode(eq[2], eq[1]);
@@ -97,7 +97,7 @@ public class Calc implements HttpHandler {
 
         try {
             IO.Append(logFile, new Date().getTime() +
-                    "\t" + ex.getRemoteAddress().getAddress().toString() + "\t" + eq + '\n');
+                    "\t" + ex.getRemoteAddress().getAddress().toString() + "\t" + eq[2] + " >> " + eq[1] + '\n');
         } catch (Exception e) {
             System.out.println(e);
         }
