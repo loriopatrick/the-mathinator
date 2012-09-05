@@ -173,7 +173,7 @@ public class Engine {
         try {
             Node n = Parser.CreateNode(eq, target);
             for (int i = 0; i < 1000; i++) {
-                if (Solve2.Step(n, "x")) break;
+                if (Solve.Step(n, "x")) break;
                 Parser.MarkUp(n);
             }
             Parser.MarkUp(n);

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5ef21a35-78fe-46fa-9ccd-fa79df4a6a7c" name="Default" comment="" />
+    <list default="true" id="5ef21a35-78fe-46fa-9ccd-fa79df4a6a7c" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve2.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/Experiment.java" afterPath="$PROJECT_DIR$/Engine/src/Experiment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tests/src/Engine.java" afterPath="$PROJECT_DIR$/Tests/src/Engine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tomcat App/src/Calc.java" afterPath="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
+    </list>
     <ignored path="mathinator2.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,19 +66,57 @@
     <favorites_list name="mathinator2" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="Experiment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="32" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Solve.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="91" column="43" selection-start="2548" selection-end="2548" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Simplify.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="752" column="36" selection-start="29116" selection-end="29116" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Engine.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="174" column="44" selection-start="6034" selection-end="6034" vertical-scroll-proportion="0.6915167">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Server/src/test.java" />
         <option value="$PROJECT_DIR$/Tests/src/Tests.java" />
-        <option value="$PROJECT_DIR$/Tests/src/Engine.java" />
         <option value="$PROJECT_DIR$/Server/web/index.jsp" />
         <option value="$PROJECT_DIR$/Tomcat App/web/about/index.html" />
         <option value="$PROJECT_DIR$/Tomcat App/web/WEB-INF/web.xml" />
@@ -83,6 +127,11 @@
         <option value="$PROJECT_DIR$/Tomcat App/web/run.js" />
         <option value="$PROJECT_DIR$/Tomcat App/src/Settings.java" />
         <option value="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
+        <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve2.java" />
+        <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
+        <option value="$PROJECT_DIR$/Engine/src/Experiment.java" />
+        <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
+        <option value="$PROJECT_DIR$/Tests/src/Engine.java" />
       </list>
     </option>
   </component>
@@ -102,7 +151,7 @@
     <option name="width" value="1280" />
     <option name="height" value="730" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -140,6 +189,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -148,9 +198,50 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -159,19 +250,19 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.side.proportion" value="0.25990677" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -185,7 +276,7 @@
       <recent name="$PROJECT_DIR$/Engine/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 7">
+  <component name="RunManager" selected="JUnit.Engine">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -212,6 +303,24 @@
     <configuration default="true" type="GoogleAppEngineDevServer" factoryName="Local">
       <server-settings />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -252,24 +361,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -292,7 +383,7 @@
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
       <JSRemoteDebuggerConfigurationSettings>
-        <option name="engineId" />
+        <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSRemoteDebuggerConfigurationSettings>
       <method>
@@ -352,32 +443,9 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Engine" />
       <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="AppEngine Dev" type="GoogleAppEngineDevServer" factoryName="Local" APPLICATION_SERVER_NAME="AppEngine Dev">
-      <server-settings>
-        <option name="artifact" value="Google App:war exploded" />
-      </server-settings>
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper VM_VAR="" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method>
-        <option name="BuildArtifacts" enabled="true" />
-      </method>
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
     </configuration>
     <configuration default="false" name="Engine" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -459,11 +527,10 @@
         </option>
       </method>
     </configuration>
-    <list size="4">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Experiment" />
-      <item index="1" class="java.lang.String" itemvalue="Google AppEngine Dev Server.AppEngine Dev" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.Engine" />
-      <item index="3" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.Engine" />
+      <item index="2" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -499,7 +566,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="22" width="1280" height="730" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -514,17 +581,17 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.6896552" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.2676519" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.40229884" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.40229884" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.318555" sideWeight="0.91883117" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.26929393" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31691298" sideWeight="0.91883117" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21266234" sideWeight="0.6896552" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21266234" sideWeight="0.6896552" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -621,36 +688,20 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="29" selection-start="590" selection-end="590" vertical-scroll-proportion="0.5154639">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/web/about/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="21" selection-start="377" selection-end="377" vertical-scroll-proportion="0.33027524">
-          <folding />
-        </state>
+        <state line="12" column="21" selection-start="377" selection-end="377" vertical-scroll-proportion="0.33027524" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/web/WEB-INF/web.xml">
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-        <state />
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.24590164" />
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
         <state />
       </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.24590164">
-          <folding />
-        </state>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
+        <state />
       </provider>
       <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
         <state />
@@ -658,44 +709,58 @@
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/1.6.0_33-b03-424.jdk/Contents/Home/src.jar!/src/java/io/File.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="882" column="0" selection-start="35885" selection-end="35885" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
+        <state line="882" column="0" selection-start="35885" selection-end="35885" vertical-scroll-proportion="0.33333334" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/web/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="43.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="43.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/src/Calc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="49" selection-start="805" selection-end="805" vertical-scroll-proportion="0.68">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="25" column="49" selection-start="805" selection-end="805" vertical-scroll-proportion="0.68" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/web/run.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="34" selection-start="2653" selection-end="2653" vertical-scroll-proportion="-4.1829896">
-          <folding />
-        </state>
+        <state line="97" column="34" selection-start="2653" selection-end="2653" vertical-scroll-proportion="-4.1829896" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/web/how/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="33" selection-start="2325" selection-end="2325" vertical-scroll-proportion="0.014245015">
-          <folding />
-        </state>
+        <state line="58" column="33" selection-start="2325" selection-end="2325" vertical-scroll-proportion="0.014245015" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/src/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="146" selection-end="146" vertical-scroll-proportion="0.15463917">
+        <state line="4" column="0" selection-start="146" selection-end="146" vertical-scroll-proportion="0.15463917" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="32" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="43" selection-start="2548" selection-end="2548" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="752" column="36" selection-start="29116" selection-end="29116" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="44" selection-start="6034" selection-end="6034" vertical-scroll-proportion="0.6915167">
           <folding />
         </state>
       </provider>

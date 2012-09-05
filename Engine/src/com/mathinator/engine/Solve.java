@@ -1,8 +1,6 @@
 package com.mathinator.engine;
 
-import java.rmi.MarshalledObject;
-
-public class Solve2 {
+public class Solve {
 
     public static boolean Solve(Node node, String target) {
         if (!node.value.equals("=")) return false;

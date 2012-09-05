@@ -59,7 +59,7 @@ public class Calc extends HttpServlet {
                     } catch (Exception e) {
                     }
 
-                    if (Solve2.Step(n, target)) break;
+                    if (Solve.Step(n, target)) break;
                 }
             } else if (mode.equals("1")) {
                 int count = 0;
