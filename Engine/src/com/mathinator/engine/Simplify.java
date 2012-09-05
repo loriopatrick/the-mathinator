@@ -16,6 +16,8 @@ public class Simplify {
                 return true;
         }
 
+        if (SimplifyDivs(node)) return true;
+
         for (int i = 0; i < node.nodes.size(); i++) {
             node.nodes.get(i).changed = false;
             if (!done) {
@@ -724,6 +726,63 @@ public class Simplify {
             }
         }
 
+        return false;
+    }
+
+    private static Node GetMulti (ArrayList<Node> nodes) {
+        Node res = new Node("*");
+        float temp = 1;
+        for (Node n : nodes) {
+            if (Bools.isNum(n.value)) {
+                temp *= Float.parseFloat(n.value);
+            } else {
+                res.nodes.add(n);
+            }
+        }
+
+        if (temp != 1) {
+            res.nodes.add(new Node(temp + ""));
+        }
+
+        if (res.nodes.size() == 1) {
+            res.clone(res.nodes.get(0));
+        } else if (res.nodes.size() == 0) {
+            res.value = "1";
+        }
+
+        return res;
+    }
+
+    public static boolean SimplifyDivs (Node node) {
+        if (node.valEquals("=")) {
+            Node a = node.nodes.get(0), b = node.nodes.get(1);
+            if (a.valEquals("/") && b.valEquals("/")) {
+                int size;
+                ArrayList<Node> as = nMath.Multiples(a.nodes.get(1));
+                ArrayList<Node> bs = nMath.Multiples(b.nodes.get(1));
+
+                size = as.size() + bs.size();
+
+                nMath.DestroyCommon(as, bs);
+
+                if (as.size() + bs.size() < size) {
+                    Node ar = GetMulti(as),
+                        br = GetMulti(bs);
+                    if (ar.valEquals("1")) {
+                        a.clone(a.nodes.get(0));
+                    } else {
+                        a.nodes.get(1).clone(ar);
+                    }
+
+                    if (br.valEquals("1")) {
+                        b.clone(b.nodes.get(0));
+                    } else {
+                        b.nodes.get(1).clone(br);
+                    }
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

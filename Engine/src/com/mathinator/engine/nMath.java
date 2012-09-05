@@ -5,6 +5,46 @@ import java.util.Collections;
 
 public class nMath {
 
+    public static ArrayList<Node> Multiples(Node n) {
+        ArrayList<Node> res = null;
+        if (n.valEquals("*")) {
+            res = new ArrayList<Node>();
+            for (Node c : n.nodes) {
+                ArrayList<Node> temp = Multiples(c);
+                if (temp == null) continue;
+                res.addAll(temp);
+            }
+            if (res.size() == 0) return null;
+        } else if (Bools.isNum(n.value)) {
+            ArrayList<Integer> mults = Multiples(n.value);
+            if (mults == null) return res;
+            res = new ArrayList<Node>();
+            for (int i : mults) {
+                res.add(new Node(i + ""));
+            }
+        } else {
+            res = new ArrayList<Node>();
+            res.add(n);
+        }
+        return res;
+    }
+
+    public static void DestroyCommon(ArrayList a, ArrayList b) {
+        for (int i = 0; i < a.size(); ) {
+            boolean remove = false;
+            for (int j = 0; j < b.size(); ) {
+                if (a.get(i).equals(b.get(j))) {
+                    remove = true;
+                    a.remove(i);
+                    b.remove(j);
+                    continue;
+                }
+                ++j;
+            }
+            if (!remove) ++i;
+        }
+    }
+
     public static ArrayList<Integer> Multiples(float v) {
         boolean neg = v < 0;
         if (neg) v *= -1;
@@ -180,9 +220,9 @@ public class nMath {
     }
 
     public static float Round(float Rval, int Rpl) {
-        float p = (float)Math.pow(10,Rpl);
+        float p = (float) Math.pow(10, Rpl);
         Rval = Rval * p;
         float tmp = Math.round(Rval);
-        return (float)tmp/p;
+        return (float) tmp / p;
     }
 }

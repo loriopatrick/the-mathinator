@@ -33,7 +33,8 @@ public class Node {
         Collections.addAll(this.nodes, nodes);
     }
 
-    public boolean equals(Node compare) {
+    public boolean equals(Object obj) {
+        Node compare = (Node)obj;
         if (compare.value.equals("ANY")) return true;
         if (Bools.isNum(this.value) && Bools.isNum(compare.value)) {
             if (Float.parseFloat(this.value) != Float.parseFloat(compare.value)) return false;
@@ -75,20 +76,20 @@ public class Node {
         return clone(false);
     }
 
-    public boolean valEquals (String v) {
+    public boolean valEquals(String v) {
         if (v.equalsIgnoreCase(this.value)) return true;
         if (Bools.isNum(v) && Bools.isNum(this.value)
                 && Float.parseFloat(v) == Float.parseFloat(this.value)) return true;
         return false;
     }
 
-    public void clone (Node node) {
+    public void clone(Node node) {
         this.value = node.value;
         this.nodes = node.nodes;
         this.changed = node.changed;
     }
 
-    public boolean contains (Node node) {
+    public boolean contains(Node node) {
         if (this.equals(node)) return true;
         for (Node n : this.nodes) {
             if (n.contains(node)) return true;
@@ -96,7 +97,7 @@ public class Node {
         return false;
     }
 
-    public int find (Node node, int layer) {
+    public int find(Node node, int layer) {
         if (this.equals(node)) return ++layer;
         for (Node n : this.nodes) {
             int l;
@@ -105,11 +106,11 @@ public class Node {
         return -1;
     }
 
-    public int find (Node node) {
+    public int find(Node node) {
         return this.find(node, -1);
     }
 
-    public String toString () {
+    public String toString() {
         return Parser.ReadNode(this);
     }
 
