@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ef21a35-78fe-46fa-9ccd-fa79df4a6a7c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/Experiment.java" afterPath="$PROJECT_DIR$/Engine/src/Experiment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Node.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Node.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java" />
     </list>
     <ignored path="mathinator2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -97,7 +96,7 @@
       <file leaf-file-name="Experiment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="31" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
+            <state line="10" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -115,7 +114,7 @@
       <file leaf-file-name="Simplify.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="781" column="0" selection-start="30014" selection-end="30014" vertical-scroll-proportion="-0.12653778">
+            <state line="771" column="24" selection-start="29700" selection-end="29700" vertical-scroll-proportion="0.72126436">
               <folding />
             </state>
           </provider>
@@ -132,19 +131,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Node.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Node.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="33" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Engine.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="210" column="50" selection-start="7001" selection-end="7001" vertical-scroll-proportion="0.0">
+            <state line="210" column="20" selection-start="6971" selection-end="6991" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -175,9 +165,9 @@
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve2.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
         <option value="$PROJECT_DIR$/Tests/src/Engine.java" />
-        <option value="$PROJECT_DIR$/Engine/src/Experiment.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Node.java" />
+        <option value="$PROJECT_DIR$/Engine/src/Experiment.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
       </list>
     </option>
@@ -323,7 +313,7 @@
       <recent name="$PROJECT_DIR$/Engine/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Experiment">
+  <component name="RunManager" selected="JUnit.Engine">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -642,11 +632,11 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32840723" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.591133" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.37438422" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.39737275" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36288998" sideWeight="0.91883117" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30762988" sideWeight="0.25123152" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36288998" sideWeight="0.91883117" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21266234" sideWeight="0.6896552" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -803,23 +793,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="31" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="210" column="50" selection-start="7001" selection-end="7001" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="33" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0">
+        <state line="85" column="16" selection-start="2845" selection-end="2845" vertical-scroll-proportion="0.3321617">
           <folding />
         </state>
       </provider>
@@ -833,9 +809,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="210" column="20" selection-start="6971" selection-end="6991" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="781" column="0" selection-start="30014" selection-end="30014" vertical-scroll-proportion="-0.12653778">
+        <state line="771" column="24" selection-start="29700" selection-end="29700" vertical-scroll-proportion="0.72126436">
           <folding />
         </state>
       </provider>

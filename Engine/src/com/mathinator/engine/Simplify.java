@@ -112,6 +112,7 @@ public class Simplify {
                         div.clone()
                 }));
 
+                node.temp = 100;
                 return true;
             }
         }
@@ -754,7 +755,7 @@ public class Simplify {
     }
 
     public static boolean SimplifyDivs (Node node) {
-        if (node.valEquals("=")) {
+        if (node.valEquals("=") && node.temp != 100) {
             Node a = node.nodes.get(0), b = node.nodes.get(1);
             if (a.valEquals("/") && b.valEquals("/")) {
                 int size;
@@ -768,20 +769,26 @@ public class Simplify {
                 if (as.size() + bs.size() < size) {
                     Node ar = GetMulti(as),
                         br = GetMulti(bs);
+                    ar.changed = true;
+                    br.changed = true;
                     if (ar.valEquals("1")) {
                         a.clone(a.nodes.get(0));
+                        a.changed = true;
                     } else {
                         a.nodes.get(1).clone(ar);
                     }
 
                     if (br.valEquals("1")) {
                         b.clone(b.nodes.get(0));
+                        b.changed = true;
                     } else {
                         b.nodes.get(1).clone(br);
                     }
                     return true;
                 }
             }
+        } else {
+            node.temp = 0;
         }
         return false;
     }
