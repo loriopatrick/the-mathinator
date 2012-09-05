@@ -814,7 +814,7 @@ public class Simplify {
             if (Divide(n, d)) return true;
 
             if (n.value.equals("+")) {
-                if (n.targets > 0 &&
+                if ((n.targets > 0 || node.targets == 0) &&
                         (d.targets == 0 || (d.targets > 0 && !d.value.equals("+"))) && expand) {
                     Node temp = new Node("+", true);
 

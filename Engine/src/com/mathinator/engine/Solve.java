@@ -284,9 +284,26 @@ public class Solve {
         for (int i = powers.length - 1; i > 0; --i) {
             if (powers[i] == null) continue;
             if (i == 2) {
+                Node a = new Node("^", new Node[]{
+                        new Node("+", new Node[]{
+                                new Node("^", new Node[]{
+                                        powers[1].clone(),
+                                        new Node("2")
+                                }),
+                                new Node("*", new Node[]{
+                                        new Node("-4"),
+                                        powers[2].clone(),
+                                        powers[0].clone()
+                                })
+                        }),
+                        new Node("/", new Node[]{
+                                new Node("1"),
+                                new Node("2")
+                        })
+                });
                 Node n = new Node("*", new Node[]{
                         new Node("+", new Node[]{
-                                new Node("x"),
+                                new Node(target),
                                 new Node("*", new Node[]{
                                         new Node("-1"),
                                         new Node("/", new Node[]{
@@ -295,23 +312,7 @@ public class Solve {
                                                                 new Node("-1"),
                                                                 powers[1].clone()
                                                         }),
-                                                        new Node("^", new Node[]{
-                                                                new Node("+", new Node[]{
-                                                                        new Node("^", new Node[]{
-                                                                                powers[1].clone(),
-                                                                                new Node("2")
-                                                                        }),
-                                                                        new Node("*", new Node[]{
-                                                                                new Node("-4"),
-                                                                                powers[2].clone(),
-                                                                                powers[0].clone()
-                                                                        })
-                                                                }),
-                                                                new Node("/", new Node[]{
-                                                                        new Node("1"),
-                                                                        new Node("2")
-                                                                })
-                                                        })
+                                                        a
                                                 }),
                                                 new Node("*", new Node[]{
                                                         new Node("2"),

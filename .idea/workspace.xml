@@ -6,6 +6,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/Experiment.java" afterPath="$PROJECT_DIR$/Engine/src/Experiment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tomcat App/src/Calc.java" afterPath="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
     </list>
     <ignored path="mathinator2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,7 +28,7 @@
   </component>
   <component name="DebuggerManager">
     <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java" line="37" class="com.mathinator.engine.nMath" package="com.mathinator.engine">
+      <breakpoint url="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" line="816" class="com.mathinator.engine.Simplify" package="com.mathinator.engine">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -81,10 +82,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Experiment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Experiment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="30" selection-start="213" selection-end="213" vertical-scroll-proportion="0.24930748">
+            <state line="6" column="35" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -93,7 +94,16 @@
       <file leaf-file-name="Solve.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="0" selection-start="2551" selection-end="2551" vertical-scroll-proportion="0.0">
+            <state line="328" column="19" selection-start="12125" selection-end="12125" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Calc.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Tomcat App/src/Calc.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="41" selection-start="2278" selection-end="2278" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -102,7 +112,7 @@
       <file leaf-file-name="Simplify.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="787" column="17" selection-start="30279" selection-end="30279" vertical-scroll-proportion="0.0">
+            <state line="816" column="56" selection-start="31090" selection-end="31090" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -111,7 +121,7 @@
       <file leaf-file-name="nMath.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="0" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0">
+            <state line="36" column="34" selection-start="1172" selection-end="1172" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -119,10 +129,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Engine.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Engine.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="219" column="20" selection-start="7602" selection-end="7613" vertical-scroll-proportion="0.0">
+            <state line="229" column="45" selection-start="8278" selection-end="8278" vertical-scroll-proportion="0.5132743">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Parser.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Parser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="237" column="0" selection-start="7547" selection-end="7547" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -149,14 +168,14 @@
         <option value="$PROJECT_DIR$/Tomcat App/src/test.java" />
         <option value="$PROJECT_DIR$/Tomcat App/web/run.js" />
         <option value="$PROJECT_DIR$/Tomcat App/src/Settings.java" />
-        <option value="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve2.java" />
-        <option value="$PROJECT_DIR$/Tests/src/Engine.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Node.java" />
-        <option value="$PROJECT_DIR$/Engine/src/Experiment.java" />
+        <option value="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
+        <option value="$PROJECT_DIR$/Engine/src/Experiment.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
+        <option value="$PROJECT_DIR$/Tests/src/Engine.java" />
       </list>
     </option>
   </component>
@@ -221,6 +240,54 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="mathinator2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tomcat App" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tomcat App" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mathinator2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -754,11 +821,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="43.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tomcat App/src/Calc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="49" selection-start="805" selection-end="805" vertical-scroll-proportion="0.68" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tomcat App/web/run.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="34" selection-start="2653" selection-end="2653" vertical-scroll-proportion="-4.1829896" />
@@ -783,37 +845,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/nMath.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0">
+        <state line="36" column="34" selection-start="1172" selection-end="1172" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
+    <entry file="file://$PROJECT_DIR$/Tomcat App/src/Calc.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="219" column="20" selection-start="7602" selection-end="7613" vertical-scroll-proportion="0.0">
+        <state line="62" column="41" selection-start="2278" selection-end="2278" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
+    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="787" column="17" selection-start="30279" selection-end="30279" vertical-scroll-proportion="0.0">
+        <state line="237" column="0" selection-start="7547" selection-end="7547" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="0" selection-start="2551" selection-end="2551" vertical-scroll-proportion="0.0">
+        <state line="328" column="19" selection-start="12125" selection-end="12125" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="816" column="56" selection-start="31090" selection-end="31090" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/Experiment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="30" selection-start="213" selection-end="213" vertical-scroll-proportion="0.24930748">
+        <state line="6" column="35" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="229" column="45" selection-start="8278" selection-end="8278" vertical-scroll-proportion="0.5132743">
           <folding />
         </state>
       </provider>

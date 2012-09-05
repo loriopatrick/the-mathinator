@@ -50,7 +50,7 @@ public class Calc extends HttpServlet {
             Node n = Parser.CreateNode(eq, target);
             Parser.MarkUp(n, target);
             writer.write(Parser.ReadNodeLatex(n) + '\n');
-
+            int count = 0;
             if (mode.equals("0")) {
                 for (int i = 0; i < Settings.STEPS; i++) {
                     Parser.MarkUp(n);
@@ -59,10 +59,11 @@ public class Calc extends HttpServlet {
                     } catch (Exception e) {
                     }
 
-                    if (Solve.Step(n, target)) break;
+                    if (Solve.Step(n, target)) ++count;
+                    if (count > 2) break;
                 }
             } else if (mode.equals("1")) {
-                int count = 0;
+
                 for (int i = 0; i < Settings.STEPS; i++) {
                     Parser.MarkUp(n);
                     try {
