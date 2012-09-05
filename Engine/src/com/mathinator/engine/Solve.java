@@ -322,7 +322,7 @@ public class Solve {
                                 })
                         }),
                         new Node("+", new Node[]{
-                                new Node("x"),
+                                new Node(target),
                                 new Node("*", new Node[]{
                                         new Node("-1"),
                                         new Node("/", new Node[]{
@@ -333,23 +333,7 @@ public class Solve {
                                                         }),
                                                         new Node("*", new Node[]{
                                                                 new Node("-1"),
-                                                                new Node("^", new Node[]{
-                                                                        new Node("+", new Node[]{
-                                                                                new Node("^", new Node[]{
-                                                                                        powers[1].clone(),
-                                                                                        new Node("2")
-                                                                                }),
-                                                                                new Node("*", new Node[]{
-                                                                                        new Node("-4"),
-                                                                                        powers[2].clone(),
-                                                                                        powers[0].clone()
-                                                                                })
-                                                                        }),
-                                                                        new Node("/", new Node[]{
-                                                                                new Node("1"),
-                                                                                new Node("2")
-                                                                        })
-                                                                })
+                                                                a
                                                         })
                                                 }),
                                                 new Node("*", new Node[]{

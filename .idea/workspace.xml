@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ef21a35-78fe-46fa-9ccd-fa79df4a6a7c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/Experiment.java" afterPath="$PROJECT_DIR$/Engine/src/Experiment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" afterPath="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Tomcat App/src/Calc.java" afterPath="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
     </list>
     <ignored path="mathinator2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,10 +87,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Solve.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Solve.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="328" column="19" selection-start="12125" selection-end="12125" vertical-scroll-proportion="0.0">
+            <state line="310" column="53" selection-start="11092" selection-end="11092" vertical-scroll-proportion="0.79646015">
               <folding />
             </state>
           </provider>
@@ -129,10 +125,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Engine.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Engine.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="45" selection-start="8278" selection-end="8278" vertical-scroll-proportion="0.5132743">
+            <state line="229" column="47" selection-start="8280" selection-end="8280" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -174,8 +170,8 @@
         <option value="$PROJECT_DIR$/Tomcat App/src/Calc.java" />
         <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java" />
         <option value="$PROJECT_DIR$/Engine/src/Experiment.java" />
-        <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
         <option value="$PROJECT_DIR$/Tests/src/Engine.java" />
+        <option value="$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java" />
       </list>
     </option>
   </component>
@@ -368,7 +364,7 @@
       <recent name="$PROJECT_DIR$/Engine/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Engine">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 7">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -866,13 +862,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="328" column="19" selection-start="12125" selection-end="12125" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Simplify.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="816" column="56" selection-start="31090" selection-end="31090" vertical-scroll-proportion="0.0">
@@ -889,7 +878,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Tests/src/Engine.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="45" selection-start="8278" selection-end="8278" vertical-scroll-proportion="0.5132743">
+        <state line="229" column="47" selection-start="8280" selection-end="8280" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Engine/src/com/mathinator/engine/Solve.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="310" column="53" selection-start="11092" selection-end="11092" vertical-scroll-proportion="0.79646015">
           <folding />
         </state>
       </provider>
