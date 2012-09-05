@@ -4,7 +4,7 @@ public class Experiment {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome... to the Mathenator!");
 
-        Solve.Run("-10*(x-10)^(1/2)=-60", "x");
+        Solve.Run("4/(x-8)=8/2", "x");
 //        Solve.Run("d(2x+5x)", "x");
 //        Node test = Parser.CreateNode("2^(3/2),-2^(3/2)");
 //        System.out.println(test);

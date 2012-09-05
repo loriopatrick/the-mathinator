@@ -787,8 +787,6 @@ public class Simplify {
                     return true;
                 }
             }
-        } else {
-            node.temp = 0;
         }
         return false;
     }

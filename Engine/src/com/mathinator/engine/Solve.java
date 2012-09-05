@@ -91,6 +91,9 @@ public class Solve {
 
         if (Break(x, y, node)) return true;
 
+
+        if (node.temp != 100 && Divs(x, y, node, toLeft)) return true;
+
         return false;
     }
 
@@ -553,8 +556,16 @@ public class Solve {
 
     public static boolean Divs(Node x, Node y, Node eq, boolean toLeft) {
         if (x.value.equals("/") && y.value.equals("/")) {
+            if (x.nodes.get(1).valEquals("1")) {
+                x.clone(x.nodes.get(0));
+                return true;
+            }
 
-            // a/x = b/x :: a = b
+            if (y.nodes.get(1).valEquals("1")) {
+                y.clone(y.nodes.get(0));
+                return true;
+            }
+
             if (x.nodes.get(1).equals(y.nodes.get(1))) {
                 x.clone(x.nodes.get(0));
                 y.clone(y.nodes.get(0));
@@ -581,6 +592,10 @@ public class Solve {
         }
 
         if (x.value.equals("/")) {
+            if (x.nodes.get(1).valEquals("1")) {
+                x.clone(x.nodes.get(0));
+                return true;
+            }
             Node temp = new Node("*", new Node[]{
                     y,
                     x.nodes.get(1)
@@ -716,7 +731,7 @@ public class Solve {
         Node last = eq.clone();
 
         Parser.MarkUp(eq, target);
-        PreSolve(eq, target);
+        if (PreSolve(eq, target)) return false;
         if (!Simplify.Step(eq)) return false;
         Solve(eq, target);
 
