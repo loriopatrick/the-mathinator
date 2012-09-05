@@ -1,6 +1,0 @@
-cd Engine;
-ant clean; ant build; ant jar;
-cd ../Server;
-ant clean; ant build; ant jar;
-cd ../
-sudo java -jar Server/build/jar/server.jar

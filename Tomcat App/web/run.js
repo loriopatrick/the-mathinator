@@ -96,10 +96,11 @@ WB.engine = {
         return eq;
     },
     calc:function (eq, callback) {
-        var msg = WB.store.mode + '\n' +
-            WB.store.target + '\n' +
-            eq;
-        $.post('/calc/', msg, function (raw) {
+        $.post('calc/', {
+            md: WB.store.mode,
+            tg: WB.store.target,
+            eq: eq
+        }, function (raw) {
             var data = raw
                 .split('\\sqrt').join('√')
                 .split('\\pi').join('π')

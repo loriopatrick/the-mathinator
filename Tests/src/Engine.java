@@ -4,7 +4,7 @@ import org.junit.*;
 
 import java.util.ArrayList;
 
-public class Tests {
+public class Engine {
 
     public boolean Parse(String eq, Node res) {
         try {
