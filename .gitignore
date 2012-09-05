@@ -2,7 +2,4 @@
 /bin
 Server/build
 Engine/build
-.*
 math.log.txt
-*/.idea
-*.iml
